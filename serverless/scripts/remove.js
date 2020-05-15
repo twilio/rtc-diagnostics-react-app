@@ -13,7 +13,7 @@ async function remove() {
 
   cli.action.start('Removing TwiML App');
   const TwiMLApps = await client.applications.list();
-  const TwiMLApp = TwiMLApps.find((q) => q.friendlyName === constants.TWIML_APP_NAME);
+  const TwiMLApp = TwiMLApps.find((item) => item.friendlyName === constants.TWIML_APP_NAME);
   if (TwiMLApp) {
     await client.applications(TwiMLApp.sid).remove();
   }

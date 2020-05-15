@@ -1,5 +1,5 @@
 import { handler } from '../../../functions/app/token';
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken'
 
 const mockContext = {
   API_KEY: 'mockkey',

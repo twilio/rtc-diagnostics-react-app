@@ -17,7 +17,6 @@ describe('', () => {
     stdout.stop();
     expect(stdout.output).toContain('Deployed to:');
     appURL = stdout.output.match(/Deployed to: (.+)\n/)[1];
-    console.log(appURL);
   });
 
   afterAll(async () => {
