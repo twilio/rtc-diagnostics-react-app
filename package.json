@@ -6,13 +6,17 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@twilio-labs/serverless-api": "^2.0.1",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.39",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "cli-ux": "^5.4.6",
+    "dotenv": "^8.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
+    "twilio": "^3.43.1",
     "typescript": "^3.7.5"
   },
   "scripts": {
@@ -21,7 +25,9 @@
     "test": "jest",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{ts,tsx}",
-    "test:ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage"
+    "test:ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage",
+    "serverless:deploy": "node serverless/scripts/deploy.js",
+    "serverless:remove": "node serverless/scripts/remove.js"
   },
   "eslintConfig": {
     "extends": "react-app",
