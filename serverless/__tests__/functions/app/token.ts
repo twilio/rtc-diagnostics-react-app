@@ -1,5 +1,5 @@
 import { handler } from '../../../functions/app/token';
-import jwt from 'jsonwebtoken'
+import jwt, { VerifyCallback } from 'jsonwebtoken'
 
 const mockContext = {
   API_KEY: 'mockkey',
@@ -17,7 +17,8 @@ describe('the token function', () => {
     expect(mockCallback).toHaveBeenCalledWith(null, expect.objectContaining({ token: expect.any(String) }));
 
     const token = mockCallback.mock.calls[0][1].token;
-    jwt.verify(token, mockContext.API_SECRET, (err: Error | null, decoded: Object) => {
+    jwt.verify(token, mockContext.API_SECRET, <VerifyCallback>((err, decoded) => {
+      expect(err).toBeNull()
       expect(decoded).toMatchInlineSnapshot(`
         Object {
           "exp": 1589568687,
@@ -35,6 +36,6 @@ describe('the token function', () => {
           "sub": "mocksid",
         }
       `);
-    });
+    }));
   });
 });
