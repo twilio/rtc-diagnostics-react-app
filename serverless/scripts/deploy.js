@@ -2,6 +2,7 @@ const { TwilioServerlessApiClient } = require('@twilio-labs/serverless-api');
 const { getListOfFunctionsAndAssets } = require('@twilio-labs/serverless-api/dist/utils/fs');
 const path = require('path');
 const cli = require('cli-ux').default;
+const constants = require('../constants')
 
 require('dotenv').config();
 
@@ -13,7 +14,7 @@ const serverlessClient = new TwilioServerlessApiClient({
 
 async function deployFunctions() {
   cli.action.start('Creating Api Key');
-  const api_key = await client.newKeys.create({ friendlyName: 'RTC Diagnostics Key' });
+  const api_key = await client.newKeys.create({ friendlyName: constants.API_KEY_NAME });
   cli.action.start('Deploying functions');
   const { functions } = await getListOfFunctionsAndAssets(path.join(__dirname, '..'));
   return serverlessClient.deployProject({
@@ -26,7 +27,7 @@ async function deployFunctions() {
     functionsEnv: 'dev',
     assets: [],
     functions,
-    serviceName: 'rtc-diagnostics',
+    serviceName: constants.SERVICE_NAME,
   });
 }
 
@@ -35,7 +36,7 @@ function createTwiMLApp(domain) {
   return client.applications.create({
     voiceMethod: 'GET',
     voiceUrl: `https://${domain}/twiml/record`,
-    friendlyName: 'Test TwiML App',
+    friendlyName: constants.TWIML_APP_NAME,
   });
 }
 

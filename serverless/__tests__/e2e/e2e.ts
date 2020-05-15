@@ -1,6 +1,9 @@
 import runDeploy from '../../scripts/deploy';
 import runRemove from '../../scripts/remove';
 import jwt from 'jsonwebtoken';
+import constants from '../../constants';
+
+constants.SERVICE_NAME = 'rtc-diagnostics-e2e-test-' + Math.random().toString(36).slice(2);
 
 const { stdout } = require('stdout-stderr');
 const superagent = require('superagent');
@@ -10,15 +13,16 @@ describe('', () => {
 
   beforeAll(async () => {
     stdout.start();
-    await runDeploy()
+    await runDeploy();
     stdout.stop();
     expect(stdout.output).toContain('Deployed to:');
-    appURL = stdout.output.match(/Deployed to: (.+)\n/)[1]
+    appURL = stdout.output.match(/Deployed to: (.+)\n/)[1];
+    console.log(appURL);
   });
 
   afterAll(async () => {
     stdout.start();
-    await runRemove()
+    await runRemove();
     stdout.stop();
 
     expect(superagent.get(`${appURL}/app/token`)).rejects.toEqual(new Error('Not Found'));

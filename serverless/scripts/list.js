@@ -1,13 +1,14 @@
+const constants = require('../constants')
 require('dotenv').config();
 const client = require('twilio')(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
 
-async function findApp(APP_NAME) {
+async function findApp() {
   const services = await client.serverless.services.list();
-  return services.find((service) => service.friendlyName === APP_NAME);
+  return services.find((service) => service.friendlyName === constants.SERVICE_NAME);
 }
 
 async function getAppInfo() {
-  const app = await findApp('rtc-diagnostics');
+  const app = await findApp();
   if (!app) return null;
 
   const appInstance = client.serverless.services(app.sid);
