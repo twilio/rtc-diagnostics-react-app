@@ -12,12 +12,15 @@ const serverlessClient = new TwilioServerlessApiClient({
 });
 
 async function deploy() {
+  cli.action.start('Creating Api Key');
+  const api_key = await client.newKeys.create({ friendlyName: 'RTC Diagnostics Key' });
+  cli.action.start('Deploying functions');
   const { functions } = await getListOfFunctionsAndAssets(path.join(__dirname, '..'));
   return serverlessClient.deployProject({
     env: {
       TWIML_APP_SID: 'foo',
-      API_KEY: process.env.API_KEY,
-      API_SECRET: process.env.API_SECRET,
+      API_KEY: api_key.sid,
+      API_SECRET: api_key.secret,
     },
     pkgJson: {},
     functionsEnv: 'dev',
@@ -27,7 +30,17 @@ async function deploy() {
   });
 }
 
+function createTwiMLApp(domain) {
+  cli.action.start('Registering TwiML App');
+  return client.applications.create({
+    voiceMethod: 'GET',
+    voiceUrl: `https://${domain}/twiml/record`,
+    friendlyName: 'Test TwiML App',
+  });
+}
+
 async function updateVariable(app, TwiMLApp) {
+  cli.action.start('Updating configuration');
   const appInstance = await client.serverless.services(app.serviceSid);
   const environment = await appInstance.environments(app.environmentSid);
   const variables = await environment.variables.list();
@@ -36,17 +49,8 @@ async function updateVariable(app, TwiMLApp) {
 }
 
 (async () => {
-  cli.action.start('Deploying functions');
   const app = await deploy();
-
-  cli.action.start('Registering TwiML App');
-  const TwiMLApp = await client.applications.create({
-    voiceMethod: 'GET',
-    voiceUrl: `https://${app.domain}/record`,
-    friendlyName: 'Test TwiML App',
-  });
-
-  cli.action.start('Updating configuration');
+  const TwiMLApp = await createTwiMLApp(app.domain);
   await updateVariable(app, TwiMLApp);
 
   cli.action.stop();
