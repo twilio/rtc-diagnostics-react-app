@@ -28,7 +28,7 @@
     "test:serverless": "jest -c jest.serverless.config.js",
     "test:ci": "npm run test:ci:app && npm run test:ci:serverless",
     "test:ci:app": "jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage",
-    "test:ci:serverless": "npm run test:ci:app -- -c jest.serverless.config.js",
+    "test:ci:serverless": "jest -c jest.serverless.config.js --ci --runInBand",
     "serverless:deploy": "node serverless/scripts/deploy.js",
     "serverless:remove": "node serverless/scripts/remove.js",
     "serverless:list": "node serverless/scripts/list.js"
