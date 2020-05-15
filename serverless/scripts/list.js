@@ -15,4 +15,8 @@ async function getAppInfo() {
   console.log('https://' + environment.domainName);
 }
 
-getAppInfo();
+if (require.main === module) {
+  getAppInfo();
+} else {
+  module.exports = getAppInfo
+}

@@ -11,7 +11,7 @@ const serverlessClient = new TwilioServerlessApiClient({
   authToken: process.env.AUTH_TOKEN,
 });
 
-async function deploy() {
+async function deployFunctions() {
   cli.action.start('Creating Api Key');
   const api_key = await client.newKeys.create({ friendlyName: 'RTC Diagnostics Key' });
   cli.action.start('Deploying functions');
@@ -31,7 +31,7 @@ async function deploy() {
 }
 
 function createTwiMLApp(domain) {
-  cli.action.start('Registering TwiML App');
+  cli.action.start('Creating TwiML App');
   return client.applications.create({
     voiceMethod: 'GET',
     voiceUrl: `https://${domain}/twiml/record`,
@@ -48,11 +48,17 @@ async function updateVariable(app, TwiMLApp) {
   return await environment.variables(TwimlAppSidVariable.sid).update({ value: TwiMLApp.sid });
 }
 
-(async () => {
-  const app = await deploy();
+async function deploy() {
+  const app = await deployFunctions();
   const TwiMLApp = await createTwiMLApp(app.domain);
   await updateVariable(app, TwiMLApp);
 
   cli.action.stop();
   console.log('Deployed to: https://' + app.domain);
-})();
+}
+
+if (require.main === module) {
+  deploy();
+} else {
+  module.exports = deploy;
+}

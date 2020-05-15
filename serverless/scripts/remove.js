@@ -27,4 +27,8 @@ async function remove() {
   cli.action.stop();
 }
 
-remove();
+if (require.main === module) {
+  remove();
+} else {
+  module.exports = remove
+}
