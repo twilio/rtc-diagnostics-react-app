@@ -26,9 +26,12 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{ts,tsx}",
     "test:serverless": "jest -c jest.serverless.config.js",
-    "test:ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage",
+    "test:ci": "npm run test:ci:app && npm run test:ci:serverless",
+    "test:ci:app": "jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage",
+    "test:ci:serverless": "npm run test:ci:app -- -c jest.serverless.config.js",
     "serverless:deploy": "node serverless/scripts/deploy.js",
-    "serverless:remove": "node serverless/scripts/remove.js"
+    "serverless:remove": "node serverless/scripts/remove.js",
+    "serverless:list": "node serverless/scripts/list.js"
   },
   "eslintConfig": {
     "extends": "react-app",
@@ -49,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.0",
     "husky": "^4.2.5",
     "jest-junit": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
@@ -56,6 +60,8 @@
     "mocha": "^7.1.2",
     "mocha-junit-reporter": "^1.23.3",
     "prettier": "^2.0.5",
+    "stdout-stderr": "^0.1.13",
+    "superagent": "^5.2.2",
     "ts-jest": "^24.3.0"
   },
   "lint-staged": {
