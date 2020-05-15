@@ -25,6 +25,7 @@
     "test": "jest",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{ts,tsx}",
+    "test:serverless": "jest -c jest.serverless.config.js",
     "test:ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage",
     "serverless:deploy": "node serverless/scripts/deploy.js",
     "serverless:remove": "node serverless/scripts/remove.js"
@@ -50,6 +51,7 @@
   "devDependencies": {
     "husky": "^4.2.5",
     "jest-junit": "^10.0.0",
+    "jsonwebtoken": "^8.5.1",
     "lint-staged": "^10.2.2",
     "mocha": "^7.1.2",
     "mocha-junit-reporter": "^1.23.3",
