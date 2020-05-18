@@ -34,7 +34,7 @@ describe('', () => {
     it('should return a valid access token', async () => {
       const { body } = await superagent.get(`${appURL}/app/token`);
       const token = jwt.decode(body.token) as { [key: string]: any };
-      expect(token.grants.identity).toEqual('test-identity');
+      expect(token.grants.identity).toEqual(constants.VOICE_IDENTITY);
       expect(token.grants.voice.outgoing.application_sid).toMatch(/^AP/);
     });
   });
