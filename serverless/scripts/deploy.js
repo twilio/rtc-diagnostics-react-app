@@ -2,7 +2,7 @@ const { TwilioServerlessApiClient } = require('@twilio-labs/serverless-api');
 const { getListOfFunctionsAndAssets } = require('@twilio-labs/serverless-api/dist/utils/fs');
 const path = require('path');
 const cli = require('cli-ux').default;
-const constants = require('../constants')
+const constants = require('../constants');
 
 require('dotenv').config();
 
@@ -19,7 +19,6 @@ async function deployFunctions() {
   const { functions } = await getListOfFunctionsAndAssets(path.join(__dirname, '..'));
   return serverlessClient.deployProject({
     env: {
-      TWIML_APP_SID: 'foo',
       API_KEY: api_key.sid,
       API_SECRET: api_key.secret,
     },
@@ -40,19 +39,17 @@ function createTwiMLApp(domain) {
   });
 }
 
-async function updateVariable(app, TwiMLApp) {
-  cli.action.start('Updating configuration');
+async function createTwiMLAppSidVariable(app, TwiMLApp) {
+  cli.action.start('Setting environment variables');
   const appInstance = await client.serverless.services(app.serviceSid);
   const environment = await appInstance.environments(app.environmentSid);
-  const variables = await environment.variables.list();
-  const TwimlAppSidVariable = variables.find((variable) => variable.key === 'TWIML_APP_SID');
-  return await environment.variables(TwimlAppSidVariable.sid).update({ value: TwiMLApp.sid });
+  return await environment.variables.create({ key: 'TWIML_APP_SID', value: TwiMLApp.sid });
 }
 
 async function deploy() {
   const app = await deployFunctions();
   const TwiMLApp = await createTwiMLApp(app.domain);
-  await updateVariable(app, TwiMLApp);
+  await createTwiMLAppSidVariable(app, TwiMLApp);
 
   cli.action.stop();
   console.log('Deployed to: https://' + app.domain);
