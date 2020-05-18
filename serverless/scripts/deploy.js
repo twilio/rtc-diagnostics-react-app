@@ -21,6 +21,7 @@ async function deployFunctions() {
     env: {
       API_KEY: api_key.sid,
       API_SECRET: api_key.secret,
+      VOICE_IDENTITY: constants.VOICE_IDENTITY
     },
     pkgJson: {},
     functionsEnv: 'dev',

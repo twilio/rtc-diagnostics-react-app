@@ -10,7 +10,7 @@ exports.handler = function (context, event, callback) {
     ttl: 90,
   });
   token.addGrant(voiceGrant);
-  token.identity = 'test-identity';
+  token.identity = context.VOICE_IDENTITY;
 
   callback(null, { token: token.toJwt() });
 };

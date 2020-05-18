@@ -1,11 +1,12 @@
 import { handler } from '../../../functions/app/token';
-import jwt, { VerifyCallback } from 'jsonwebtoken'
+import jwt, { VerifyCallback } from 'jsonwebtoken';
 
 const mockContext = {
   API_KEY: 'mockkey',
   API_SECRET: 'mocksecret',
   ACCOUNT_SID: 'mocksid',
   TWIML_APP_SID: 'mockappsid',
+  VOICE_IDENTITY: 'test-identity',
 };
 
 Date.now = () => 1589568597000;
@@ -18,7 +19,7 @@ describe('the token function', () => {
 
     const token = mockCallback.mock.calls[0][1].token;
     jwt.verify(token, mockContext.API_SECRET, <VerifyCallback>((err, decoded) => {
-      expect(err).toBeNull()
+      expect(err).toBeNull();
       expect(decoded).toMatchInlineSnapshot(`
         Object {
           "exp": 1589568687,
