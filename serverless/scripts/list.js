@@ -1,4 +1,4 @@
-const constants = require('../constants')
+const constants = require('../constants');
 require('dotenv').config();
 const client = require('twilio')(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
 
@@ -19,5 +19,5 @@ async function getAppInfo() {
 if (require.main === module) {
   getAppInfo();
 } else {
-  module.exports = getAppInfo
+  module.exports = getAppInfo;
 }
