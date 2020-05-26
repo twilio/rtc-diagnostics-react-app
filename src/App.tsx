@@ -33,7 +33,7 @@ function App() {
     <div>
       <CssBaseline />
       <AppBar position="static">
-        <Toolbar>Hello</Toolbar>
+        <Toolbar>Twilio Network Test</Toolbar>
       </AppBar>
       <Container className={classes.container}>
         <Grid container spacing={3}>
@@ -42,7 +42,7 @@ function App() {
               <NetworkTestWidget
                 token={token}
                 iceServers={turnCredentials?.iceServers}
-                onComplete={(results) => setResults(results)}
+                onResult={(results) => setResults(results)}
               />
             </Paper>
           </Grid>
