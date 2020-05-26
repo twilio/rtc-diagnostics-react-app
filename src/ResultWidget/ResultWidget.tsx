@@ -36,7 +36,8 @@ const rows: Row[] = [
     label: 'Jitter min/avg/max',
     getValue: (test: any) => {
       const jitter = test.results.preflight.stats.jitter;
-      return `${round(jitter.min)}/${round(jitter.average)}/${round(jitter.max)}`;
+      const { min, average, max } = jitter;
+      return `${round(min)} / ${round(average)} / ${round(max)}`;
     },
   },
   {
@@ -62,7 +63,7 @@ const rows: Row[] = [
 ];
 
 export default function ResultWidget(props: any) {
-  const { results } = { results: mockResults } as any;
+  const { results } = props; //{ results: mockResults } as any;
 
   if (!results) return null;
 
@@ -73,7 +74,7 @@ export default function ResultWidget(props: any) {
           <TableRow>
             <TableCell></TableCell>
             {results.map((result: any) => (
-              <TableCell>{getRegionName(result.region)}</TableCell>
+              <TableCell key={result.region}>{getRegionName(result.region)}</TableCell>
             ))}
           </TableRow>
         </TableHead>

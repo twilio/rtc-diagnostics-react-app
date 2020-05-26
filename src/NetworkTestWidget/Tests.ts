@@ -1,4 +1,4 @@
-import { testNetwork, testBitrate, BitrateTest, NetworkTest } from '@twilio/rtc-diagnostics';
+import { testBitrate, BitrateTest } from '@twilio/rtc-diagnostics';
 import { Device, Connection } from 'twilio-client';
 import { PreflightTest } from 'twilio-client/es5/twilio/preflight/preflight';
 import { replaceRegions, Region } from '../utils';
@@ -89,7 +89,7 @@ export function createTestSuite(token: string, iceServers: RTCIceServer[], regio
     edge: region ? region : 'roaming',
   };
 
-  return <TestSuite>{
+  return {
     region: region ? region : 'global',
     tests: [
       {
@@ -103,5 +103,5 @@ export function createTestSuite(token: string, iceServers: RTCIceServer[], regio
         start: preflightTestRunner(token, updatedPreflightOptions),
       },
     ],
-  };
+  } as TestSuite;
 }

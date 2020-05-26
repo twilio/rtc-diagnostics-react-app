@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Button, LinearProgress, makeStyles, Typography, Grid } from '@material-ui/core';
-import { createTestSuite } from './Tests';
-import { replaceRegions, getRegionName, Region } from '../utils';
+import React from 'react';
+import { Button, LinearProgress, makeStyles, Typography } from '@material-ui/core';
+import { getRegionName, Region } from '../utils';
+import useTestRunner from './useTestRunner';
 
 const useStyles = makeStyles({
   progressContainer: {
@@ -15,59 +15,25 @@ const useStyles = makeStyles({
 interface NetworkTestWidgetProps {
   token?: string;
   iceServers?: RTCIceServer[];
-  onComplete: (results: any) => void;
+  onResult: (results: any) => void;
 }
 
-const regions = ['tokyo', 'ashburn', 'sydney'];
+const regions: Region[] = ['tokyo', 'ashburn', 'sydney'];
 
-export default function NetworkTestWidget({ token, iceServers, onComplete }: NetworkTestWidgetProps) {
-  const classes = useStyles();
-
-  const [isRunning, setIsRunning] = useState(false);
-  const [activeTest, setActiveTest] = useState('');
-  const [progress, setProgress] = useState(0);
-  const [results, setResults] = useState<any[]>([]);
-  const [activeRegion, setActiveRegion] = useState<Region>();
+export default function NetworkTestWidget({ token, iceServers, onResult }: NetworkTestWidgetProps) {
+  const { isRunning, activeTest, progress, results, activeRegion, startTests } = useTestRunner();
 
   async function startTest() {
-    setIsRunning(true);
-    const r: any[] = [];
-
-    const testSuites = regions.map((region) => createTestSuite(token!, iceServers!, region));
-
-    for (const suite of testSuites) {
-      const testResults: any = {
-        region: suite.region,
-        results: {},
-      };
-
-      setActiveRegion(suite.region);
-
-      for (const test of suite.tests) {
-        setProgress(((suite.tests.indexOf(test) + 0.2) / suite.tests.length) * 100);
-        setActiveTest(test.name);
-        const result = await test.start();
-        testResults.results[test.kind] = result;
-        setProgress(((suite.tests.indexOf(test) + 1) / suite.tests.length) * 100);
-      }
-
-      r.push(testResults);
-    }
-
-    setActiveTest('');
-    setActiveRegion(undefined);
-    setIsRunning(false);
-    setResults(r);
-    onComplete(r);
+    const testResults = await startTests(token!, iceServers!, regions);
+    onResult(testResults);
   }
 
-  console.log(results);
+  const classes = useStyles();
   const ready = Boolean(token && iceServers);
 
   return (
     <div>
       <Typography variant="h4">Network Test</Typography>
-
       {isRunning && (
         <div className={classes.progressContainer}>
           <Typography>Active Test: {activeTest}</Typography>
@@ -75,7 +41,6 @@ export default function NetworkTestWidget({ token, iceServers, onComplete }: Net
           <LinearProgress variant="determinate" value={progress} />
         </div>
       )}
-
       <Button onClick={startTest} variant="contained" color="primary" disabled={!ready || isRunning}>
         Start
       </Button>
