@@ -1,36 +1,79 @@
 import React from 'react';
-import { Paper, TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
+import {
+  Paper,
+  TableContainer,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Tooltip,
+  makeStyles,
+} from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
 
 import mockResults from './mockResults';
 import { getRegionName } from '../utils';
+
+enum TestColors {
+  good = 'green',
+  warn = 'yellow',
+  bad = 'red',
+}
+
+const useStyles = makeStyles({
+  tableCellContent: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    '& svg': {
+      fill: '#666',
+    },
+  },
+  [TestColors.good]: {
+    background: '#8f8',
+  },
+  [TestColors.warn]: {
+    background: '#ff8',
+  },
+  [TestColors.bad]: {
+    background: '#f88',
+  },
+});
 
 const round = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
 
 interface Row {
   label: string;
   getValue(report: any): string | number;
+  getColor?(report: any): TestColors;
 }
 
 const rows: Row[] = [
   {
     label: 'Signaling servers reachable',
     getValue: (test: any) => 'Yes',
+    getColor: (test: any) => TestColors.good,
   },
   {
     label: 'Insights Servers Reachable',
     getValue: (test: any) => 'Yes',
+    getColor: (test: any) => TestColors.good,
   },
   {
     label: 'Media Servers Reachable',
     getValue: (test: any) => 'Yes',
+    getColor: (test: any) => TestColors.good,
   },
   {
     label: 'Time To Media',
-    getValue: (test: any) => 'foo',
+    getValue: (test: any) => 'N/A',
+    getColor: (test: any) => TestColors.good,
   },
   {
     label: 'Time to Connect',
-    getValue: (test: any) => 'foo',
+    getValue: (test: any) => test.results.preflight.networkTiming.peerConnection.duration,
+    getColor: (test: any) => TestColors.good,
   },
   {
     label: 'Jitter min/avg/max',
@@ -39,22 +82,27 @@ const rows: Row[] = [
       const { min, average, max } = jitter;
       return `${round(min)} / ${round(average)} / ${round(max)}`;
     },
+    getColor: (test: any) => (test.results.preflight.stats.jitter.average < 30 ? TestColors.good : TestColors.bad),
   },
   {
     label: 'Latency (ms)',
     getValue: (test: any) => test.results.preflight.stats.rtt.average,
+    getColor: (test: any) => (test.results.preflight.stats.rtt.average < 200 ? TestColors.good : TestColors.bad),
   },
   {
     label: 'Packet Loss',
-    getValue: (test: any) => test.results.preflight.totals.packetsLostFraction,
+    getValue: (test: any) => `${test.results.preflight.totals.packetsLostFraction}%`,
+    getColor: (test: any) => (test.results.preflight.totals.packetsLostFraction < 3 ? TestColors.good : TestColors.bad),
   },
   {
     label: 'Bandwidth (kbps)',
     getValue: (test: any) => test.results.bitrate.averageBitrate,
+    getColor: (test: any) => TestColors.good,
   },
   {
     label: 'Expected Audio Quality (MOS)',
     getValue: (test: any) => test.results.preflight.stats.mos.average,
+    getColor: (test: any) => TestColors.good,
   },
   {
     label: 'Call SID',
@@ -63,7 +111,8 @@ const rows: Row[] = [
 ];
 
 export default function ResultWidget(props: any) {
-  const { results } = props; //{ results: mockResults } as any;
+  const { results } = { results: mockResults } as any;
+  const classes = useStyles();
 
   if (!results) return null;
 
@@ -82,11 +131,31 @@ export default function ResultWidget(props: any) {
           {rows.map((row) => {
             return (
               <TableRow key={row.label}>
-                <TableCell>{row.label}</TableCell>
+                <TableCell>
+                  <div className={classes.tableCellContent}>
+                    {row.label}
+                    <Tooltip title="More information can be displayed here." placement="top">
+                      <InfoIcon />
+                    </Tooltip>
+                  </div>
+                </TableCell>
                 {results.map((result: any) => {
                   const value = row.getValue(result);
                   const displayValue = typeof value === 'number' ? round(value) : value;
-                  return <TableCell key={result.region}>{displayValue}</TableCell>;
+                  const color = row.getColor?.(result);
+                  const className = color ? classes[color!] : undefined;
+                  return (
+                    <TableCell key={result.region} className={className}>
+                      <div className={classes.tableCellContent}>
+                        {displayValue}
+                        {color === TestColors.bad && (
+                          <Tooltip title="More information can be displayed here." placement="top">
+                            <InfoIcon />
+                          </Tooltip>
+                        )}
+                      </div>
+                    </TableCell>
+                  );
                 })}
               </TableRow>
             );

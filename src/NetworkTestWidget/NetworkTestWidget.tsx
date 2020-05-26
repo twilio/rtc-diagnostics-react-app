@@ -38,10 +38,10 @@ export default function NetworkTestWidget({ token, iceServers, onResult }: Netwo
         <div className={classes.progressContainer}>
           <Typography>Active Test: {activeTest}</Typography>
           <Typography>Active Region: {getRegionName(activeRegion!)}</Typography>
-          <LinearProgress variant="determinate" value={progress} />
+          <LinearProgress variant="determinate" value={progress} color="secondary" />
         </div>
       )}
-      <Button onClick={startTest} variant="contained" color="primary" disabled={!ready || isRunning}>
+      <Button onClick={startTest} variant="contained" color="secondary" disabled={!ready || isRunning}>
         Start
       </Button>
     </div>

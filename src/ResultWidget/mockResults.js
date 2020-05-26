@@ -280,7 +280,7 @@ export default [
         ],
         selectedEdge: 'tokyo',
         stats: {
-          jitter: { average: 3.5454545454545454, max: 37, min: 0 },
+          jitter: { average: 30.5454545454545454, max: 37, min: 0 },
           mos: { average: 4.3093051153316315, max: 4.335752599619776, min: 4.1102772938997765 },
           rtt: { average: 161.0909090909091, max: 167, min: 159 },
         },
@@ -289,7 +289,7 @@ export default [
           bytesReceived: 57360,
           bytesSent: 83680,
           packetsLost: 0,
-          packetsLostFraction: 0,
+          packetsLostFraction: 4,
           packetsReceived: 359,
           packetsSent: 523,
         },

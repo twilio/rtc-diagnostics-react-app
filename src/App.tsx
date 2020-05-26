@@ -33,7 +33,9 @@ function App() {
     <div>
       <CssBaseline />
       <AppBar position="static">
-        <Toolbar>Twilio Network Test</Toolbar>
+        <Toolbar>
+          <img src="twilio-logo.png" style={{ maxHeight: '64px' }}></img>
+        </Toolbar>
       </AppBar>
       <Container className={classes.container}>
         <Grid container spacing={3}>
