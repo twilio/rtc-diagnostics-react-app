@@ -43,10 +43,10 @@ export interface TestResults {
   };
 }
 
-export enum TestColors {
-  good = 'green',
-  warn = 'yellow',
-  bad = 'red',
+export enum TestWarnings {
+  none = '',
+  warn = 'warn',
+  error = 'error',
 }
 
 export type Region =

@@ -37,7 +37,7 @@ export default function NetworkTestWidget({ token, iceServers, onComplete }: Net
       <Typography variant="h4" style={{ marginBottom: '0.5em' }}>
         Connectivity and Bandwidth Tests
       </Typography>
-      {isRunning && (
+      {(isRunning || results.length > 0) && (
         <div>
           {regions.map((region, i) => (
             <RegionResult key={region} region={region} isActive={activeRegion === region} result={results[i]} />

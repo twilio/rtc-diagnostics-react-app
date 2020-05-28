@@ -3,10 +3,13 @@ import { Typography, LinearProgress, makeStyles, Tooltip } from '@material-ui/co
 import clsx from 'clsx';
 
 import InfoIcon from '@material-ui/icons/Info';
-// import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
-// import WarningIcon from '@material-ui/icons/Warning';
+import WarningIcon from '@material-ui/icons/Warning';
 import { getRegionName } from '../utils';
+import { Region, TestResults } from '../types';
+
+import { rows } from '../ResultWidget/ResultWidget';
 
 const useStyles = makeStyles({
   container: {
@@ -39,9 +42,18 @@ const useStyles = makeStyles({
   },
 });
 
-export default function RegionResult(props: any) {
+interface RegionResultProps {
+  region: Region;
+  isActive: boolean;
+  result?: TestResults;
+}
+
+export default function RegionResult(props: RegionResultProps) {
   const { region, isActive, result } = props;
   const classes = useStyles();
+
+  const hasError = Object.values(result?.errors ?? {}).length > 0;
+  const hasWarning = result && rows.some((row) => row.getWarning?.(result));
 
   return (
     <div className={clsx(classes.container, { [classes.pendingTest]: !isActive && !result })}>
@@ -52,7 +64,9 @@ export default function RegionResult(props: any) {
       <div className={classes.iconContainer}>
         {result && (
           <>
-            <CheckIcon style={{ fill: '#0c0' }} />
+            {hasError && <CloseIcon style={{ fill: '#d00' }} />}
+            {!hasError && hasWarning && <WarningIcon style={{ fill: '#dd0' }} />}
+            {!hasError && !hasWarning && <CheckIcon style={{ fill: '#090' }} />}
             <Tooltip title="More information can be displayed here." placement="top">
               <InfoIcon />
             </Tooltip>

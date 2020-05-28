@@ -14,7 +14,7 @@ import InfoIcon from '@material-ui/icons/Info';
 
 import mockResults from './mockResults';
 import { getRegionName } from '../utils';
-import { TestColors } from '../types';
+import { TestWarnings, TestResults } from '../types';
 
 const useStyles = makeStyles({
   tableCellContent: {
@@ -25,13 +25,10 @@ const useStyles = makeStyles({
       fill: '#666',
     },
   },
-  [TestColors.good]: {
-    background: '#fff',
-  },
-  [TestColors.warn]: {
+  [TestWarnings.warn]: {
     background: '#ff8',
   },
-  [TestColors.bad]: {
+  [TestWarnings.error]: {
     background: '#f88',
   },
 });
@@ -40,71 +37,76 @@ const round = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
 
 interface Row {
   label: string;
-  getValue(report: any): string | number;
-  getColor?(report: any): TestColors;
+  getValue(testResults: TestResults): string | number | undefined;
+  getWarning?(testResults: TestResults): TestWarnings;
 }
 
-const rows: Row[] = [
+export const rows: Row[] = [
   {
     label: 'Signaling servers reachable',
-    getValue: (test: any) => 'Yes',
-    getColor: (test: any) => TestColors.good,
+    getValue: (testResults: TestResults) => 'Yes',
+    getWarning: (testResults: TestResults) => TestWarnings.none,
   },
   {
     label: 'Media Servers Reachable',
-    getValue: (test: any) => 'Yes',
-    getColor: (test: any) => TestColors.good,
+    getValue: (testResults: TestResults) => 'Yes',
+    getWarning: (testResults: TestResults) => TestWarnings.none,
   },
   {
     label: 'Time To Connect',
-    getValue: (test: any) => 'N/A',
-    getColor: (test: any) => TestColors.good,
+    getValue: (testResults: TestResults) => 'N/A',
+    getWarning: (testResults: TestResults) => TestWarnings.none,
   },
   {
     label: 'Time to Media',
-    getValue: (test: any) => test.results.preflight.networkTiming.peerConnection.duration,
-    getColor: (test: any) => TestColors.good,
+    getValue: (testResults: TestResults) => testResults?.results?.preflight?.networkTiming?.peerConnection?.duration,
+    getWarning: (testResults: TestResults) => TestWarnings.none,
   },
   {
     label: 'Jitter min/avg/max',
-    getValue: (test: any) => {
-      const jitter = test.results.preflight.stats.jitter;
-      const { min, average, max } = jitter;
-      return `${round(min)} / ${round(average)} / ${round(max)}`;
+    getValue: (testResults: TestResults) => {
+      const jitter = testResults?.results?.preflight?.stats?.jitter;
+      if (jitter) {
+        const { min, average, max } = jitter;
+        return `${round(min)} / ${round(average)} / ${round(max)}`;
+      }
     },
-    getColor: (test: any) => (test.results.preflight.stats.jitter.average < 30 ? TestColors.good : TestColors.bad),
+    getWarning: (testResults: TestResults) =>
+      (testResults?.results?.preflight?.stats?.jitter?.average ?? 0) < 30 ? TestWarnings.none : TestWarnings.error,
   },
   {
     label: 'Latency (ms)',
-    getValue: (test: any) => test.results.preflight.stats.rtt.average,
-    getColor: (test: any) => (test.results.preflight.stats.rtt.average < 200 ? TestColors.good : TestColors.bad),
+    getValue: (testResults: TestResults) => testResults?.results?.preflight?.stats?.rtt?.average,
+    getWarning: (testResults: TestResults) =>
+      (testResults?.results?.preflight?.stats?.rtt?.average ?? 0) < 200 ? TestWarnings.none : TestWarnings.error,
   },
   {
     label: 'Packet Loss',
-    getValue: (test: any) => `${test.results.preflight.totals.packetsLostFraction}%`,
-    getColor: (test: any) => (test.results.preflight.totals.packetsLostFraction < 3 ? TestColors.good : TestColors.bad),
+    getValue: (testResults: TestResults) => `${testResults?.results?.preflight?.totals?.packetsLostFraction}%`,
+    getWarning: (testResults: TestResults) =>
+      (testResults?.results?.preflight?.totals?.packetsLostFraction ?? 0) < 3 ? TestWarnings.none : TestWarnings.error,
   },
   {
     label: 'Bandwidth (kbps)',
-    getValue: (test: any) => test.results.bitrate.averageBitrate,
-    getColor: (test: any) => {
-      if (test.results.bitrate.averageBitrate < 40) {
-        return TestColors.bad;
+    getValue: (testResults: TestResults) => testResults?.results?.bitrate?.averageBitrate,
+    getWarning: (testResults: TestResults) => {
+      if ((testResults?.results?.bitrate?.averageBitrate ?? 0) < 40) {
+        return TestWarnings.error;
       }
-      if (test.results.bitrate.averageBitrate < 100) {
-        return TestColors.warn;
+      if ((testResults?.results?.bitrate?.averageBitrate ?? 0) < 100) {
+        return TestWarnings.warn;
       }
-      return TestColors.good;
+      return TestWarnings.none;
     },
   },
   {
     label: 'Expected Audio Quality (MOS)',
-    getValue: (test: any) => test.results.preflight.stats.mos.average,
-    getColor: (test: any) => TestColors.good,
+    getValue: (testResults: TestResults) => testResults?.results?.preflight?.stats?.mos?.average,
+    getWarning: (testResults: TestResults) => TestWarnings.none,
   },
   {
     label: 'Call SID',
-    getValue: (test: any) => test.results.preflight.callSid,
+    getValue: (testResults: TestResults) => testResults?.results?.preflight?.callSid,
   },
 ];
 
@@ -141,13 +143,13 @@ export default function ResultWidget(props: any) {
                 {results.map((result: any) => {
                   const value = row.getValue(result);
                   const displayValue = typeof value === 'number' ? round(value) : value;
-                  const color = row.getColor?.(result);
+                  const color = row.getWarning?.(result);
                   const className = color ? classes[color!] : undefined;
                   return (
                     <TableCell key={result.region} className={className}>
                       <div className={classes.tableCellContent}>
                         {displayValue}
-                        {(color === TestColors.bad || color === TestColors.warn) && (
+                        {(color === TestWarnings.error || color === TestWarnings.warn) && (
                           <Tooltip title="More information can be displayed here." placement="top">
                             <InfoIcon />
                           </Tooltip>
