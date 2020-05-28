@@ -31,7 +31,7 @@ const useStyles = makeStyles({
     },
   },
   [TestColors.good]: {
-    background: '#8f8',
+    background: '#fff',
   },
   [TestColors.warn]: {
     background: '#ff8',
@@ -56,22 +56,17 @@ const rows: Row[] = [
     getColor: (test: any) => TestColors.good,
   },
   {
-    label: 'Insights Servers Reachable',
-    getValue: (test: any) => 'Yes',
-    getColor: (test: any) => TestColors.good,
-  },
-  {
     label: 'Media Servers Reachable',
     getValue: (test: any) => 'Yes',
     getColor: (test: any) => TestColors.good,
   },
   {
-    label: 'Time To Media',
+    label: 'Time To Connect',
     getValue: (test: any) => 'N/A',
     getColor: (test: any) => TestColors.good,
   },
   {
-    label: 'Time to Connect',
+    label: 'Time to Media',
     getValue: (test: any) => test.results.preflight.networkTiming.peerConnection.duration,
     getColor: (test: any) => TestColors.good,
   },
@@ -97,7 +92,15 @@ const rows: Row[] = [
   {
     label: 'Bandwidth (kbps)',
     getValue: (test: any) => test.results.bitrate.averageBitrate,
-    getColor: (test: any) => TestColors.good,
+    getColor: (test: any) => {
+      if (test.results.bitrate.averageBitrate < 40) {
+        return TestColors.bad;
+      }
+      if (test.results.bitrate.averageBitrate < 100) {
+        return TestColors.warn;
+      }
+      return TestColors.good;
+    },
   },
   {
     label: 'Expected Audio Quality (MOS)',
@@ -111,7 +114,8 @@ const rows: Row[] = [
 ];
 
 export default function ResultWidget(props: any) {
-  const { results } = { results: mockResults } as any;
+  const results = mockResults;
+  // const { results } = props;
   const classes = useStyles();
 
   if (!results) return null;
@@ -148,7 +152,7 @@ export default function ResultWidget(props: any) {
                     <TableCell key={result.region} className={className}>
                       <div className={classes.tableCellContent}>
                         {displayValue}
-                        {color === TestColors.bad && (
+                        {(color === TestColors.bad || color === TestColors.warn) && (
                           <Tooltip title="More information can be displayed here." placement="top">
                             <InfoIcon />
                           </Tooltip>

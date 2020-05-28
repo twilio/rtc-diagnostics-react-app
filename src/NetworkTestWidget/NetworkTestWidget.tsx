@@ -33,7 +33,9 @@ export default function NetworkTestWidget({ token, iceServers, onResult }: Netwo
 
   return (
     <div>
-      <Typography variant="h4">Network Test</Typography>
+      <Typography variant="h4" style={{ marginBottom: '0.5em' }}>
+        Network Test
+      </Typography>
       {isRunning && (
         <div className={classes.progressContainer}>
           <Typography>Active Test: {activeTest}</Typography>

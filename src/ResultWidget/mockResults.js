@@ -3,7 +3,7 @@ export default [
     region: 'tokyo',
     results: {
       bitrate: {
-        averageBitrate: 1414.8064934378265,
+        averageBitrate: 30.8064934378265,
         didPass: true,
         errors: [],
         networkTiming: {
@@ -606,7 +606,7 @@ export default [
     region: 'sydney',
     results: {
       bitrate: {
-        averageBitrate: 899.223863590713,
+        averageBitrate: 90.223863590713,
         didPass: true,
         errors: [],
         networkTiming: {

@@ -5,9 +5,8 @@ import { replaceRegions, Region } from '../utils';
 import { DiagnosticError } from '@twilio/rtc-diagnostics/es5/lib/errors';
 
 const preflightOptions: PreflightTest.Options = {
-  codecPreferences: [Connection.Codec.PCMU, Connection.Codec.Opus],
+  codecPreferences: [Connection.Codec.Opus, Connection.Codec.PCMU],
   debug: false,
-  edge: 'sydney',
   signalingTimeoutMs: 10000,
 };
 
