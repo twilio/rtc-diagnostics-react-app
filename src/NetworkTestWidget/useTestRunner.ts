@@ -12,7 +12,6 @@ export default function useTestRunner() {
   const startTests = useCallback(async (token: string, iceServers: RTCIceServer[], regions: Region[]) => {
     setIsRunning(true);
     const testSuites = regions.map((region) => createTestSuite(token, iceServers, region));
-    const r: any[] = [];
 
     for (const suite of testSuites) {
       const testResults: any = {
@@ -30,14 +29,12 @@ export default function useTestRunner() {
         setProgress(((suite.tests.indexOf(test) + 1) / suite.tests.length) * 100);
       }
 
-      r.push(testResults);
+      setResults((prevResults) => [...prevResults, testResults]);
     }
 
     setActiveTest('');
     setActiveRegion(undefined);
     setIsRunning(false);
-    setResults(r);
-    return r;
   }, []);
 
   return {

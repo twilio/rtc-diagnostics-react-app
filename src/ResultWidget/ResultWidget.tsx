@@ -114,8 +114,8 @@ const rows: Row[] = [
 ];
 
 export default function ResultWidget(props: any) {
-  const results = mockResults;
-  // const { results } = props;
+  // const results = mockResults;
+  const { results } = props;
   const classes = useStyles();
 
   if (!results) return null;

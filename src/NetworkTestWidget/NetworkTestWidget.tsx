@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, LinearProgress, makeStyles, Typography } from '@material-ui/core';
 import { getRegionName, Region } from '../utils';
 import useTestRunner from './useTestRunner';
+import RegionResult from './RegionResult';
 
 const useStyles = makeStyles({
   progressContainer: {
@@ -25,7 +26,7 @@ export default function NetworkTestWidget({ token, iceServers, onResult }: Netwo
 
   async function startTest() {
     const testResults = await startTests(token!, iceServers!, regions);
-    onResult(testResults);
+    // onResult(testResults);
   }
 
   const classes = useStyles();
@@ -34,13 +35,13 @@ export default function NetworkTestWidget({ token, iceServers, onResult }: Netwo
   return (
     <div>
       <Typography variant="h4" style={{ marginBottom: '0.5em' }}>
-        Network Test
+        Connectivity and Bandwidth Tests
       </Typography>
       {isRunning && (
-        <div className={classes.progressContainer}>
-          <Typography>Active Test: {activeTest}</Typography>
-          <Typography>Active Region: {getRegionName(activeRegion!)}</Typography>
-          <LinearProgress variant="determinate" value={progress} color="secondary" />
+        <div>
+          {regions.map((region, i) => (
+            <RegionResult key={region} region={region} isActive={activeRegion === region} result={results[i]} />
+          ))}
         </div>
       )}
       <Button onClick={startTest} variant="contained" color="secondary" disabled={!ready || isRunning}>
