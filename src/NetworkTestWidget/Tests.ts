@@ -3,7 +3,6 @@ import { Device, Connection } from 'twilio-client';
 import { PreflightTest } from 'twilio-client/es5/twilio/preflight/preflight';
 import { replaceRegions } from '../utils';
 import { Region, TestKind, TestSuite } from '../types';
-import { DiagnosticError } from '@twilio/rtc-diagnostics/es5/lib/errors';
 
 const preflightOptions: PreflightTest.Options = {
   codecPreferences: [Connection.Codec.Opus, Connection.Codec.PCMU],

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, LinearProgress, makeStyles, Typography } from '@material-ui/core';
-import { getRegionName } from '../utils';
+import { Button, makeStyles, Typography } from '@material-ui/core';
 import useTestRunner from './useTestRunner';
 import RegionResult from './RegionResult';
 import { Region } from '../types';
@@ -17,17 +16,17 @@ const useStyles = makeStyles({
 interface NetworkTestWidgetProps {
   token?: string;
   iceServers?: RTCIceServer[];
-  onResult: (results: any) => void;
+  onComplete: (results: any) => void;
 }
 
 const regions: Region[] = ['tokyo', 'ashburn', 'sydney'];
 
-export default function NetworkTestWidget({ token, iceServers, onResult }: NetworkTestWidgetProps) {
-  const { isRunning, activeTest, results, activeRegion, startTests } = useTestRunner();
+export default function NetworkTestWidget({ token, iceServers, onComplete }: NetworkTestWidgetProps) {
+  const { isRunning, results, activeRegion, startTests } = useTestRunner();
 
   async function startTest() {
     const testResults = await startTests(token!, iceServers!, regions);
-    // onResult(testResults);
+    onComplete(testResults);
   }
 
   const classes = useStyles();

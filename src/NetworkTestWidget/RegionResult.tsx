@@ -3,9 +3,9 @@ import { Typography, LinearProgress, makeStyles, Tooltip } from '@material-ui/co
 import clsx from 'clsx';
 
 import InfoIcon from '@material-ui/icons/Info';
-import CloseIcon from '@material-ui/icons/Close';
+// import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
-import WarningIcon from '@material-ui/icons/Warning';
+// import WarningIcon from '@material-ui/icons/Warning';
 import { getRegionName } from '../utils';
 
 const useStyles = makeStyles({

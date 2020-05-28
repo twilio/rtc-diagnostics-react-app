@@ -44,7 +44,7 @@ function App() {
               <NetworkTestWidget
                 token={token}
                 iceServers={turnCredentials?.iceServers}
-                onResult={(results) => setResults(results)}
+                onComplete={(results) => setResults(results)}
               />
             </Paper>
           </Grid>
