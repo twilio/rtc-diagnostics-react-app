@@ -1,8 +1,10 @@
-function replaceRegion(url: string, region: string) {
+import { Region } from './types';
+
+function replaceRegion(url: string, region: Region) {
   return url.replace('global', region);
 }
 
-export function replaceRegions(region: string, iceServers: RTCIceServer[]) {
+export function replaceRegions(region: Region, iceServers: RTCIceServer[]) {
   return iceServers.map((server: RTCIceServer) => {
     const result = {
       ...server,
@@ -22,21 +24,6 @@ export function replaceRegions(region: string, iceServers: RTCIceServer[]) {
     return result;
   });
 }
-
-export type Region =
-  | 'sydney'
-  | 'sao-paolo'
-  | 'dublin'
-  | 'frankfurt'
-  | 'tokyo'
-  | 'singapore'
-  | 'ashburn'
-  | 'roaming'
-  | 'ashburn-ix'
-  | 'san-jose-ix'
-  | 'london-ix'
-  | 'frankfurt-ix'
-  | 'singapore-ix';
 
 const regionMap = {
   sydney: 'Sydney',

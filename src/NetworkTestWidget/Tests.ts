@@ -1,7 +1,8 @@
 import { testBitrate, BitrateTest } from '@twilio/rtc-diagnostics';
 import { Device, Connection } from 'twilio-client';
 import { PreflightTest } from 'twilio-client/es5/twilio/preflight/preflight';
-import { replaceRegions, Region } from '../utils';
+import { replaceRegions } from '../utils';
+import { Region, TestKind, TestSuite } from '../types';
 import { DiagnosticError } from '@twilio/rtc-diagnostics/es5/lib/errors';
 
 const preflightOptions: PreflightTest.Options = {
@@ -63,24 +64,7 @@ function bitrateTestRunner(iceServers: BitrateTest.Options['iceServers']) {
   };
 }
 
-interface BitrateTestRunner {
-  name: string;
-  kind: 'bitrate';
-  start(): Promise<BitrateTest.Report | DiagnosticError>;
-}
-
-interface PreflightTestRunner {
-  name: string;
-  kind: 'preflight';
-  start(): Promise<any>;
-}
-
-interface TestSuite {
-  region: Region;
-  tests: [BitrateTestRunner, PreflightTestRunner];
-}
-
-export function createTestSuite(token: string, iceServers: RTCIceServer[], region?: string) {
+export function createTestSuite(token: string, iceServers: RTCIceServer[], region?: Region) {
   const updatedIceServer = region ? replaceRegions(region, iceServers) : iceServers;
 
   const updatedPreflightOptions = {
@@ -93,12 +77,12 @@ export function createTestSuite(token: string, iceServers: RTCIceServer[], regio
     tests: [
       {
         name: 'Bitrate Test',
-        kind: 'bitrate',
+        kind: TestKind.bitrate,
         start: bitrateTestRunner(updatedIceServer),
       },
       {
         name: 'Preflight Test',
-        kind: 'preflight',
+        kind: TestKind.preflight,
         start: preflightTestRunner(token, updatedPreflightOptions),
       },
     ],

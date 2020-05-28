@@ -11,12 +11,12 @@ import { getRegionName } from '../utils';
 const useStyles = makeStyles({
   container: {
     border: '1px solid #ddd',
-    borderRadius: '2px',
+    borderRadius: '3px',
     display: 'flex',
     padding: '0.8em',
     background: '#eee',
     alignItems: 'center',
-    margin: '0.5em',
+    margin: '1em',
     justifyContent: 'space-between',
   },
   progressContainer: {

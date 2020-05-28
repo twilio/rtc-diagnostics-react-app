@@ -14,12 +14,7 @@ import InfoIcon from '@material-ui/icons/Info';
 
 import mockResults from './mockResults';
 import { getRegionName } from '../utils';
-
-enum TestColors {
-  good = 'green',
-  warn = 'yellow',
-  bad = 'red',
-}
+import { TestColors } from '../types';
 
 const useStyles = makeStyles({
   tableCellContent: {

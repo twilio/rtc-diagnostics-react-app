@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button, LinearProgress, makeStyles, Typography } from '@material-ui/core';
-import { getRegionName, Region } from '../utils';
+import { getRegionName } from '../utils';
 import useTestRunner from './useTestRunner';
 import RegionResult from './RegionResult';
+import { Region } from '../types';
 
 const useStyles = makeStyles({
   progressContainer: {
@@ -22,7 +23,7 @@ interface NetworkTestWidgetProps {
 const regions: Region[] = ['tokyo', 'ashburn', 'sydney'];
 
 export default function NetworkTestWidget({ token, iceServers, onResult }: NetworkTestWidgetProps) {
-  const { isRunning, activeTest, progress, results, activeRegion, startTests } = useTestRunner();
+  const { isRunning, activeTest, results, activeRegion, startTests } = useTestRunner();
 
   async function startTest() {
     const testResults = await startTests(token!, iceServers!, regions);

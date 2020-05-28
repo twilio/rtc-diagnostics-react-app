@@ -5,12 +5,6 @@ import App from './App';
 import { ThemeProvider } from '@material-ui/core';
 import theme from './theme';
 
-declare global {
-  interface RTCIceServer {
-    url: string;
-  }
-}
-
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
