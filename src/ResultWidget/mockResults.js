@@ -586,7 +586,7 @@ export default [
         selectedEdge: 'ashburn',
         stats: {
           jitter: { average: 3.727272727272727, max: 39, min: 0 },
-          mos: { average: 4.406149102912324, max: 4.410116624740652, min: 4.369376044364701 },
+          mos: { average: 3.206149102912324, max: 4.410116624740652, min: 4.369376044364701 },
           rtt: { average: 51.18181818181818, max: 52, min: 51 },
         },
         testTiming: { start: 1590466179644, end: 1590466192780, duration: 13136 },

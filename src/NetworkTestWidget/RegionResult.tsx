@@ -9,7 +9,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 import { getRegionName } from '../utils';
 import { Region, TestResults } from '../types';
 
-import { rows } from '../ResultWidget/ResultWidget';
+import { rows } from '../ResultWidget/rows';
 
 const useStyles = makeStyles({
   container: {
@@ -65,7 +65,7 @@ export default function RegionResult(props: RegionResultProps) {
         {result && (
           <>
             {hasError && <CloseIcon style={{ fill: '#d00' }} />}
-            {!hasError && hasWarning && <WarningIcon style={{ fill: '#dd0' }} />}
+            {!hasError && hasWarning && <WarningIcon style={{ fill: '#ff0' }} />}
             {!hasError && !hasWarning && <CheckIcon style={{ fill: '#090' }} />}
             <Tooltip title="More information can be displayed here." placement="top">
               <InfoIcon />

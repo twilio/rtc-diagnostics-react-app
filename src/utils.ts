@@ -1,5 +1,7 @@
 import { Region } from './types';
 
+export const round = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
+
 function replaceRegion(url: string, region: Region) {
   return url.replace('global', region);
 }
@@ -42,5 +44,5 @@ const regionMap = {
 };
 
 export function getRegionName(region: Region) {
-  return regionMap[region] as string;
+  return regionMap[region];
 }

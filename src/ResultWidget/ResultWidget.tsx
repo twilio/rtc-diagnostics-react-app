@@ -15,6 +15,8 @@ import InfoIcon from '@material-ui/icons/Info';
 import mockResults from './mockResults';
 import { getRegionName } from '../utils';
 import { TestWarnings, TestResults } from '../types';
+import { rows } from './rows';
+import { round } from '../utils';
 
 const useStyles = makeStyles({
   tableCellContent: {
@@ -32,83 +34,6 @@ const useStyles = makeStyles({
     background: '#f88',
   },
 });
-
-const round = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
-
-interface Row {
-  label: string;
-  getValue(testResults: TestResults): string | number | undefined;
-  getWarning?(testResults: TestResults): TestWarnings;
-}
-
-export const rows: Row[] = [
-  {
-    label: 'Signaling servers reachable',
-    getValue: (testResults: TestResults) => 'Yes',
-    getWarning: (testResults: TestResults) => TestWarnings.none,
-  },
-  {
-    label: 'Media Servers Reachable',
-    getValue: (testResults: TestResults) => 'Yes',
-    getWarning: (testResults: TestResults) => TestWarnings.none,
-  },
-  {
-    label: 'Time To Connect',
-    getValue: (testResults: TestResults) => 'N/A',
-    getWarning: (testResults: TestResults) => TestWarnings.none,
-  },
-  {
-    label: 'Time to Media',
-    getValue: (testResults: TestResults) => testResults?.results?.preflight?.networkTiming?.peerConnection?.duration,
-    getWarning: (testResults: TestResults) => TestWarnings.none,
-  },
-  {
-    label: 'Jitter min/avg/max',
-    getValue: (testResults: TestResults) => {
-      const jitter = testResults?.results?.preflight?.stats?.jitter;
-      if (jitter) {
-        const { min, average, max } = jitter;
-        return `${round(min)} / ${round(average)} / ${round(max)}`;
-      }
-    },
-    getWarning: (testResults: TestResults) =>
-      (testResults?.results?.preflight?.stats?.jitter?.average ?? 0) < 30 ? TestWarnings.none : TestWarnings.error,
-  },
-  {
-    label: 'Latency (ms)',
-    getValue: (testResults: TestResults) => testResults?.results?.preflight?.stats?.rtt?.average,
-    getWarning: (testResults: TestResults) =>
-      (testResults?.results?.preflight?.stats?.rtt?.average ?? 0) < 200 ? TestWarnings.none : TestWarnings.error,
-  },
-  {
-    label: 'Packet Loss',
-    getValue: (testResults: TestResults) => `${testResults?.results?.preflight?.totals?.packetsLostFraction}%`,
-    getWarning: (testResults: TestResults) =>
-      (testResults?.results?.preflight?.totals?.packetsLostFraction ?? 0) < 3 ? TestWarnings.none : TestWarnings.error,
-  },
-  {
-    label: 'Bandwidth (kbps)',
-    getValue: (testResults: TestResults) => testResults?.results?.bitrate?.averageBitrate,
-    getWarning: (testResults: TestResults) => {
-      if ((testResults?.results?.bitrate?.averageBitrate ?? 0) < 40) {
-        return TestWarnings.error;
-      }
-      if ((testResults?.results?.bitrate?.averageBitrate ?? 0) < 100) {
-        return TestWarnings.warn;
-      }
-      return TestWarnings.none;
-    },
-  },
-  {
-    label: 'Expected Audio Quality (MOS)',
-    getValue: (testResults: TestResults) => testResults?.results?.preflight?.stats?.mos?.average,
-    getWarning: (testResults: TestResults) => TestWarnings.none,
-  },
-  {
-    label: 'Call SID',
-    getValue: (testResults: TestResults) => testResults?.results?.preflight?.callSid,
-  },
-];
 
 export default function ResultWidget(props: any) {
   // const results = mockResults;
@@ -130,27 +55,32 @@ export default function ResultWidget(props: any) {
         </TableHead>
         <TableBody>
           {rows.map((row) => {
+            const tooltipTitle = row.tooltipContent?.label;
             return (
               <TableRow key={row.label}>
                 <TableCell>
                   <div className={classes.tableCellContent}>
                     {row.label}
-                    <Tooltip title="More information can be displayed here." placement="top">
-                      <InfoIcon />
-                    </Tooltip>
+                    {tooltipTitle && (
+                      <Tooltip title={tooltipTitle} placement="top" interactive leaveDelay={250}>
+                        <InfoIcon />
+                      </Tooltip>
+                    )}
                   </div>
                 </TableCell>
                 {results.map((result: any) => {
                   const value = row.getValue(result);
                   const displayValue = typeof value === 'number' ? round(value) : value;
-                  const color = row.getWarning?.(result);
-                  const className = color ? classes[color!] : undefined;
+                  const warning = row.getWarning?.(result);
+                  const className = warning ? classes[warning] : undefined;
+                  const tooltipContent = warning ? row.tooltipContent?.[warning] : null;
+
                   return (
                     <TableCell key={result.region} className={className}>
                       <div className={classes.tableCellContent}>
                         {displayValue}
-                        {(color === TestWarnings.error || color === TestWarnings.warn) && (
-                          <Tooltip title="More information can be displayed here." placement="top">
+                        {tooltipContent && (
+                          <Tooltip title={tooltipContent} placement="top" interactive leaveDelay={250}>
                             <InfoIcon />
                           </Tooltip>
                         )}
