@@ -37,7 +37,6 @@ function preflightTestRunner(token: string, options = preflightOptions) {
 }
 
 function bitrateTestRunner(iceServers: BitrateTest.Options['iceServers']) {
-  console.log(iceServers);
   return function start() {
     return new Promise((resolve, reject) => {
       const bitrateTest = testBitrate({ iceServers });

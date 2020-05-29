@@ -14,7 +14,7 @@ import InfoIcon from '@material-ui/icons/Info';
 
 import mockResults from './mockResults';
 import { getRegionName } from '../utils';
-import { TestWarnings, TestResults } from '../types';
+import { TestWarnings } from '../types';
 import { rows } from './rows';
 import { round } from '../utils';
 

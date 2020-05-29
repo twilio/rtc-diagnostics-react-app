@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { TestResults, TestWarnings } from '../../types';
+import { TestResults, TestWarnings } from '../../../types';
 import { Typography } from '@material-ui/core';
-import { Row } from './shared';
-import { round } from '../../utils';
+import { Row } from '../shared';
+import { round } from '../../../utils';
 
 function getMOSDescription(mos?: number) {
   if (typeof mos === 'undefined') return '';

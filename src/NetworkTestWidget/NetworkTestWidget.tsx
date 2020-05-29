@@ -1,17 +1,8 @@
 import React from 'react';
-import { Button, makeStyles, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import useTestRunner from './useTestRunner';
 import RegionResult from './RegionResult';
 import { Region } from '../types';
-
-const useStyles = makeStyles({
-  progressContainer: {
-    margin: '1em 0',
-    '& > div': {
-      margin: '1em 0',
-    },
-  },
-});
 
 interface NetworkTestWidgetProps {
   token?: string;
@@ -28,8 +19,6 @@ export default function NetworkTestWidget({ token, iceServers, onComplete }: Net
     const testResults = await startTests(token!, iceServers!, regions);
     onComplete(testResults);
   }
-
-  const classes = useStyles();
   const ready = Boolean(token && iceServers);
 
   return (

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { TestResults, TestWarnings } from '../../types';
+import { TestResults, TestWarnings } from '../../../types';
 import { Typography } from '@material-ui/core';
-import { Row } from './shared';
+import { Row } from '../shared';
 
 const row: Row = {
   label: 'Packet Loss',

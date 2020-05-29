@@ -1,13 +1,18 @@
 import React from 'react';
 
-import { TestResults, TestWarnings } from '../../types';
+import { TestResults, TestWarnings } from '../../../types';
 import { Typography } from '@material-ui/core';
-import { Link, Row } from './shared';
+import { Link, Row } from '../shared';
+
+const hasError = (testResults: TestResults) => {
+  const code = testResults.errors.preflight?.code;
+  return code === 31901 || code === 31005;
+};
 
 const row: Row = {
-  label: 'Signaling Servers Reachable',
-  getValue: (testResults: TestResults) => 'Yes',
-  getWarning: (testResults: TestResults) => TestWarnings.none,
+  label: 'Signalling Servers Reachable',
+  getValue: (testResults: TestResults) => (hasError(testResults) ? 'No' : 'Yes'),
+  getWarning: (testResults: TestResults) => (hasError(testResults) ? TestWarnings.error : TestWarnings.none),
   tooltipContent: {
     label: (
       <Typography>

@@ -3,7 +3,7 @@ import { TestWarnings, TestResults } from '../../types';
 import { Link as LinkImpl } from '@material-ui/core';
 
 export type RowLabel =
-  | 'Signaling Servers Reachable'
+  | 'Signalling Servers Reachable'
   | 'Media Servers Reachable'
   | 'Time To Connect'
   | 'Time to Media'

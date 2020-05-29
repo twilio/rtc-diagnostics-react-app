@@ -20,15 +20,15 @@ export interface PreflightTestRunner {
   start(): Promise<PreflightTest.Report>;
 }
 
-export interface TestSuite {
-  region: Region;
-  tests: [BitrateTestRunner, PreflightTestRunner];
-}
-
 declare global {
   interface RTCIceServer {
     url: string;
   }
+}
+
+export interface TestSuite {
+  region: Region;
+  tests: [BitrateTestRunner, PreflightTestRunner];
 }
 
 export interface TestResults {

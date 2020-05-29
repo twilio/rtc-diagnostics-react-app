@@ -1,13 +1,13 @@
-import bandwidthRow from './bandwidth';
-import callSidRow from './callSid';
-import expectedQualityRow from './expectedQuality';
-import jitterRow from './jitter';
-import latencyRow from './latency';
-import mediaServersRow from './mediaServers';
-import packetLossRow from './packetLoss';
-import signalingServersRow from './signalingServers';
-import timeToConnectRow from './timeToConnect';
-import timeToMediaRow from './timeToMedia';
+import bandwidthRow from './bandwidth/bandwidth';
+import callSidRow from './callSid/callSid';
+import expectedQualityRow from './expectedQuality/expectedQuality';
+import jitterRow from './jitter/jitter';
+import latencyRow from './latency/latency';
+import mediaServersRow from './mediaServers/mediaServers';
+import packetLossRow from './packetLoss/packetLoss';
+import signalingServersRow from './signallingServers/signallingServers';
+import timeToConnectRow from './timeToConnect/timeToConnect';
+import timeToMediaRow from './timeToMedia/timeToMedia';
 import { Row } from './shared';
 
 export const rows: Row[] = [

@@ -1,5 +1,5 @@
-import { Row } from './shared';
-import { TestResults } from '../../types';
+import { Row } from '../shared';
+import { TestResults } from '../../../types';
 
 const row: Row = {
   label: 'Call SID',

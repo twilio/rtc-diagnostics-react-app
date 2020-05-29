@@ -1,13 +1,16 @@
 import React from 'react';
 
-import { TestResults, TestWarnings } from '../../types';
+import { TestResults, TestWarnings } from '../../../types';
 import { Typography } from '@material-ui/core';
-import { Link, Row } from './shared';
+import { Link, Row } from '../shared';
 
 const row: Row = {
-  label: 'Media Servers Reachable',
-  getValue: (testResults: TestResults) => 'Yes',
-  getWarning: (testResults: TestResults) => TestWarnings.none,
+  label: 'Time to Media',
+  getValue: (testResults: TestResults) => testResults?.results?.preflight?.networkTiming?.peerConnection?.duration,
+  getWarning: (testResults: TestResults) =>
+    (testResults?.results?.preflight?.networkTiming?.peerConnection?.duration ?? 0) < 1001
+      ? TestWarnings.none
+      : TestWarnings.warn,
   tooltipContent: {
     label: (
       <Typography>
@@ -19,7 +22,7 @@ const row: Row = {
         type issues.
       </Typography>
     ),
-    [TestWarnings.error]: (
+    [TestWarnings.warn]: (
       <Typography>
         The media server could not be reached. Ensure your device has internet connectivity, and any firewalls allow
         access to Twilio’s{' '}
