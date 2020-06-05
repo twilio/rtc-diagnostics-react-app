@@ -3,6 +3,11 @@ import { Region } from './types';
 export const round = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
 
 function replaceRegion(url: string, region: Region) {
+  // 'roaming' region is equivalent to 'global' for NTS
+  if (region === 'roaming') {
+    return url;
+  }
+
   return url.replace('global', region);
 }
 
