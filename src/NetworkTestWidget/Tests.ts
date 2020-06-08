@@ -8,6 +8,7 @@ const preflightOptions: PreflightTest.Options = {
   codecPreferences: [Connection.Codec.Opus, Connection.Codec.PCMU],
   debug: false,
   signalingTimeoutMs: 10000,
+  fakeMicInput: true,
 };
 
 function preflightTestRunner(token: string, options = preflightOptions) {
