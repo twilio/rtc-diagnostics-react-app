@@ -1,7 +1,7 @@
 import { testBitrate, BitrateTest } from '@twilio/rtc-diagnostics';
 import { Device, Connection } from 'twilio-client';
 import { PreflightTest } from 'twilio-client/es5/twilio/preflight/preflight';
-import { replaceRegions } from '../utils';
+import { regionalizeIceUrls } from '../utils';
 import { Region, TestKind, TestSuite } from '../types';
 
 const preflightOptions: PreflightTest.Options = {
@@ -42,16 +42,16 @@ function bitrateTestRunner(iceServers: BitrateTest.Options['iceServers']) {
       const bitrateTest = testBitrate({ iceServers });
 
       bitrateTest.on(BitrateTest.Events.Bitrate, (bitrate) => {
-        console.log('Bitrate Test - bitrate: ' + bitrate);
+        console.log('Bitrate Test - bitrate: ', bitrate);
       });
 
       bitrateTest.on(BitrateTest.Events.Error, (error) => {
-        console.log('Bitrate Test - error: ' + error);
+        console.log('Bitrate Test - error: ', error);
         reject(error);
       });
 
       bitrateTest.on(BitrateTest.Events.End, (report) => {
-        console.log('Bitrate Test - end: ' + report);
+        console.log('Bitrate Test - end: ', report);
         resolve(report);
       });
 
@@ -63,7 +63,7 @@ function bitrateTestRunner(iceServers: BitrateTest.Options['iceServers']) {
 }
 
 export function createTestSuite(token: string, iceServers: RTCIceServer[], region?: Region) {
-  const updatedIceServer = region ? replaceRegions(region, iceServers) : iceServers;
+  const updatedIceServer = region ? regionalizeIceUrls(region, iceServers) : iceServers;
 
   const updatedPreflightOptions = {
     ...preflightOptions,
