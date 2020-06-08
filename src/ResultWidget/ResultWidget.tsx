@@ -9,34 +9,61 @@ import {
   TableCell,
   Tooltip,
   makeStyles,
+  createStyles,
+  Theme,
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 
 import mockResults from './mockResults';
 import { getRegionName } from '../utils';
 import { TestWarnings, TestResults } from '../types';
+import { darken, fade, lighten } from '@material-ui/core/styles/colorManipulator';
 import { rows } from './rows';
 import { round } from '../utils';
 
-const useStyles = makeStyles({
-  tableCellContent: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    '& svg': {
-      fill: '#666',
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    table: {
+      tableLayout: 'fixed',
+      '& th:first-child': {
+        width: '260px',
+      },
+      '& td, & th': {
+        borderRight: `1px solid
+      ${
+        // Same implementation as material-ui's table borderBottom.
+        theme.palette.type === 'light'
+          ? lighten(fade(theme.palette.divider, 1), 0.88)
+          : darken(fade(theme.palette.divider, 1), 0.68)
+      }`,
+      },
+      '& td:last-child, & th:last-child': {
+        borderRight: 'none',
+      },
+      '& th, & td:first-child': {
+        fontWeight: 'bold',
+      },
     },
-  },
-  [TestWarnings.warn]: {
-    background: '#ff8',
-  },
-  [TestWarnings.error]: {
-    background: '#f88',
-  },
-});
+    tableCellContent: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      wordBreak: 'break-word',
+      '& svg': {
+        fill: '#666',
+      },
+    },
+    [TestWarnings.warn]: {
+      background: '#ff8',
+    },
+    [TestWarnings.error]: {
+      background: '#f88',
+    },
+  })
+);
 
 export default function ResultWidget(props: any) {
-  // const results = mockResults;
+  // const results: any = mockResults;
   const { results } = props;
   const classes = useStyles();
 
@@ -44,7 +71,7 @@ export default function ResultWidget(props: any) {
 
   return (
     <TableContainer component={Paper}>
-      <Table>
+      <Table className={classes.table}>
         <TableHead>
           <TableRow>
             <TableCell></TableCell>
