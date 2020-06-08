@@ -6,7 +6,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
 import WarningIcon from '@material-ui/icons/Warning';
-import { getRegionName } from '../utils';
+import { regionNameMap } from '../utils';
 import { Region, TestResults } from '../types';
 
 import { rows } from '../ResultWidget/rows';
@@ -57,7 +57,7 @@ export default function RegionResult(props: RegionResultProps) {
 
   return (
     <div className={clsx(classes.container, { [classes.pendingTest]: !isActive && !result })}>
-      <Typography className={classes.regionName}>{getRegionName(region)}</Typography>
+      <Typography className={classes.regionName}>{regionNameMap[region]}</Typography>
       <div className={classes.progressContainer}>
         {isActive && <LinearProgress variant="indeterminate" color="secondary" />}
       </div>

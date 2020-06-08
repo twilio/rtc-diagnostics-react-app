@@ -1,4 +1,4 @@
-import { Region } from './types';
+import { Region, TestResults } from './types';
 
 export const round = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
 
@@ -32,7 +32,7 @@ export function regionalizeIceUrls(region: Region, iceServers: RTCIceServer[]) {
   });
 }
 
-const regionMap = {
+export const regionNameMap = {
   sydney: 'Sydney',
   'sao-paolo': 'Sao Paolo',
   dublin: 'Dublin',
@@ -48,6 +48,10 @@ const regionMap = {
   'singapore-ix': 'Singapore IX',
 };
 
-export function getRegionName(region: Region) {
-  return regionMap[region];
+export function getRegionName(result: TestResults) {
+  if (result.results.preflight?.selectedEdge === 'roaming') {
+    return `Roaming(${regionNameMap[result.results.preflight?.edge as Region]})`;
+  }
+
+  return regionNameMap[result.region as Region];
 }

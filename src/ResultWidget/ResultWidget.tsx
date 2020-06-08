@@ -14,7 +14,7 @@ import InfoIcon from '@material-ui/icons/Info';
 
 import mockResults from './mockResults';
 import { getRegionName } from '../utils';
-import { TestWarnings } from '../types';
+import { TestWarnings, TestResults } from '../types';
 import { rows } from './rows';
 import { round } from '../utils';
 
@@ -49,7 +49,7 @@ export default function ResultWidget(props: any) {
           <TableRow>
             <TableCell></TableCell>
             {results.map((result: any) => (
-              <TableCell key={result.region}>{getRegionName(result.region)}</TableCell>
+              <TableCell key={result.region}>{getRegionName(result)}</TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -68,7 +68,7 @@ export default function ResultWidget(props: any) {
                     )}
                   </div>
                 </TableCell>
-                {results.map((result: any) => {
+                {results.map((result: TestResults) => {
                   const value = row.getValue(result);
                   const displayValue = typeof value === 'number' ? round(value) : value;
                   const warning = row.getWarning?.(result);
