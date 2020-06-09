@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { TestResults, TestWarnings } from '../../../types';
-import { Typography } from '@material-ui/core';
-import { Link, Row } from '../shared';
+import { Link, Row, Typography } from '../shared';
 
 const hasError = (testResults: TestResults) => {
   const code = testResults.errors.preflight?.code;
@@ -13,10 +12,35 @@ const row: Row = {
   label: 'Media Servers Reachable',
   getValue: (testResults: TestResults) => {
     if (testResults.results.preflight?.isTurnRequired) {
+      const turnProtocol = testResults.results.preflight?.selectedIceCandidatePair?.localCandidate.relayProtocol;
+      if (turnProtocol === 'tcp') {
+        return 'Yes (TURN TCP)';
+      }
+
+      if (turnProtocol === 'udp') {
+        return 'Yes (TURN UDP)';
+      }
+
+      return 'YES (TURN)';
     }
     return hasError(testResults) ? 'No' : 'Yes';
   },
-  getWarning: (testResults: TestResults) => (hasError(testResults) ? TestWarnings.error : TestWarnings.none),
+  getWarning: (testResults: TestResults) => {
+    if (testResults.results.preflight?.isTurnRequired) {
+      const turnProtocol = testResults.results.preflight?.selectedIceCandidatePair?.localCandidate.relayProtocol;
+      if (turnProtocol === 'tcp') {
+        return TestWarnings.warnTurnTCP;
+      }
+
+      if (turnProtocol === 'udp') {
+        return TestWarnings.warnTurnUDP;
+      }
+
+      return TestWarnings.warnTurn;
+    }
+
+    return hasError(testResults) ? TestWarnings.error : TestWarnings.none;
+  },
   tooltipContent: {
     label: (
       <Typography>

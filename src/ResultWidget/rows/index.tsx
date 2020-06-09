@@ -6,7 +6,7 @@ import latencyRow from './latency/latency';
 import mediaServersRow from './mediaServers/mediaServers';
 import packetLossRow from './packetLoss/packetLoss';
 import signalingServersRow from './signallingServers/signallingServers';
-import timeToConnectRow from './timeToConnect/timeToConnect';
+// import timeToConnectRow from './timeToConnect/timeToConnect';
 import timeToMediaRow from './timeToMedia/timeToMedia';
 import { Row } from './shared';
 

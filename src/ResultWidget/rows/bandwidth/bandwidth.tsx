@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { TestResults, TestWarnings } from '../../../types';
-import { Typography } from '@material-ui/core';
-import { Row } from '../shared';
+import { Row, Typography } from '../shared';
 
 const row: Row = {
   label: 'Bandwidth (kbps)',

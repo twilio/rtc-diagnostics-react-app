@@ -1,9 +1,8 @@
 import React from 'react';
 
 import { TestResults, TestWarnings } from '../../../types';
-import { Typography } from '@material-ui/core';
 import { round } from '../../../utils';
-import { Row } from '../shared';
+import { Row, Typography } from '../shared';
 
 const row: Row = {
   label: 'Jitter min/avg/max',

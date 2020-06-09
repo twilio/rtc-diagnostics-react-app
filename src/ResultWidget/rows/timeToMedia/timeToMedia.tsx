@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { TestResults, TestWarnings } from '../../../types';
-import { Typography } from '@material-ui/core';
-import { Link, Row } from '../shared';
+import { Link, Row, Typography } from '../shared';
 
 const row: Row = {
   label: 'Time to Media',
@@ -17,7 +16,7 @@ const row: Row = {
         Tests connectivity to the Media servers. See{' '}
         <Link href="https://www.twilio.com/docs/voice/client/javascript/voice-client-js-and-mobile-sdks-network-connectivity-requirements#voice-media-servers-connectivity-requirements">
           media connectivity requirements
-        </Link>
+        </Link>{' '}
         for more information. Unreachable media servers cause the call to drop prematurely and could cause one way audio
         type issues.
       </Typography>

@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { TestResults, TestWarnings } from '../../../types';
-import { Typography } from '@material-ui/core';
-import { Link, Row } from '../shared';
+import { Link, Row, Typography } from '../shared';
 
 const hasError = (testResults: TestResults) => {
   const code = testResults.errors.preflight?.code;

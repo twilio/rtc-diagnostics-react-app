@@ -1,6 +1,6 @@
 import React from 'react';
 import { TestWarnings, TestResults } from '../../types';
-import { Link as LinkImpl } from '@material-ui/core';
+import { Link as LinkImpl, Typography as TypographyImpl } from '@material-ui/core';
 
 export type RowLabel =
   | 'Signalling Servers Reachable'
@@ -22,13 +22,20 @@ export type Row = {
 };
 
 export type TooltipContent = {
-  label: React.ReactElement;
-  [TestWarnings.warn]?: React.ReactElement;
-  [TestWarnings.error]?: React.ReactElement;
+  label: React.ReactNode;
+  [TestWarnings.warn]?: React.ReactNode;
+  [TestWarnings.error]?: React.ReactNode;
+  [TestWarnings.warnTurn]?: React.ReactNode;
+  [TestWarnings.warnTurnTCP]?: React.ReactNode;
+  [TestWarnings.warnTurnUDP]?: React.ReactNode;
 };
 
 export const Link = ({ children, href }: { children: string; href: string }) => (
   <LinkImpl href={href} target="_blank" rel="noopener" style={{ color: 'inherit', textDecoration: 'underline' }}>
     {children}
   </LinkImpl>
+);
+
+export const Typography = ({ children }: { children: React.ReactNode }) => (
+  <TypographyImpl variant="body2">{children}</TypographyImpl>
 );
