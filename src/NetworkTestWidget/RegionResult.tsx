@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
 import WarningIcon from '@material-ui/icons/Warning';
 import { regionNameMap } from '../utils';
-import { Region, TestResults } from '../types';
+import { Region, TestResults, TestWarnings } from '../types';
 
 import { rows } from '../ResultWidget/rows';
 
@@ -53,7 +53,7 @@ export default function RegionResult(props: RegionResultProps) {
   const classes = useStyles();
 
   const hasError = Object.values(result?.errors ?? {}).length > 0;
-  const hasWarning = result && rows.some((row) => row.getWarning?.(result));
+  const hasWarning = result && rows.some((row) => row.getWarning?.(result) !== TestWarnings.none);
 
   return (
     <div className={clsx(classes.container, { [classes.pendingTest]: !isActive && !result })}>
