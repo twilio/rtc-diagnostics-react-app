@@ -18,26 +18,34 @@ describe('the bandwidth row', () => {
 
   describe('the getWarning function', () => {
     it('should return none when there are no preflight results', () => {
-      const testResult = set({}, 'results.bitrate.averageBitrate', 1000) as TestResults;
+      const testResult = set({}, 'results.bitrate.averageBitrate', 10) as TestResults;
       expect(bandwidth.getWarning?.(testResult)).toBe(TestWarnings.none);
     });
 
-    it('should return none when the bitrate is 100', () => {
-      let testResult = set({}, 'results.bitrate.averageBitrate', 1000) as TestResults;
-      testResult = set(testResult, 'results.preflight', {});
-      expect(bandwidth.getWarning?.(testResult)).toBe(TestWarnings.none);
+    describe('when the codec is PCMU', () => {
+      const baseResult = set({}, 'results.preflight.samples[0].codecName', 'pcmu');
+      it('should return none when the bitrate is 100', () => {
+        let testResult = set(baseResult, 'results.bitrate.averageBitrate', 100) as TestResults;
+        expect(bandwidth.getWarning?.(testResult)).toBe(TestWarnings.none);
+      });
+
+      it('should return warn when the bitrate is below 100', () => {
+        let testResult = set(baseResult, 'results.bitrate.averageBitrate', 99) as TestResults;
+        expect(bandwidth.getWarning?.(testResult)).toBe(TestWarnings.warn);
+      });
     });
 
-    it('should return none when the bitrate is below 100', () => {
-      let testResult = set({}, 'results.bitrate.averageBitrate', 99) as TestResults;
-      testResult = set(testResult, 'results.preflight', {});
-      expect(bandwidth.getWarning?.(testResult)).toBe(TestWarnings.warn);
-    });
+    describe('when the codec is Opus', () => {
+      const baseResult = set({}, 'results.preflight.samples[0].codecName', 'opus');
+      it('should return none when the bitrate is 40', () => {
+        let testResult = set(baseResult, 'results.bitrate.averageBitrate', 40) as TestResults;
+        expect(bandwidth.getWarning?.(testResult)).toBe(TestWarnings.none);
+      });
 
-    it('should return none when the bitrate is below 40', () => {
-      let testResult = set({}, 'results.bitrate.averageBitrate', 39) as TestResults;
-      testResult = set(testResult, 'results.preflight', {});
-      expect(bandwidth.getWarning?.(testResult)).toBe(TestWarnings.error);
+      it('should return warn when the bitrate is below 40', () => {
+        let testResult = set(baseResult, 'results.bitrate.averageBitrate', 39) as TestResults;
+        expect(bandwidth.getWarning?.(testResult)).toBe(TestWarnings.warn);
+      });
     });
   });
 });

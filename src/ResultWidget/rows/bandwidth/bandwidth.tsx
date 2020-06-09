@@ -2,6 +2,12 @@ import React from 'react';
 
 import { TestResults, TestWarnings } from '../../../types';
 import { Row, Typography } from '../shared';
+import { Connection } from 'twilio-client';
+
+const codecThresholds = {
+  [Connection.Codec.PCMU]: 100,
+  [Connection.Codec.Opus]: 40,
+};
 
 const row: Row = {
   label: 'Bandwidth (kbps)',
@@ -12,12 +18,9 @@ const row: Row = {
     }
 
     const bitrate = testResults.results.bitrate?.averageBitrate ?? 0;
+    const codec = testResults.results.preflight?.samples.slice(-1)[0].codecName as Connection.Codec;
 
-    if (bitrate < 40) {
-      return TestWarnings.error;
-    }
-
-    if (bitrate < 100) {
+    if (bitrate < codecThresholds[codec]) {
       return TestWarnings.warn;
     }
 
