@@ -8,14 +8,15 @@ import { Row } from '../shared';
 const row: Row = {
   label: 'Jitter min/avg/max',
   getValue: (testResults: TestResults) => {
-    const jitter = testResults?.results?.preflight?.stats?.jitter;
+    const jitter = testResults.results.preflight?.stats?.jitter;
+
     if (jitter) {
       const { min, average, max } = jitter;
       return `${round(min)} / ${round(average)} / ${round(max)}`;
     }
   },
   getWarning: (testResults: TestResults) =>
-    (testResults?.results?.preflight?.stats?.jitter?.average ?? 0) < 30 ? TestWarnings.none : TestWarnings.error,
+    (testResults.results.preflight?.stats?.jitter?.average ?? 0) < 30 ? TestWarnings.none : TestWarnings.error,
   tooltipContent: {
     label: (
       <Typography>

@@ -28,9 +28,14 @@ function getMOSDescription(mos?: number) {
 
 const row: Row = {
   label: 'Expected Audio Quality (MOS)',
-  getValue: (testResults: TestResults) => getMOSDescription(testResults?.results?.preflight?.stats?.mos?.average),
-  getWarning: (testResults: TestResults) =>
-    (testResults?.results?.preflight?.stats?.mos?.average ?? 0) < 3.5 ? TestWarnings.warn : TestWarnings.none,
+  getValue: (testResults: TestResults) => getMOSDescription(testResults.results.preflight?.stats?.mos?.average),
+  getWarning: (testResults: TestResults) => {
+    const average = testResults.results.preflight?.stats?.mos?.average;
+    if (typeof average !== 'undefined') {
+      return average < 3.5 ? TestWarnings.warn : TestWarnings.none;
+    }
+    return TestWarnings.none;
+  },
   tooltipContent: {
     label: (
       <Typography>

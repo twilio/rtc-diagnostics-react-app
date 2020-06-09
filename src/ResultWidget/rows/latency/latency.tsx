@@ -6,9 +6,9 @@ import { Row } from '../shared';
 
 const row: Row = {
   label: 'Latency (ms)',
-  getValue: (testResults: TestResults) => testResults?.results?.preflight?.stats?.rtt?.average,
+  getValue: (testResults: TestResults) => testResults.results.preflight?.stats?.rtt?.average,
   getWarning: (testResults: TestResults) =>
-    (testResults?.results?.preflight?.stats?.rtt?.average ?? 0) < 200 ? TestWarnings.none : TestWarnings.warn,
+    (testResults.results.preflight?.stats?.rtt?.average ?? 0) < 200 ? TestWarnings.none : TestWarnings.warn,
   tooltipContent: {
     label: (
       <Typography>

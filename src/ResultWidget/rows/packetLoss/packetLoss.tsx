@@ -6,9 +6,14 @@ import { Row } from '../shared';
 
 const row: Row = {
   label: 'Packet Loss',
-  getValue: (testResults: TestResults) => `${testResults?.results?.preflight?.totals?.packetsLostFraction}%`,
+  getValue: (testResults: TestResults) => {
+    const packetLoss = testResults.results.preflight?.totals?.packetsLostFraction;
+    if (typeof packetLoss !== 'undefined') {
+      return `${packetLoss}%`;
+    }
+  },
   getWarning: (testResults: TestResults) =>
-    (testResults?.results?.preflight?.totals?.packetsLostFraction ?? 0) < 3 ? TestWarnings.none : TestWarnings.warn,
+    (testResults.results.preflight?.totals?.packetsLostFraction ?? 0) < 3 ? TestWarnings.none : TestWarnings.warn,
   tooltipContent: {
     label: (
       <Typography>

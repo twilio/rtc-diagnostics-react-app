@@ -6,9 +6,9 @@ import { Link, Row } from '../shared';
 
 const row: Row = {
   label: 'Time to Media',
-  getValue: (testResults: TestResults) => testResults?.results?.preflight?.networkTiming?.peerConnection?.duration,
+  getValue: (testResults: TestResults) => testResults.results.preflight?.networkTiming?.peerConnection?.duration,
   getWarning: (testResults: TestResults) =>
-    (testResults?.results?.preflight?.networkTiming?.peerConnection?.duration ?? 0) < 1001
+    (testResults.results.preflight?.networkTiming?.peerConnection?.duration ?? 0) < 1001
       ? TestWarnings.none
       : TestWarnings.warn,
   tooltipContent: {

@@ -6,14 +6,22 @@ import { Row } from '../shared';
 
 const row: Row = {
   label: 'Bandwidth (kbps)',
-  getValue: (testResults: TestResults) => testResults?.results?.bitrate?.averageBitrate,
+  getValue: (testResults: TestResults) => testResults.results.preflight && testResults.results.bitrate?.averageBitrate,
   getWarning: (testResults: TestResults) => {
-    if ((testResults?.results?.bitrate?.averageBitrate ?? 0) < 40) {
+    if (!testResults.results.preflight) {
+      return TestWarnings.none;
+    }
+
+    const bitrate = testResults.results.bitrate?.averageBitrate ?? 0;
+
+    if (bitrate < 40) {
       return TestWarnings.error;
     }
-    if ((testResults?.results?.bitrate?.averageBitrate ?? 0) < 100) {
+
+    if (bitrate < 100) {
       return TestWarnings.warn;
     }
+
     return TestWarnings.none;
   },
   tooltipContent: {
