@@ -75,14 +75,14 @@ export function createTestSuite(token: string, iceServers: RTCIceServer[], regio
     region: region ? region : 'global',
     tests: [
       {
-        name: 'Bitrate Test',
-        kind: TestKind.bitrate,
-        start: bitrateTestRunner(updatedIceServer),
-      },
-      {
         name: 'Preflight Test',
         kind: TestKind.preflight,
         start: preflightTestRunner(token, updatedPreflightOptions),
+      },
+      {
+        name: 'Bitrate Test',
+        kind: TestKind.bitrate,
+        start: bitrateTestRunner(updatedIceServer),
       },
     ],
   } as TestSuite;

@@ -28,7 +28,7 @@ declare global {
 
 export interface TestSuite {
   region: Region;
-  tests: [BitrateTestRunner, PreflightTestRunner];
+  tests: [PreflightTestRunner, BitrateTestRunner];
 }
 
 export interface TestResults {
@@ -47,6 +47,9 @@ export enum TestWarnings {
   none = '',
   warn = 'warn',
   error = 'error',
+  warnTurn = 'warnTurn',
+  warnTurnTCP = 'warnTurnTCP',
+  warnTurnUDP = 'warnTurnUDP',
 }
 
 export type Region =
