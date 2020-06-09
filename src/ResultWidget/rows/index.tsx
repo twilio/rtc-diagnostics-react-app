@@ -13,7 +13,7 @@ import { Row } from './shared';
 export const rows: Row[] = [
   signalingServersRow,
   mediaServersRow,
-  timeToConnectRow,
+  // timeToConnectRow, // Remove for now - not implemented in SDK
   timeToMediaRow,
   jitterRow,
   latencyRow,
