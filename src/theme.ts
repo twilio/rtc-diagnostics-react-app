@@ -19,7 +19,7 @@ export default createMuiTheme({
       main: '#0D122B',
     },
     secondary: {
-      main: '#F22F46',
+      main: '#027AC5',
     },
   },
 });

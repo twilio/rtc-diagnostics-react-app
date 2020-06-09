@@ -57,15 +57,20 @@ const useStyles = makeStyles((theme: Theme) =>
       background: '#ff8',
     },
     [TestWarnings.error]: {
-      background: '#f88',
+      background: '#DE5858',
     },
   })
 );
 
-export default function ResultWidget(props: any) {
+export default function ResultWidget(props: { results: TestResults[] }) {
   // const results: any = mockResults;
   const { results } = props;
   const classes = useStyles();
+
+  const getTableCellClass = (warning?: TestWarnings) => {
+    if (warning?.includes('warn')) return classes[TestWarnings.warn];
+    if (warning === TestWarnings.error) return classes[TestWarnings.error];
+  };
 
   if (!results) return null;
 
@@ -75,7 +80,7 @@ export default function ResultWidget(props: any) {
         <TableHead>
           <TableRow>
             <TableCell></TableCell>
-            {results.map((result: any) => (
+            {results.map((result) => (
               <TableCell key={result.region}>{getRegionName(result)}</TableCell>
             ))}
           </TableRow>
@@ -95,11 +100,11 @@ export default function ResultWidget(props: any) {
                     )}
                   </div>
                 </TableCell>
-                {results.map((result: TestResults) => {
+                {results.map((result) => {
                   const value = row.getValue(result);
                   const displayValue = typeof value === 'number' ? round(value) : value;
                   const warning = row.getWarning?.(result);
-                  const className = warning ? classes[warning] : undefined;
+                  const className = getTableCellClass(warning);
                   const tooltipContent = warning ? row.tooltipContent?.[warning] : null;
 
                   return (
