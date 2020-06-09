@@ -11,7 +11,11 @@ const hasError = (testResults: TestResults) => {
 
 const row: Row = {
   label: 'Media Servers Reachable',
-  getValue: (testResults: TestResults) => (hasError(testResults) ? 'No' : 'Yes'),
+  getValue: (testResults: TestResults) => {
+    if (testResults.results.preflight?.isTurnRequired) {
+    }
+    return hasError(testResults) ? 'No' : 'Yes';
+  },
   getWarning: (testResults: TestResults) => (hasError(testResults) ? TestWarnings.error : TestWarnings.none),
   tooltipContent: {
     label: (

@@ -58,10 +58,12 @@
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.5.0",
+    "@types/lodash.set": "^4.3.6",
     "husky": "^4.2.5",
     "jest-junit": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
     "lint-staged": "^10.2.2",
+    "lodash.set": "^4.3.2",
     "mocha": "^7.1.2",
     "mocha-junit-reporter": "^1.23.3",
     "prettier": "^2.0.5",
