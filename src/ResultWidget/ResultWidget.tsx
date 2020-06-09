@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function ResultWidget(props: { results: TestResults[] }) {
+export default function ResultWidget(props: { results?: TestResults[] }) {
   // const results: any = mockResults;
   const { results } = props;
   const classes = useStyles();

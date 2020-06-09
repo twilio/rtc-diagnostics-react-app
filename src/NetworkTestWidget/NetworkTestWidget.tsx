@@ -8,11 +8,10 @@ interface NetworkTestWidgetProps {
   token?: string;
   iceServers?: RTCIceServer[];
   onComplete: (results: any) => void;
+  regions: Region[];
 }
 
-const regions: Region[] = ['tokyo', 'ashburn', 'sydney'];
-
-export default function NetworkTestWidget({ token, iceServers, onComplete }: NetworkTestWidgetProps) {
+export default function NetworkTestWidget({ token, iceServers, onComplete, regions }: NetworkTestWidgetProps) {
   const { isRunning, results, activeRegion, startTests } = useTestRunner();
 
   async function startTest() {

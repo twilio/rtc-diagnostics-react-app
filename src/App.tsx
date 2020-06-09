@@ -45,6 +45,7 @@ function App() {
                 token={token}
                 iceServers={turnCredentials?.iceServers}
                 onComplete={(results) => setResults(results)}
+                regions={['roaming', 'ashburn', 'tokyo', 'sao-paolo']}
               />
             </Paper>
           </Grid>
