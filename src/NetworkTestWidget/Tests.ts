@@ -16,21 +16,21 @@ function preflightTestRunner(token: string, options = preflightOptions) {
     return new Promise((resolve, reject) => {
       const preflightTest = Device.testPreflight(token, options);
 
-      preflightTest.on('completed', (report) => {
+      preflightTest.on(PreflightTest.Events.Completed, (report: PreflightTest.Report) => {
         console.log('Preflight Test - report: ', report);
         resolve(report);
       });
 
-      preflightTest.on('connected', () => {
+      preflightTest.on(PreflightTest.Events.Connected, () => {
         console.log('Preflight Test - connected: ');
       });
 
-      preflightTest.on('failed', (error) => {
+      preflightTest.on(PreflightTest.Events.Failed, (error) => {
         console.log('Preflight Test - failed: ', error);
         reject(error);
       });
 
-      preflightTest.on('warning', (warningName, warningData) => {
+      preflightTest.on(PreflightTest.Events.Warning, (warningName, warningData) => {
         console.log('Preflight Test - warning: ', warningName, warningData);
       });
     });
@@ -63,16 +63,16 @@ function bitrateTestRunner(iceServers: BitrateTest.Options['iceServers']) {
   };
 }
 
-export function createTestSuite(token: string, iceServers: RTCIceServer[], region?: Region) {
-  const updatedIceServer = region ? regionalizeIceUrls(region, iceServers) : iceServers;
+export function createTestSuite(token: string, iceServers: RTCIceServer[], region: Region) {
+  const updatedIceServer = regionalizeIceUrls(region, iceServers);
 
   const updatedPreflightOptions = {
     ...preflightOptions,
-    edge: region ? region : 'roaming',
+    edge: region,
   };
 
   return {
-    region: region ? region : 'global',
+    region: region,
     tests: [
       {
         name: 'Preflight Test',
