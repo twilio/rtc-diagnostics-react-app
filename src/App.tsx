@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { AppBar, Container, Toolbar, Grid, Paper, CssBaseline, makeStyles } from '@material-ui/core';
 import NetworkTestWidget from './NetworkTestWidget/NetworkTestWidget';
 import ResultWidget from './ResultWidget/ResultWidget';
@@ -14,20 +14,19 @@ const useStyles = makeStyles({
 
 function App() {
   const classes = useStyles();
-  const [token, setToken] = useState<string>();
-  const [turnCredentials, setTurnCredentials] = useState<{ iceServers: RTCIceServer[] }>();
-
   const [results, setResults] = useState();
 
-  useEffect(() => {
-    fetch('app/token')
+  async function getCredentials() {
+    const token: string = await fetch('app/token')
       .then((res) => res.json())
-      .then((res) => setToken(res.token));
+      .then((res) => res.token);
 
-    fetch('app/turn-credentials')
+    const iceServers: RTCIceServer[] = await fetch('app/turn-credentials')
       .then((res) => res.json())
-      .then((res) => setTurnCredentials(res));
-  }, []);
+      .then((res) => res.iceServers);
+
+    return { token, iceServers };
+  }
 
   return (
     <div>
@@ -42,8 +41,7 @@ function App() {
           <Grid item xs={12}>
             <Paper className={classes.paper} elevation={3}>
               <NetworkTestWidget
-                token={token}
-                iceServers={turnCredentials?.iceServers}
+                getCredentials={getCredentials}
                 onComplete={(results) => setResults(results)}
                 regions={['roaming', 'ashburn', 'tokyo', 'sao-paolo']}
               />

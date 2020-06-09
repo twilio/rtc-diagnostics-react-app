@@ -1,24 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Typography } from '@material-ui/core';
 import useTestRunner from './useTestRunner';
 import RegionResult from './RegionResult';
 import { Region } from '../types';
 
 interface NetworkTestWidgetProps {
+  getCredentials: () => Promise<{ token: string; iceServers: RTCIceServer[] }>;
   token?: string;
   iceServers?: RTCIceServer[];
   onComplete: (results: any) => void;
   regions: Region[];
 }
 
-export default function NetworkTestWidget({ token, iceServers, onComplete, regions }: NetworkTestWidgetProps) {
+export default function NetworkTestWidget({ getCredentials, onComplete, regions }: NetworkTestWidgetProps) {
+  const [isFecthingCredentials, setIsFetcingCredentials] = useState(false);
+  const [error, setError] = useState<Error>();
   const { isRunning, results, activeRegion, startTests } = useTestRunner();
 
   async function startTest() {
-    const testResults = await startTests(token!, iceServers!, regions);
-    onComplete(testResults);
+    try {
+      setIsFetcingCredentials(true);
+      const { token, iceServers } = await getCredentials();
+      setIsFetcingCredentials(false);
+      const testResults = await startTests(token, iceServers, regions);
+      onComplete(testResults);
+    } catch (e) {
+      setIsFetcingCredentials(false);
+      setError(e);
+    }
   }
-  const ready = Boolean(token && iceServers);
 
   return (
     <div>
@@ -32,7 +42,12 @@ export default function NetworkTestWidget({ token, iceServers, onComplete, regio
           ))}
         </div>
       )}
-      <Button onClick={startTest} variant="contained" color="secondary" disabled={!ready || isRunning}>
+      {error && (
+        <Typography variant="body2" style={{ color: '#F00', marginBottom: '1em' }}>
+          Error: {error.message}
+        </Typography>
+      )}
+      <Button onClick={startTest} variant="contained" color="secondary" disabled={isFecthingCredentials || isRunning}>
         Start
       </Button>
     </div>
