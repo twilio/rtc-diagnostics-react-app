@@ -48,7 +48,7 @@ function createTwiMLApp(domain) {
   cli.action.start('Creating TwiML App');
   return client.applications.create({
     voiceMethod: 'GET',
-    voiceUrl: `https://${domain}/twiml/record`,
+    voiceUrl: `https://${domain}/twiml/echo`,
     friendlyName: constants.TWIML_APP_NAME,
   });
 }
