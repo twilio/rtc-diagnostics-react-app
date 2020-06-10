@@ -4,14 +4,30 @@ import { TestResults, TestWarnings } from '../../../types';
 import { Link, Row, Typography } from '../shared';
 
 const hasError = (testResults: TestResults) => {
-  const code = testResults.errors.preflight?.code;
+  const code = testResults.errors?.preflight?.code;
   return code === 31901 || code === 31005;
 };
 
 const row: Row = {
   label: 'Signalling Servers Reachable',
-  getValue: (testResults: TestResults) => (hasError(testResults) ? 'No' : 'Yes'),
-  getWarning: (testResults: TestResults) => (hasError(testResults) ? TestWarnings.error : TestWarnings.none),
+  getValue: (testResults: TestResults) => {
+    if (hasError(testResults)) {
+      return 'No';
+    }
+
+    if (testResults.results.preflight || testResults.errors.preflight?.hasConnected) {
+      return 'Yes';
+    }
+
+    return 'Did not run';
+  },
+  getWarning: (testResults: TestResults) => {
+    if (hasError(testResults)) {
+      return TestWarnings.error;
+    }
+
+    return TestWarnings.none;
+  },
   tooltipContent: {
     label: (
       <Typography>
