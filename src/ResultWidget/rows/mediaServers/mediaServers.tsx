@@ -11,35 +11,56 @@ const hasError = (testResults: TestResults) => {
 const row: Row = {
   label: 'Media Servers Reachable',
   getValue: (testResults: TestResults) => {
-    if (testResults.results.preflight?.isTurnRequired) {
-      const turnProtocol = testResults.results.preflight?.selectedIceCandidatePair?.localCandidate.relayProtocol;
-      if (turnProtocol === 'tcp') {
-        return 'Yes (TURN TCP)';
-      }
-
-      if (turnProtocol === 'udp') {
-        return 'Yes (TURN UDP)';
-      }
-
-      return 'YES (TURN)';
+    if (hasError(testResults)) {
+      return 'No';
     }
-    return hasError(testResults) ? 'No' : 'Yes';
+
+    if (
+      testResults.results.preflight?.samples?.slice(-1)[0].bytesReceived ||
+      testResults.errors.preflight?.latestSample.bytesReceived
+    ) {
+      if (testResults.results.preflight?.isTurnRequired) {
+        const turnProtocol = testResults.results.preflight?.selectedIceCandidatePair?.localCandidate.relayProtocol;
+        if (turnProtocol === 'tcp') {
+          return 'Yes (TURN TCP)';
+        }
+
+        if (turnProtocol === 'udp') {
+          return 'Yes (TURN UDP)';
+        }
+
+        return 'Yes (TURN)';
+      }
+      return 'Yes';
+    }
+
+    return 'Did not run';
   },
   getWarning: (testResults: TestResults) => {
-    if (testResults.results.preflight?.isTurnRequired) {
-      const turnProtocol = testResults.results.preflight?.selectedIceCandidatePair?.localCandidate.relayProtocol;
-      if (turnProtocol === 'tcp') {
-        return TestWarnings.warnTurnTCP;
-      }
-
-      if (turnProtocol === 'udp') {
-        return TestWarnings.warnTurnUDP;
-      }
-
-      return TestWarnings.warnTurn;
+    if (hasError(testResults)) {
+      return TestWarnings.error;
     }
 
-    return hasError(testResults) ? TestWarnings.error : TestWarnings.none;
+    if (
+      testResults.results.preflight?.samples?.slice(-1)[0].bytesReceived ||
+      testResults.errors.preflight?.latestSample.bytesReceived
+    ) {
+      if (testResults.results.preflight?.isTurnRequired) {
+        const turnProtocol = testResults.results.preflight?.selectedIceCandidatePair?.localCandidate.relayProtocol;
+        if (turnProtocol === 'tcp') {
+          return TestWarnings.warnTurnTCP;
+        }
+
+        if (turnProtocol === 'udp') {
+          return TestWarnings.warnTurnUDP;
+        }
+
+        return TestWarnings.warnTurn;
+      }
+      return TestWarnings.none;
+    }
+
+    return TestWarnings.none;
   },
   tooltipContent: {
     label: (
