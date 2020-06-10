@@ -2,13 +2,14 @@ import React from 'react';
 
 import { TestResults, TestWarnings } from '../../../types';
 import { Row, Typography } from '../shared';
+import { round } from '../../../utils';
 
 const row: Row = {
   label: 'Packet Loss',
   getValue: (testResults: TestResults) => {
     const packetLoss = testResults.results.preflight?.totals?.packetsLostFraction;
     if (typeof packetLoss !== 'undefined') {
-      return `${packetLoss}%`;
+      return `${round(packetLoss)}%`;
     }
   },
   getWarning: (testResults: TestResults) =>
