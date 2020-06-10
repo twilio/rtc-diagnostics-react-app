@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
 import WarningIcon from '@material-ui/icons/Warning';
 import { regionNameMap } from '../utils';
-import { Region, TestResults, TestWarnings } from '../types';
+import { Region, TestResults } from '../types';
 
 import { rows } from '../ResultWidget/rows';
 
@@ -53,7 +53,7 @@ export default function RegionResult(props: RegionResultProps) {
   const classes = useStyles();
 
   const hasError = Object.values(result?.errors ?? {}).length > 0;
-  const hasWarning = result && rows.some((row) => row.getWarning?.(result) !== TestWarnings.none);
+  const hasWarning = result && rows.some((row) => row.getWarning?.(result));
 
   return (
     <div className={clsx(classes.container, { [classes.pendingTest]: !isActive && !result })}>
@@ -65,7 +65,7 @@ export default function RegionResult(props: RegionResultProps) {
         {result && (
           <>
             {hasError && <CloseIcon style={{ fill: '#d00' }} />}
-            {!hasError && hasWarning && <WarningIcon style={{ fill: '#ff0' }} />}
+            {!hasError && hasWarning && <WarningIcon style={{ fill: '#ff0', stroke: '#555' }} />}
             {!hasError && !hasWarning && <CheckIcon style={{ fill: '#090' }} />}
             <Tooltip title="More information can be displayed here." placement="top">
               <InfoIcon />
