@@ -3,6 +3,7 @@ import { Device, Connection } from 'twilio-client';
 import { PreflightTest } from 'twilio-client/es5/twilio/preflight/preflight';
 import { regionalizeIceUrls } from '../utils';
 import { Region, TestKind, TestSuite } from '../types';
+import RTCSample from 'twilio-client/es5/twilio/rtc/sample';
 
 const preflightOptions: PreflightTest.Options = {
   codecPreferences: [Connection.Codec.Opus, Connection.Codec.PCMU],
@@ -15,6 +16,8 @@ function preflightTestRunner(token: string, options = preflightOptions) {
   return function start() {
     return new Promise((resolve, reject) => {
       const preflightTest = Device.testPreflight(token, options);
+      let hasConnected = false;
+      let latestSample: RTCSample;
 
       preflightTest.on(PreflightTest.Events.Completed, (report: PreflightTest.Report) => {
         console.log('Preflight Test - report: ', report);
@@ -22,11 +25,18 @@ function preflightTestRunner(token: string, options = preflightOptions) {
       });
 
       preflightTest.on(PreflightTest.Events.Connected, () => {
-        console.log('Preflight Test - connected: ');
+        console.log('Preflight Test - connected');
+        hasConnected = true;
+      });
+
+      preflightTest.on(PreflightTest.Events.Sample, (sample: RTCSample) => {
+        latestSample = sample;
       });
 
       preflightTest.on(PreflightTest.Events.Failed, (error) => {
         console.log('Preflight Test - failed: ', error);
+        error.hasConnected = hasConnected;
+        error.latestSample = latestSample;
         reject(error);
       });
 
