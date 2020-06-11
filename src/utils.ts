@@ -50,7 +50,7 @@ export const regionNameMap = {
 
 export function getRegionName(result: TestResults) {
   if (result.results.preflight?.selectedEdge === 'roaming') {
-    return `Roaming(${regionNameMap[result.results.preflight?.edge as Region]})`;
+    return `Roaming (${regionNameMap[result.results.preflight?.edge as Region]})`;
   }
 
   return regionNameMap[result.region as Region];
