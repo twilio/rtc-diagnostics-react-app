@@ -17,7 +17,7 @@ const row: Row = {
 
     if (
       testResults.results.preflight?.samples?.slice(-1)[0].bytesReceived ||
-      testResults.errors.preflight?.latestSample.bytesReceived
+      testResults.errors.preflight?.latestSample?.bytesReceived
     ) {
       if (testResults.results.preflight?.isTurnRequired) {
         const turnProtocol = testResults.results.preflight?.selectedIceCandidatePair?.localCandidate.relayProtocol;
@@ -43,7 +43,7 @@ const row: Row = {
 
     if (
       testResults.results.preflight?.samples?.slice(-1)[0].bytesReceived ||
-      testResults.errors.preflight?.latestSample.bytesReceived
+      testResults.errors.preflight?.latestSample?.bytesReceived
     ) {
       if (testResults.results.preflight?.isTurnRequired) {
         const turnProtocol = testResults.results.preflight?.selectedIceCandidatePair?.localCandidate.relayProtocol;
