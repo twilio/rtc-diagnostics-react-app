@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'space-between',
       wordBreak: 'break-word',
       '& svg': {
-        fill: '#666',
+        fill: '#000',
       },
     },
     [TestWarnings.warn]: {
