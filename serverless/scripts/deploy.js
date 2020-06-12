@@ -24,11 +24,13 @@ async function deployFunctions() {
 
   const indexHTML = assets.find((asset) => asset.name.includes('index.html'));
 
-  assets.push({
-    ...indexHTML,
-    path: '/',
-    name: '/',
-  });
+  if (indexHTML) {
+    assets.push({
+      ...indexHTML,
+      path: '/',
+      name: '/',
+    });
+  }
 
   return serverlessClient.deployProject({
     env: {
