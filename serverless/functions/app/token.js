@@ -7,7 +7,7 @@ exports.handler = function (context, event, callback) {
   });
 
   const token = new AccessToken(context.ACCOUNT_SID, context.API_KEY, context.API_SECRET, {
-    ttl: 90,
+    ttl: 180,
   });
   token.addGrant(voiceGrant);
   token.identity = context.VOICE_IDENTITY;
