@@ -32,7 +32,7 @@ export default function ProgressBar({ position, duration }: { position: number; 
     const el = progressBarRef.current;
     if (el) {
       setTimeout(() => {
-        el.style.transition = `all ${duration}s linear`;
+        el.style.transition = `right ${duration}s linear`;
         el.style.right = `${String(100 - position)}%`;
       });
     }
