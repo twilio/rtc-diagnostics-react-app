@@ -6,7 +6,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
 import WarningIcon from '@material-ui/icons/Warning';
-import ProgressBar from './ProgressBar';
+import ProgressBar from './ProgressBar/ProgressBar';
 import { regionNameMap } from '../utils';
 import { NetworkTestName, Region, TestResults } from '../types';
 
