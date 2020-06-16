@@ -67,7 +67,7 @@ export default function RegionResult(props: RegionResultProps) {
   const hasError = Object.values(result?.errors ?? {}).length > 0;
   const hasWarning = result && rows.some((row) => row.getWarning?.(result));
 
-  const progressDuration = activeTest ? progressBarTimings[activeTest].duration : 100;
+  const progressDuration = activeTest ? progressBarTimings[activeTest].duration : 0;
   const progressPosition = activeTest ? progressBarTimings[activeTest].position : 0;
 
   return (
