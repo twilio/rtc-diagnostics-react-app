@@ -1,6 +1,5 @@
 import { testBitrate, BitrateTest } from '@twilio/rtc-diagnostics';
-import { Device, Connection } from 'twilio-client';
-import { PreflightTest } from 'twilio-client/es5/twilio/preflight/preflight';
+import { Device, Connection, PreflightTest } from 'twilio-client';
 import { regionalizeIceUrls } from '../utils';
 import { Region, TestKind, TestSuite } from '../types';
 import RTCSample from 'twilio-client/es5/twilio/rtc/sample';

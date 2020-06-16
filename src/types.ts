@@ -1,6 +1,5 @@
 import { BitrateTest } from '@twilio/rtc-diagnostics';
-import { PreflightTest } from 'twilio-client/es5/twilio/preflight/preflight';
-import { Device } from 'twilio-client';
+import { Device, PreflightTest } from 'twilio-client';
 import { DiagnosticError } from '@twilio/rtc-diagnostics/es5/lib/errors';
 import RTCSample from 'twilio-client/es5/twilio/rtc/sample';
 
