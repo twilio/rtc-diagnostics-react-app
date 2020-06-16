@@ -56,7 +56,7 @@ const progressBarTimings = {
   },
   'Bitrate Test': {
     position: 100,
-    duration: 15,
+    duration: BITRATE_TEST_DURATION / 1000,
   },
 };
 
