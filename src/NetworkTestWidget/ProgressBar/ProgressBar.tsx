@@ -32,6 +32,8 @@ export default function ProgressBar({ position, duration }: { position: number; 
     const el = progressBarRef.current;
     if (el) {
       setTimeout(() => {
+        // We set these values asynchronously so that the browser can recognize the change in the 'right' value.
+        // Without this, the progress bar would instantly snap to the designated position.
         el.style.transition = `right ${duration}s linear`;
         el.style.right = `${String(100 - position)}%`;
       });
