@@ -14,7 +14,6 @@ import {
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 
-import mockResults from './mockResults';
 import { getRegionName } from '../utils';
 import { TestWarnings, TestResults } from '../types';
 import { darken, fade, lighten } from '@material-ui/core/styles/colorManipulator';
@@ -63,7 +62,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function ResultWidget(props: { results?: TestResults[] }) {
-  // const results: any = mockResults;
   const { results } = props;
   const classes = useStyles();
 
