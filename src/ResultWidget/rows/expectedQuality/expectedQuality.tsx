@@ -4,37 +4,21 @@ import { TestResults, TestWarnings } from '../../../types';
 import { Row, Typography } from '../shared';
 import { round } from '../../../utils';
 
-function getMOSDescription(mos?: number) {
-  if (typeof mos === 'undefined') return '';
-
-  let descriptor = '';
-  switch (true) {
-    case mos >= 4:
-      descriptor = 'Excellent';
-      break;
-    case mos >= 3.5:
-      descriptor = 'Good';
-      break;
-    case mos >= 2.5:
-      descriptor = 'Degraded';
-      break;
-    default:
-      descriptor = 'Unacceptable';
-  }
-
-  return `${descriptor} (${round(mos)})`;
-}
+const capitalize = (word: string) => word[0].toUpperCase() + word.slice(1);
 
 const row: Row = {
   label: 'Expected Audio Quality (MOS)',
-  getValue: (testResults: TestResults) => getMOSDescription(testResults.results.preflight?.stats?.mos?.average),
-  getWarning: (testResults: TestResults) => {
-    const average = testResults.results.preflight?.stats?.mos?.average;
-    if (typeof average !== 'undefined') {
-      return average < 3.5 ? TestWarnings.warn : TestWarnings.none;
+  getValue: (testResults: TestResults) => {
+    const quality = testResults.results.preflight?.callQuality;
+    const mos = testResults.results.preflight?.stats?.mos?.average;
+    if (quality && mos) {
+      return `${capitalize(quality)} (${round(mos)})`;
     }
-    return TestWarnings.none;
   },
+  getWarning: (testResults: TestResults) =>
+    testResults.results.preflight?.warnings.some((warning) => warning.name === 'low-mos')
+      ? TestWarnings.warn
+      : TestWarnings.none,
   tooltipContent: {
     label: (
       <Typography>

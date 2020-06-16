@@ -20,14 +20,14 @@ describe('the Jitter row', () => {
   });
 
   describe('the getWarning function', () => {
-    it('should return none when jitter is below 30', () => {
-      const testResults = set({}, 'results.preflight.stats.jitter.average', 29) as TestResults;
+    it('should return TestWarnings.none when there are no high-jitter warnings', () => {
+      const testResults = set({}, 'results.preflight.warnings', []) as TestResults;
       expect(jitterRow.getWarning?.(testResults)).toBe(TestWarnings.none);
     });
 
-    it('should return error when jitter is 30 or above', () => {
-      const testResults = set({}, 'results.preflight.stats.jitter.average', 30) as TestResults;
-      expect(jitterRow.getWarning?.(testResults)).toBe(TestWarnings.error);
+    it('should return TestWarnings.warn when there are high-jitter warnings', () => {
+      const testResults = set({}, 'results.preflight.warnings.[0].name', 'high-jitter') as TestResults;
+      expect(jitterRow.getWarning?.(testResults)).toBe(TestWarnings.warn);
     });
   });
 });

@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { TestResults, TestWarnings } from '../../../types';
-import { Link, Row, Typography } from '../shared';
+import { Row, Typography } from '../shared';
 
 const row: Row = {
   label: 'Time to Media',
   getValue: (testResults: TestResults) => testResults.results.preflight?.networkTiming?.peerConnection?.duration,
   getWarning: (testResults: TestResults) =>
-    (testResults.results.preflight?.networkTiming?.peerConnection?.duration ?? 0) < 1001
+    (testResults.results.preflight?.networkTiming?.peerConnection?.duration ?? 0) < 1800 // TODO: Look for high-pc-connect-duration in report.warnings when available
       ? TestWarnings.none
       : TestWarnings.warn,
   tooltipContent: {
