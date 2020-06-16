@@ -8,6 +8,8 @@ import CheckIcon from '@material-ui/icons/Check';
 import WarningIcon from '@material-ui/icons/Warning';
 import ProgressBar from './ProgressBar/ProgressBar';
 import { regionNameMap } from '../utils';
+
+import { BITRATE_TEST_DURATION } from './Tests';
 import { NetworkTestName, Region, TestResults } from '../types';
 
 import { rows } from '../ResultWidget/rows';
