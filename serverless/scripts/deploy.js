@@ -15,8 +15,23 @@ const serverlessClient = new TwilioServerlessApiClient({
 async function deployFunctions() {
   cli.action.start('Creating Api Key');
   const api_key = await client.newKeys.create({ friendlyName: constants.API_KEY_NAME });
-  cli.action.start('Deploying functions');
-  const { functions } = await getListOfFunctionsAndAssets(path.join(__dirname, '..'));
+  cli.action.start('Deploying assets and functions');
+
+  const { assets, functions } = await getListOfFunctionsAndAssets(__dirname, {
+    functionsFolderNames: ['../functions'],
+    assetsFolderNames: ['../../build'],
+  });
+
+  const indexHTML = assets.find((asset) => asset.name.includes('index.html'));
+
+  if (indexHTML) {
+    assets.push({
+      ...indexHTML,
+      path: '/',
+      name: '/',
+    });
+  }
+
   return serverlessClient.deployProject({
     env: {
       API_KEY: api_key.sid,
@@ -25,7 +40,7 @@ async function deployFunctions() {
     },
     pkgJson: {},
     functionsEnv: 'dev',
-    assets: [],
+    assets,
     functions,
     serviceName: constants.SERVICE_NAME,
   });
@@ -35,7 +50,7 @@ function createTwiMLApp(domain) {
   cli.action.start('Creating TwiML App');
   return client.applications.create({
     voiceMethod: 'GET',
-    voiceUrl: `https://${domain}/twiml/record`,
+    voiceUrl: `https://${domain}/twiml/echo`,
     friendlyName: constants.TWIML_APP_NAME,
   });
 }

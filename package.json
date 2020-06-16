@@ -3,11 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
+    "@material-ui/core": "^4.10.0",
+    "@material-ui/icons": "^4.9.1",
     "@twilio-labs/serverless-api": "^2.0.1",
-    "@types/jest": "^24.9.1",
+    "@twilio/rtc-diagnostics": "https://github.com/twilio/rtc-diagnostics/archive/1.0.0-rc2.tar.gz",
     "@types/node": "^12.12.39",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
@@ -17,6 +16,7 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "twilio": "^3.43.1",
+    "twilio-client": "https://github.com/twilio/twilio-client.js/archive/1.13.0-rc1.tar.gz",
     "typescript": "^3.7.5"
   },
   "scripts": {
@@ -29,7 +29,7 @@
     "test:ci": "npm run test:ci:app && npm run test:ci:serverless",
     "test:ci:app": "jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage",
     "test:ci:serverless": "jest -c jest.serverless.config.js --ci --runInBand",
-    "serverless:deploy": "node serverless/scripts/deploy.js",
+    "serverless:deploy": "npm run build && node serverless/scripts/deploy.js",
     "serverless:remove": "node serverless/scripts/remove.js",
     "serverless:list": "node serverless/scripts/list.js"
   },
@@ -52,11 +52,18 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "@types/jest": "^24.9.1",
     "@types/jsonwebtoken": "^8.5.0",
+    "@types/lodash.set": "^4.3.6",
+    "http-proxy-middleware": "^1.0.4",
     "husky": "^4.2.5",
     "jest-junit": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
     "lint-staged": "^10.2.2",
+    "lodash.set": "^4.3.2",
     "mocha": "^7.1.2",
     "mocha-junit-reporter": "^1.23.3",
     "prettier": "^2.0.5",
