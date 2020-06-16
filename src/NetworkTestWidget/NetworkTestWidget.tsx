@@ -15,7 +15,7 @@ interface NetworkTestWidgetProps {
 export default function NetworkTestWidget({ getCredentials, onComplete, regions }: NetworkTestWidgetProps) {
   const [isFecthingCredentials, setIsFetcingCredentials] = useState(false);
   const [error, setError] = useState<Error>();
-  const { isRunning, results, activeRegion, startTests } = useTestRunner();
+  const { isRunning, results, activeRegion, startTests, activeTest } = useTestRunner();
 
   async function startTest() {
     try {
@@ -38,7 +38,13 @@ export default function NetworkTestWidget({ getCredentials, onComplete, regions 
       {(isRunning || results.length > 0) && (
         <div>
           {regions.map((region, i) => (
-            <RegionResult key={region} region={region} isActive={activeRegion === region} result={results[i]} />
+            <RegionResult
+              key={region}
+              region={region}
+              isActive={activeRegion === region}
+              result={results[i]}
+              activeTest={activeTest}
+            />
           ))}
         </div>
       )}

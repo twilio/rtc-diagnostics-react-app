@@ -68,7 +68,7 @@ function bitrateTestRunner(iceServers: BitrateTest.Options['iceServers']) {
 
       setTimeout(() => {
         bitrateTest.stop();
-      }, 8000);
+      }, 15000);
     });
   };
 }
