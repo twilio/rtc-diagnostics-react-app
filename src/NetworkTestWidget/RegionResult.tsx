@@ -51,8 +51,8 @@ interface RegionResultProps {
 }
 const progressBarTimings = {
   'Preflight Test': {
-    position: 60,
-    duration: 23,
+    position: 62.5,
+    duration: 25,
   },
   'Bitrate Test': {
     position: 100,
