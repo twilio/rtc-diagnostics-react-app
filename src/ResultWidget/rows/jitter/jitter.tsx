@@ -15,7 +15,9 @@ const row: Row = {
     }
   },
   getWarning: (testResults: TestResults) =>
-    (testResults.results.preflight?.stats?.jitter?.average ?? 0) < 30 ? TestWarnings.none : TestWarnings.error,
+    testResults.results.preflight?.warnings.some((warning) => warning.name === 'high-jitter')
+      ? TestWarnings.warn
+      : TestWarnings.none,
   tooltipContent: {
     label: (
       <Typography>

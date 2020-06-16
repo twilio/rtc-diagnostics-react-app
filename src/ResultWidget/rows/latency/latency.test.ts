@@ -4,13 +4,13 @@ import { TestResults, TestWarnings } from '../../../types';
 
 describe('the latencyRow', () => {
   describe('the getWarning function', () => {
-    it('should return none when the average rtt is less than 200', () => {
-      const testResults = set({}, 'results.preflight.stats.rtt.average', 199) as TestResults;
+    it('should return TestWarnings.none when there are no high-rtt warnings', () => {
+      const testResults = set({}, 'results.preflight.warnings', []) as TestResults;
       expect(latencyRow.getWarning?.(testResults)).toBe(TestWarnings.none);
     });
 
-    it('should return none when the average rtt is 200 or more', () => {
-      const testResults = set({}, 'results.preflight.stats.rtt.average', 200) as TestResults;
+    it('should return TestWarnings.warn when there are high-rtt warnings', () => {
+      const testResults = set({}, 'results.preflight.warnings.[0].name', 'high-rtt') as TestResults;
       expect(latencyRow.getWarning?.(testResults)).toBe(TestWarnings.warn);
     });
   });

@@ -13,7 +13,9 @@ const row: Row = {
     }
   },
   getWarning: (testResults: TestResults) =>
-    (testResults.results.preflight?.totals?.packetsLostFraction ?? 0) < 3 ? TestWarnings.none : TestWarnings.warn,
+    testResults.results.preflight?.warnings.some((warning) => warning.name === 'high-packet-loss')
+      ? TestWarnings.warn
+      : TestWarnings.none,
   tooltipContent: {
     label: (
       <Typography>

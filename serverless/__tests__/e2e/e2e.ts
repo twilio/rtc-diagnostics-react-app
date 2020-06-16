@@ -63,7 +63,7 @@ describe('', () => {
     it('should return the correct TwiML', async () => {
       const { text } = await superagent.get(`${appURL}/twiml/play?RecordingUrl=testurl`);
       expect(text).toMatchInlineSnapshot(
-        `"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><Response><Say>You said:</Say><Play loop=\\"1\\">testurl</Play><Say>Hanging up now.</Say></Response>"`
+        `"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><Response><Say>You said:</Say><Play loop=\\"1\\">testurl</Play><Say>Now waiting for a few seconds to gather audio performance metrics.</Say><Pause length=\\"3\\"/><Say>Hanging up now.</Say></Response>"`
       );
     });
   });
@@ -72,7 +72,7 @@ describe('', () => {
     it('should return the correct TwiML', async () => {
       const { text } = await superagent.get(`${appURL}/twiml/record`);
       expect(text).toEqual(
-        `<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say>Record a message in 3, 2, 1</Say><Record maxLength=\"3\" action=\"${appURL}/twiml/play\"/><Say>Did not detect a message to record</Say></Response>`
+        `<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say>Record a message in 3, 2, 1</Say><Record maxLength=\"5\" action=\"${appURL}/twiml/play\"/><Say>Did not detect a message to record</Say></Response>`
       );
     });
   });

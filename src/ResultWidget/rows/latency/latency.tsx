@@ -7,7 +7,9 @@ const row: Row = {
   label: 'Latency (ms)',
   getValue: (testResults: TestResults) => testResults.results.preflight?.stats?.rtt?.average,
   getWarning: (testResults: TestResults) =>
-    (testResults.results.preflight?.stats?.rtt?.average ?? 0) < 200 ? TestWarnings.none : TestWarnings.warn,
+    testResults.results.preflight?.warnings.some((warning) => warning.name === 'high-rtt')
+      ? TestWarnings.warn
+      : TestWarnings.none,
   tooltipContent: {
     label: (
       <Typography>
