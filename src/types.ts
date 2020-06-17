@@ -8,14 +8,16 @@ export enum TestKind {
   preflight = 'preflight',
 }
 
+export type NetworkTestName = 'Bitrate Test' | 'Preflight Test';
+
 export interface BitrateTestRunner {
-  name: string;
+  name: NetworkTestName;
   kind: TestKind.bitrate;
   start(): Promise<BitrateTest.Report>;
 }
 
 export interface PreflightTestRunner {
-  name: string;
+  name: NetworkTestName;
   kind: TestKind.preflight;
   start(): Promise<PreflightTest.Report>;
 }

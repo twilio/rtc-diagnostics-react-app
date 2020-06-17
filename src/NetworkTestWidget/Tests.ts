@@ -11,6 +11,8 @@ const preflightOptions: PreflightTest.Options = {
   fakeMicInput: true,
 };
 
+export const BITRATE_TEST_DURATION = 15000;
+
 function preflightTestRunner(token: string, options = preflightOptions) {
   return function start() {
     return new Promise((resolve, reject) => {
@@ -67,7 +69,7 @@ function bitrateTestRunner(iceServers: BitrateTest.Options['iceServers']) {
 
       setTimeout(() => {
         bitrateTest.stop();
-      }, 15000);
+      }, BITRATE_TEST_DURATION);
     });
   };
 }

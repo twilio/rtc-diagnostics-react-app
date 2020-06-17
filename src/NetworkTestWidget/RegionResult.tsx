@@ -1,13 +1,16 @@
 import React from 'react';
-import { Typography, LinearProgress, makeStyles, Tooltip } from '@material-ui/core';
+import { makeStyles, Typography, Tooltip } from '@material-ui/core';
 import clsx from 'clsx';
 
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
 import WarningIcon from '@material-ui/icons/Warning';
+import ProgressBar from './ProgressBar/ProgressBar';
 import { regionNameMap } from '../utils';
-import { Region, TestResults } from '../types';
+
+import { BITRATE_TEST_DURATION } from './Tests';
+import { NetworkTestName, Region, TestResults } from '../types';
 
 import { rows } from '../ResultWidget/rows';
 
@@ -46,20 +49,34 @@ interface RegionResultProps {
   region: Region;
   isActive: boolean;
   result?: TestResults;
+  activeTest?: NetworkTestName;
 }
+const progressBarTimings = {
+  'Preflight Test': {
+    position: 62.5,
+    duration: 25,
+  },
+  'Bitrate Test': {
+    position: 100,
+    duration: BITRATE_TEST_DURATION / 1000,
+  },
+};
 
 export default function RegionResult(props: RegionResultProps) {
-  const { region, isActive, result } = props;
+  const { region, isActive, result, activeTest } = props;
   const classes = useStyles();
 
   const hasError = Object.values(result?.errors ?? {}).length > 0;
   const hasWarning = result && rows.some((row) => row.getWarning?.(result));
 
+  const progressDuration = activeTest ? progressBarTimings[activeTest].duration : 0;
+  const progressPosition = activeTest ? progressBarTimings[activeTest].position : 0;
+
   return (
     <div className={clsx(classes.container, { [classes.pendingTest]: !isActive && !result })}>
       <Typography className={classes.regionName}>{regionNameMap[region]}</Typography>
       <div className={classes.progressContainer}>
-        {isActive && <LinearProgress variant="indeterminate" color="secondary" />}
+        {isActive && <ProgressBar position={progressPosition} duration={progressDuration} />}
       </div>
       <div className={classes.iconContainer}>
         {result && (
