@@ -9,7 +9,7 @@ describe('the ProgressBar component', () => {
     expect(progressBarEl.style.transition).toBe('');
     expect(progressBarEl.style.right).toBe('');
 
-    setTimeout(() => {
+    window.requestAnimationFrame(() => {
       expect(progressBarEl.style.transition).toBe('right 10s linear');
       expect(progressBarEl.style.right).toBe('50%');
       done();
