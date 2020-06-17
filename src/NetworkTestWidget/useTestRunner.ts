@@ -1,10 +1,10 @@
 import { useState, useCallback } from 'react';
-import { Region, TestResults } from '../types';
+import { Region, TestResults, NetworkTestName } from '../types';
 import { createTestSuite } from './Tests';
 
 export default function useTestRunner() {
   const [isRunning, setIsRunning] = useState(false);
-  const [activeTest, setActiveTest] = useState('');
+  const [activeTest, setActiveTest] = useState<NetworkTestName>();
   const [results, setResults] = useState<TestResults[]>([]);
   const [activeRegion, setActiveRegion] = useState<Region>();
 
@@ -38,7 +38,7 @@ export default function useTestRunner() {
       allResults.push(testResults);
     }
 
-    setActiveTest('');
+    setActiveTest(undefined);
     setActiveRegion(undefined);
     setIsRunning(false);
     return allResults;
