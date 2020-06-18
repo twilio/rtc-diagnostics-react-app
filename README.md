@@ -1,3 +1,5 @@
+**Please note, this application is currently in preview state. We welcome all feedback through Github issues**
+
 # Voice Diagnostics Tool
 
 [![CircleCI](https://circleci.com/gh/twilio/rtc-diagnostics-react-app.svg?style=svg)](https://circleci.com/gh/twilio/rtc-diagnostics-react-app)
