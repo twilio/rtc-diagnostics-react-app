@@ -41,7 +41,10 @@ This performs the following steps:
 
 - Builds the React app in the `build/` directory and deploys it to Twilio Serverless.
 - Deploys the end points required for performing the tests to Twilio Serverless. These include an access token generator, an NTS token generator, the TwiML App and corresponding TwiML bins
-- Prints the URL for the app to the console
+
+When deployment has finished, the Twilio Serverless URL for the application will be printed to the console. This URL can be used to access the application:
+
+`Deployed to: https://rtc-diagnostics-12345-dev.twil.io`
 
 ## View App URL
 
