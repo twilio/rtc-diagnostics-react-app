@@ -1,4 +1,4 @@
-**Please note, this application is currently in preview state. We welcome all feedback through Github issues**
+⚠️ **Please note, this application is currently in preview state. We welcome all feedback through Github issues**
 
 # Voice Diagnostics Tool
 
