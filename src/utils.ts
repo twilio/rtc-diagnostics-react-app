@@ -1,6 +1,7 @@
 import { Region, TestResults } from './types';
 
-export const round = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
+export const round = (num: number, decimals = 2) =>
+  Math.round((num + Number.EPSILON) * 10 ** decimals) / 10 ** decimals;
 
 function regionalizeIceUrl(url: string, region: Region) {
   // 'roaming' region is equivalent to 'global' for NTS

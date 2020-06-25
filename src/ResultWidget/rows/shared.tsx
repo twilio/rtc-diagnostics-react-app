@@ -8,7 +8,7 @@ export type RowLabel =
   | 'Time To Connect'
   | 'Time to Media'
   | 'Jitter min/avg/max'
-  | 'Latency (ms)'
+  | 'Latency (ms) min/avg/max'
   | 'Packet Loss'
   | 'Bandwidth (kbps)'
   | 'Expected Audio Quality (MOS)'
