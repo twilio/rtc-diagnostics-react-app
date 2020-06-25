@@ -14,6 +14,11 @@ describe('the signallingServers row', () => {
       expect(signallingServersRow.getValue(testResult)).toBe('No');
     });
 
+    it('should return "No" when the error code is 31000', () => {
+      const testResult = set({}, 'errors.preflight.code', 31000) as TestResults;
+      expect(signallingServersRow.getValue(testResult)).toBe('No');
+    });
+
     it('should return "Yes" if the preflight test completed successfully', () => {
       const testResult = set({}, 'results.preflight', {}) as TestResults;
       expect(signallingServersRow.getValue(testResult)).toBe('Yes');
