@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AppBar, Container, Toolbar, Grid, Paper, CssBaseline, makeStyles } from '@material-ui/core';
+import CopyResultsWidget from './CopyResultsWidget/CopyResultsWidget';
 import NetworkTestWidget from './NetworkTestWidget/NetworkTestWidget';
 import ResultWidget from './ResultWidget/ResultWidget';
 
@@ -43,9 +44,12 @@ function App() {
               <NetworkTestWidget
                 getCredentials={getCredentials}
                 onComplete={(results) => setResults(results)}
-                regions={['roaming', 'ashburn', 'tokyo', 'sao-paolo']}
+                regions={['roaming', 'sydney']}
               />
             </Paper>
+          </Grid>
+          <Grid container justify="center">
+            <CopyResultsWidget results={results} />
           </Grid>
           <Grid item xs={12}>
             <Paper elevation={3}>
