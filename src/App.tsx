@@ -44,11 +44,11 @@ function App() {
               <NetworkTestWidget
                 getCredentials={getCredentials}
                 onComplete={(results) => setResults(results)}
-                regions={['roaming']}
+                regions={['roaming', 'sydney']}
               />
             </Paper>
           </Grid>
-          <Grid container xs={12} justify="center">
+          <Grid container justify="center">
             <CopyResultsWidget results={results} />
           </Grid>
           <Grid item xs={12}>
