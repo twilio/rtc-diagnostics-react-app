@@ -5,7 +5,7 @@ import { Link, Row, Typography } from '../shared';
 
 const hasError = (testResults: TestResults) => {
   const code = testResults.errors?.preflight?.code;
-  return code === 31901 || code === 31005;
+  return code === 31901 || code === 31005 || code === 31000;
 };
 
 const row: Row = {
