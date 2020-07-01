@@ -3,31 +3,26 @@ import { Region, TestResults } from './types';
 export const round = (num: number, decimals = 2) =>
   Math.round((num + Number.EPSILON) * 10 ** decimals) / 10 ** decimals;
 
-function regionalizeIceUrl(url: string, region: Region) {
-  // 'roaming' region is equivalent to 'global' for NTS
+export function regionalizeIceUrls(region: Region, iceServers: RTCIceServer[]) {
   if (region === 'roaming') {
-    return url;
+    return iceServers;
   }
 
-  return url.replace('global', region);
-}
-
-export function regionalizeIceUrls(region: Region, iceServers: RTCIceServer[]) {
   return iceServers.map((server: RTCIceServer) => {
     const result = {
       ...server,
     };
 
     if (result.url) {
-      result.url = regionalizeIceUrl(result.url, region);
+      result.url = result.url.replace('global', region);
     }
 
     if (typeof result.urls === 'string') {
-      result.urls = regionalizeIceUrl(result.urls, region);
+      result.urls = result.urls.replace('global', region);
     }
 
     if (Array.isArray(result.urls)) {
-      result.urls = result.urls.map((url) => regionalizeIceUrl(url, region));
+      result.urls = result.urls.map((url) => url.replace('global', region));
     }
     return result;
   });
