@@ -22,7 +22,7 @@ describe('the token function', () => {
       expect(err).toBeNull();
       expect(decoded).toMatchInlineSnapshot(`
         Object {
-          "exp": 1589568777,
+          "exp": 1589568637,
           "grants": Object {
             "identity": "test-identity",
             "voice": Object {
