@@ -3,24 +3,7 @@ import { Device, PreflightTest } from 'twilio-client';
 import { DiagnosticError } from '@twilio/rtc-diagnostics/es5/lib/errors';
 import RTCSample from 'twilio-client/es5/twilio/rtc/sample';
 
-export enum TestKind {
-  bitrate = 'bitrate',
-  preflight = 'preflight',
-}
-
 export type NetworkTestName = 'Bitrate Test' | 'Preflight Test';
-
-export interface BitrateTestRunner {
-  name: NetworkTestName;
-  kind: TestKind.bitrate;
-  start(): Promise<BitrateTest.Report>;
-}
-
-export interface PreflightTestRunner {
-  name: NetworkTestName;
-  kind: TestKind.preflight;
-  start(): Promise<PreflightTest.Report>;
-}
 
 declare global {
   interface RTCIceServer {
@@ -37,20 +20,15 @@ declare module 'twilio-client' {
   }
 }
 
-export interface TestSuite {
-  region: Region;
-  tests: [PreflightTestRunner, BitrateTestRunner];
-}
-
 export interface TestResults {
   region: Region;
   results: {
-    [TestKind.bitrate]?: BitrateTest.Report;
-    [TestKind.preflight]?: PreflightTest.Report;
+    bitrate?: BitrateTest.Report;
+    preflight?: PreflightTest.Report;
   };
   errors: {
-    [TestKind.bitrate]?: DiagnosticError;
-    [TestKind.preflight]?: Device.Error;
+    bitrate?: DiagnosticError;
+    preflight?: Device.Error;
   };
 }
 
