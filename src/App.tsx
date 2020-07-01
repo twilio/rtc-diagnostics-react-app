@@ -17,16 +17,20 @@ function App() {
   const classes = useStyles();
   const [results, setResults] = useState();
 
-  async function getCredentials() {
-    const token: string = await fetch('app/token')
-      .then((res) => res.json())
-      .then((res) => res.token);
-
+  async function getTURNCredentials() {
     const iceServers: RTCIceServer[] = await fetch('app/turn-credentials')
       .then((res) => res.json())
       .then((res) => res.iceServers);
 
-    return { token, iceServers };
+    return iceServers;
+  }
+
+  async function getVoiceToken() {
+    const token: string = await fetch('app/token')
+      .then((res) => res.json())
+      .then((res) => res.token);
+
+    return token;
   }
 
   return (
@@ -42,9 +46,10 @@ function App() {
           <Grid item xs={12}>
             <Paper className={classes.paper} elevation={3}>
               <NetworkTestWidget
-                getCredentials={getCredentials}
+                getVoiceToken={getVoiceToken}
+                getTURNCredentials={getTURNCredentials}
                 onComplete={(results) => setResults(results)}
-                regions={['roaming', 'sydney']}
+                regions={['roaming', 'tokyo']}
               />
             </Paper>
           </Grid>

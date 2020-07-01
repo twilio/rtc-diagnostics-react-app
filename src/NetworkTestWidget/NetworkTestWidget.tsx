@@ -1,33 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Typography } from '@material-ui/core';
 import useTestRunner from './useTestRunner';
 import RegionResult from './RegionResult';
 import { Region } from '../types';
 
 interface NetworkTestWidgetProps {
-  getCredentials: () => Promise<{ token: string; iceServers: RTCIceServer[] }>;
+  getTURNCredentials: () => Promise<RTCIceServer[]>;
+  getVoiceToken: () => Promise<string>;
   token?: string;
   iceServers?: RTCIceServer[];
   onComplete: (results: any) => void;
   regions: Region[];
 }
 
-export default function NetworkTestWidget({ getCredentials, onComplete, regions }: NetworkTestWidgetProps) {
-  const [isFecthingCredentials, setIsFetcingCredentials] = useState(false);
-  const [error, setError] = useState<Error>();
-  const { isRunning, results, activeRegion, startTests, activeTest } = useTestRunner();
+export default function NetworkTestWidget({
+  getTURNCredentials,
+  getVoiceToken,
+  onComplete,
+  regions,
+}: NetworkTestWidgetProps) {
+  const { isRunning, results, activeRegion, runTests, activeTest } = useTestRunner();
 
   async function startTest() {
-    try {
-      setIsFetcingCredentials(true);
-      const { token, iceServers } = await getCredentials();
-      setIsFetcingCredentials(false);
-      const testResults = await startTests(token, iceServers, regions);
-      onComplete(testResults);
-    } catch (e) {
-      setIsFetcingCredentials(false);
-      setError(e);
-    }
+    const testResults = await runTests(getVoiceToken, getTURNCredentials, regions);
+    onComplete(testResults);
   }
 
   return (
@@ -48,12 +44,7 @@ export default function NetworkTestWidget({ getCredentials, onComplete, regions 
           ))}
         </div>
       )}
-      {error && (
-        <Typography variant="body2" style={{ color: '#F00', marginBottom: '1em' }}>
-          Error: {error.message}
-        </Typography>
-      )}
-      <Button onClick={startTest} variant="contained" color="secondary" disabled={isFecthingCredentials || isRunning}>
+      <Button onClick={startTest} variant="contained" color="secondary" disabled={isRunning}>
         Start
       </Button>
     </div>
