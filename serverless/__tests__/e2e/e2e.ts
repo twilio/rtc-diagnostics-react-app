@@ -45,7 +45,7 @@ describe('', () => {
       expect(body).toEqual(
         expect.objectContaining({
           password: '[Redacted]',
-          ttl: '180',
+          ttl: '30',
           username: expect.any(String),
           accountSid: expect.any(String),
           iceServers: expect.arrayContaining([

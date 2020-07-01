@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Region, TestResults, NetworkTestName } from '../types';
-import { createTestSuite } from './Tests';
+import { bitrateTestRunner, preflightTestRunner } from './Tests';
 
 export default function useTestRunner() {
   const [isRunning, setIsRunning] = useState(false);
@@ -8,47 +8,60 @@ export default function useTestRunner() {
   const [results, setResults] = useState<TestResults[]>([]);
   const [activeRegion, setActiveRegion] = useState<Region>();
 
-  const startTests = useCallback(async (token: string, iceServers: RTCIceServer[], regions: Region[]) => {
-    setIsRunning(true);
-    setResults([]);
-    const allResults: TestResults[] = [];
-    const testSuites = regions.map((region) => createTestSuite(token, iceServers, region));
+  const runTests = useCallback(
+    async (
+      getVoiceToken: () => Promise<string>,
+      getTURNCredentials: () => Promise<RTCIceServer[]>,
+      regions: Region[]
+    ) => {
+      setIsRunning(true);
+      setResults([]);
+      const allResults: TestResults[] = [];
 
-    for (const suite of testSuites) {
-      const testResults: TestResults = {
-        region: suite.region,
-        results: {},
-        errors: {},
-      };
+      for (const region of regions) {
+        const testResults: TestResults = {
+          region: region,
+          results: {},
+          errors: {},
+        };
 
-      setActiveRegion(suite.region);
+        setActiveRegion(region);
+        setActiveTest('Preflight Test');
 
-      for (const test of suite.tests) {
-        setActiveTest(test.name);
         try {
-          const result = await test.start();
-          testResults.results[test.kind] = result as any;
+          const voiceToken = await getVoiceToken();
+          testResults.results.preflight = await preflightTestRunner(region, voiceToken);
         } catch (err) {
-          testResults.errors[test.kind] = err;
-          break; // Stops remaining tests
+          testResults.errors.preflight = err;
         }
+
+        if (!testResults.errors.preflight) {
+          setActiveTest('Bitrate Test');
+          try {
+            const TURNCredentials = await getTURNCredentials();
+            testResults.results.bitrate = await bitrateTestRunner(region, TURNCredentials);
+          } catch (err) {
+            testResults.errors.bitrate = err;
+          }
+        }
+
+        setResults((prevResults) => [...prevResults, testResults]);
+        allResults.push(testResults);
       }
 
-      setResults((prevResults) => [...prevResults, testResults]);
-      allResults.push(testResults);
-    }
-
-    setActiveTest(undefined);
-    setActiveRegion(undefined);
-    setIsRunning(false);
-    return allResults;
-  }, []);
+      setActiveTest(undefined);
+      setActiveRegion(undefined);
+      setIsRunning(false);
+      return allResults;
+    },
+    []
+  );
 
   return {
     isRunning,
     activeTest,
     results,
     activeRegion,
-    startTests,
+    runTests,
   };
 }
