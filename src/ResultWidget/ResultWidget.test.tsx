@@ -84,7 +84,7 @@ const snapshotMapper: OutputMapper = (json) => {
 };
 
 describe('the ResultWidget component', () => {
-  it('should should not render when results are not present', () => {
+  it('should not render when results are not present', () => {
     const wrapper = shallow(<ResultWidget />);
     expect(wrapper.find(TableContainer).exists()).toBe(false);
   });

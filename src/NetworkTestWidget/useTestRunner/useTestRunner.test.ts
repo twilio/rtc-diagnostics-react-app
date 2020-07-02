@@ -16,7 +16,7 @@ const mockPreflightTestRunner = preflightTestRunner as jest.Mock<any>;
 describe('the useTestRunner hook', () => {
   beforeEach(jest.clearAllMocks);
 
-  it('should should correcly run all tests and update its state accordingly', async () => {
+  it('should correcly run all tests and update its state accordingly', async () => {
     mockBitrateTestRunner.mockImplementation(() => resolvePromise('mockBitrateResult'));
     mockPreflightTestRunner.mockImplementation(() => resolvePromise('mockPreflightResult'));
 
