@@ -10,7 +10,7 @@ describe('the bandwidth row', () => {
     });
 
     it('should return the averageBitrate when preflight tests results are available', () => {
-      let testResult = set({}, 'results.bitrate.averageBitrate', 1000) as TestResults;
+      let testResult = set({}, 'results.bitrate.averageBitrate', 1000.234) as TestResults;
       testResult = set(testResult, 'results.preflight', {});
       expect(bandwidth.getValue(testResult)).toBe(1000);
     });
