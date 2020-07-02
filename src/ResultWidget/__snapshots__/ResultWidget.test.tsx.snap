@@ -1,0 +1,403 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the ResultWidget component should render correctly when results are present 1`] = `
+<Table
+  className="makeStyles-table-1"
+>
+  <TableHead>
+    <TableRow>
+      <TableCell />
+      <TableCell
+        key="roaming"
+      >
+        Roaming (Ashburn)
+      </TableCell>
+      <TableCell
+        key="tokyo"
+      >
+        Tokyo
+      </TableCell>
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    <TableRow
+      key="Signalling Servers Reachable"
+    >
+      <TableCell>
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          Signalling Servers Reachable
+          <Tooltip
+            interactive={true}
+            leaveDelay={250}
+            placement="top"
+            title={
+              <Unknown>
+                Tests connectivity to the Signalling servers. See
+                 
+                <Unknown
+                  href="https://www.twilio.com/docs/voice/client/javascript/voice-client-js-and-mobile-sdks-network-connectivity-requirements#signalling-connectivity-requirements"
+                >
+                  connectivity requirements
+                </Unknown>
+                 
+                for more information. Calls cannot be established without connectivity to the signalling servers
+              </Unknown>
+            }
+          >
+            <InfoIcon />
+          </Tooltip>
+        </div>
+      </TableCell>
+      <TableCell
+        key="roaming"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          Yes
+        </div>
+      </TableCell>
+      <TableCell
+        className="makeStyles-error-4"
+        key="tokyo"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          No
+          <Tooltip
+            interactive={true}
+            leaveDelay={250}
+            placement="top"
+            title={
+              <Unknown>
+                The Signalling server could not be reached. Ensure your device has internet connectivity, DNS is configured correctly, and any firewalls allow access to Twilio’s
+                 
+                <Unknown
+                  href="https://www.twilio.com/docs/voice/client/javascript/voice-client-js-and-mobile-sdks-network-connectivity-requirements#signalling-connectivity-requirements"
+                >
+                  Signalling Servers
+                </Unknown>
+              </Unknown>
+            }
+          >
+            <InfoIcon />
+          </Tooltip>
+        </div>
+      </TableCell>
+    </TableRow>
+    <TableRow
+      key="Media Servers Reachable"
+    >
+      <TableCell>
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          Media Servers Reachable
+          <Tooltip
+            interactive={true}
+            leaveDelay={250}
+            placement="top"
+            title={
+              <Unknown>
+                Tests connectivity to the Media servers. See
+                 
+                <Unknown
+                  href="https://www.twilio.com/docs/voice/client/javascript/voice-client-js-and-mobile-sdks-network-connectivity-requirements#voice-media-servers-connectivity-requirements"
+                >
+                  media connectivity requirements
+                </Unknown>
+                for more information. Unreachable media servers cause the call to drop prematurely and could cause one way audio type issues.
+              </Unknown>
+            }
+          >
+            <InfoIcon />
+          </Tooltip>
+        </div>
+      </TableCell>
+      <TableCell
+        className="makeStyles-warn-3"
+        key="roaming"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          Yes (TURN UDP)
+        </div>
+      </TableCell>
+      <TableCell
+        key="tokyo"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          Did not run
+        </div>
+      </TableCell>
+    </TableRow>
+    <TableRow
+      key="Time to Media"
+    >
+      <TableCell>
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          Time to Media
+          <Tooltip
+            interactive={true}
+            leaveDelay={250}
+            placement="top"
+            title={
+              <Unknown>
+                The time it takes for the media to flow between the caller and callee after the callee picks up. The lower the better. A high value indicates latency issues in the connection between the endpoints.
+              </Unknown>
+            }
+          >
+            <InfoIcon />
+          </Tooltip>
+        </div>
+      </TableCell>
+      <TableCell
+        key="roaming"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          1618
+        </div>
+      </TableCell>
+      <TableCell
+        key="tokyo"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        />
+      </TableCell>
+    </TableRow>
+    <TableRow
+      key="Jitter min/avg/max"
+    >
+      <TableCell>
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          Jitter min/avg/max
+          <Tooltip
+            interactive={true}
+            leaveDelay={250}
+            placement="top"
+            title={
+              <Unknown>
+                Jitter is a measure of incoming audio packets time variance. A high value for jitter results in deterioration of sound quality and may introduce unacceptable latency.
+              </Unknown>
+            }
+          >
+            <InfoIcon />
+          </Tooltip>
+        </div>
+      </TableCell>
+      <TableCell
+        key="roaming"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          2 / 5.44 / 9
+        </div>
+      </TableCell>
+      <TableCell
+        key="tokyo"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        />
+      </TableCell>
+    </TableRow>
+    <TableRow
+      key="Latency (ms) min/avg/max"
+    >
+      <TableCell>
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          Latency (ms) min/avg/max
+          <Tooltip
+            interactive={true}
+            leaveDelay={250}
+            placement="top"
+            title={
+              <Unknown>
+                Latency is the time a packet of data takes from sender to receiver. High latency leads to poor user experience as speakers unknowingly begin to talk over each other. Latency is usually attributed to slow or overloaded networks
+              </Unknown>
+            }
+          >
+            <InfoIcon />
+          </Tooltip>
+        </div>
+      </TableCell>
+      <TableCell
+        key="roaming"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          54 / 70 / 212
+        </div>
+      </TableCell>
+      <TableCell
+        key="tokyo"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        />
+      </TableCell>
+    </TableRow>
+    <TableRow
+      key="Packet Loss"
+    >
+      <TableCell>
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          Packet Loss
+          <Tooltip
+            interactive={true}
+            leaveDelay={250}
+            placement="top"
+            title={
+              <Unknown>
+                The percentage of packets lost. High packet loss results in missing audio fragments leading to unintelligible speech. Packet loss is usually caused by overloaded routers
+              </Unknown>
+            }
+          >
+            <InfoIcon />
+          </Tooltip>
+        </div>
+      </TableCell>
+      <TableCell
+        key="roaming"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          2%
+        </div>
+      </TableCell>
+      <TableCell
+        key="tokyo"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        />
+      </TableCell>
+    </TableRow>
+    <TableRow
+      key="Bandwidth (kbps)"
+    >
+      <TableCell>
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          Bandwidth (kbps)
+          <Tooltip
+            interactive={true}
+            leaveDelay={250}
+            placement="top"
+            title={
+              <Unknown>
+                The bandwidth test performs a symmetrical bandwidth test using a loopback loop through a TURN server.
+              </Unknown>
+            }
+          >
+            <InfoIcon />
+          </Tooltip>
+        </div>
+      </TableCell>
+      <TableCell
+        key="roaming"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          2875
+        </div>
+      </TableCell>
+      <TableCell
+        key="tokyo"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        />
+      </TableCell>
+    </TableRow>
+    <TableRow
+      key="Expected Audio Quality (MOS)"
+    >
+      <TableCell>
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          Expected Audio Quality (MOS)
+          <Tooltip
+            interactive={true}
+            leaveDelay={250}
+            placement="top"
+            title={
+              <Unknown>
+                Expected audio quality is calculated from jitter, latency, and packet loss measured. A measure of 3.5 and above is needed for good user experience.
+              </Unknown>
+            }
+          >
+            <InfoIcon />
+          </Tooltip>
+        </div>
+      </TableCell>
+      <TableCell
+        key="roaming"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          Excellent (4.39)
+        </div>
+      </TableCell>
+      <TableCell
+        key="tokyo"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        />
+      </TableCell>
+    </TableRow>
+    <TableRow
+      key="Call SID"
+    >
+      <TableCell>
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          Call SID
+        </div>
+      </TableCell>
+      <TableCell
+        key="roaming"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        >
+          CA12345
+        </div>
+      </TableCell>
+      <TableCell
+        key="tokyo"
+      >
+        <div
+          className="makeStyles-tableCellContent-2"
+        />
+      </TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+`;
