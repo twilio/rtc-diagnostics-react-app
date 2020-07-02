@@ -9,7 +9,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import { regionNameMap } from '../../utils';
 
-import { BITRATE_TEST_DURATION } from '../Tests';
+import { BITRATE_TEST_DURATION } from '../Tests/Tests';
 import { NetworkTestName, Region, TestResults } from '../../types';
 
 import { rows } from '../../ResultWidget/rows';

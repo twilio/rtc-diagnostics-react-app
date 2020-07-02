@@ -1,7 +1,7 @@
 import { testBitrate, BitrateTest } from '@twilio/rtc-diagnostics';
 import { Device, Connection, PreflightTest } from 'twilio-client';
-import { regionalizeIceUrls } from '../utils';
-import { Region } from '../types';
+import { regionalizeIceUrls } from '../../utils';
+import { Region } from '../../types';
 import RTCSample from 'twilio-client/es5/twilio/rtc/sample';
 
 const preflightOptions: PreflightTest.Options = {
