@@ -6,13 +6,13 @@ import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
 import WarningIcon from '@material-ui/icons/Warning';
-import ProgressBar from './ProgressBar/ProgressBar';
-import { regionNameMap } from '../utils';
+import ProgressBar from '../ProgressBar/ProgressBar';
+import { regionNameMap } from '../../utils';
 
-import { BITRATE_TEST_DURATION } from './Tests';
-import { NetworkTestName, Region, TestResults } from '../types';
+import { BITRATE_TEST_DURATION } from '../Tests';
+import { NetworkTestName, Region, TestResults } from '../../types';
 
-import { rows } from '../ResultWidget/rows';
+import { rows } from '../../ResultWidget/rows';
 
 const useStyles = makeStyles({
   container: {
