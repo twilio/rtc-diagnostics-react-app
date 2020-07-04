@@ -30,7 +30,8 @@ export default function useTestRunner() {
 
         try {
           const voiceToken = await getVoiceToken();
-          testResults.results.preflight = await preflightTestRunner(region, voiceToken);
+          const iceServers = await getTURNCredentials();
+          testResults.results.preflight = await preflightTestRunner(region, voiceToken, iceServers);
         } catch (err) {
           testResults.errors.preflight = err;
         }
