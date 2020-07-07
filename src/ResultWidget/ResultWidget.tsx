@@ -18,7 +18,6 @@ import { getRegionName } from '../utils';
 import { TestWarnings, TestResults } from '../types';
 import { darken, fade, lighten } from '@material-ui/core/styles/colorManipulator';
 import { rows } from './rows';
-import { round } from '../utils';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -100,7 +99,6 @@ export default function ResultWidget(props: { results?: TestResults[] }) {
                 </TableCell>
                 {results.map((result) => {
                   const value = row.getValue(result);
-                  const displayValue = typeof value === 'number' ? round(value) : value;
                   const warning = row.getWarning?.(result);
                   const className = getTableCellClass(warning);
                   const tooltipContent = warning ? row.tooltipContent?.[warning] : null;
@@ -108,7 +106,7 @@ export default function ResultWidget(props: { results?: TestResults[] }) {
                   return (
                     <TableCell key={result.region} className={className}>
                       <div className={classes.tableCellContent}>
-                        {displayValue}
+                        {value}
                         {tooltipContent && (
                           <Tooltip title={tooltipContent} placement="top" interactive leaveDelay={250}>
                             <InfoIcon />

@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { Region, TestResults, NetworkTestName } from '../types';
-import { bitrateTestRunner, preflightTestRunner } from './Tests';
+import { Region, TestResults, NetworkTestName } from '../../types';
+import { bitrateTestRunner, preflightTestRunner } from '../Tests/Tests';
 
 export default function useTestRunner() {
   const [isRunning, setIsRunning] = useState(false);

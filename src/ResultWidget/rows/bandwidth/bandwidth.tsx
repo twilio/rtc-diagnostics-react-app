@@ -3,6 +3,7 @@ import React from 'react';
 import { TestResults, TestWarnings } from '../../../types';
 import { Row, Typography } from '../shared';
 import { Connection } from 'twilio-client';
+import { round } from '../../../utils';
 
 // These audio codecs require different amounts of bandwidth to perform well.
 // The bandwidth warning that is displayed to the user will have a different
@@ -14,7 +15,10 @@ const codecBandwidthThresholds = {
 
 const row: Row = {
   label: 'Bandwidth (kbps)',
-  getValue: (testResults: TestResults) => testResults.results.preflight && testResults.results.bitrate?.averageBitrate,
+  getValue: (testResults: TestResults) => {
+    const value = testResults.results.preflight && testResults.results.bitrate?.averageBitrate;
+    return typeof value === 'number' ? round(value, 0) : value;
+  },
   getWarning: (testResults: TestResults) => {
     if (!testResults.results.preflight) {
       return TestWarnings.none;
