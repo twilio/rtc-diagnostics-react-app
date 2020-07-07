@@ -16,7 +16,7 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "twilio": "^3.43.1",
-    "twilio-client": "^1.13.0-preview1",
+    "twilio-client": "^1.13.0-beta1",
     "typescript": "^3.7.5"
   },
   "scripts": {
