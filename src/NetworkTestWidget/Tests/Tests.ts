@@ -13,9 +13,15 @@ const preflightOptions: PreflightTest.Options = {
 
 export const BITRATE_TEST_DURATION = 15000;
 
-export function preflightTestRunner(region: Region, token: string) {
+export function preflightTestRunner(region: Region, token: string, iceServers: RTCIceServer[]) {
+  const updatedIceServers = regionalizeIceUrls(region, iceServers);
+
   return new Promise<PreflightTest.Report>((resolve, reject) => {
-    const preflightTest = Device.testPreflight(token, { ...preflightOptions, edge: region });
+    const preflightTest = Device.testPreflight(token, {
+      ...preflightOptions,
+      edge: region,
+      iceServers: updatedIceServers,
+    });
     let hasConnected = false;
     let latestSample: RTCSample;
 

@@ -30,7 +30,8 @@ export default function useTestRunner() {
 
         try {
           const voiceToken = await getVoiceToken();
-          testResults.results.preflight = await preflightTestRunner(region, voiceToken);
+          const iceServers = await getTURNCredentials();
+          testResults.results.preflight = await preflightTestRunner(region, voiceToken, iceServers);
         } catch (err) {
           testResults.errors.preflight = err;
         }
@@ -38,8 +39,8 @@ export default function useTestRunner() {
         if (!testResults.errors.preflight) {
           setActiveTest('Bitrate Test');
           try {
-            const TURNCredentials = await getTURNCredentials();
-            testResults.results.bitrate = await bitrateTestRunner(region, TURNCredentials);
+            const iceServers = await getTURNCredentials();
+            testResults.results.bitrate = await bitrateTestRunner(region, iceServers);
           } catch (err) {
             testResults.errors.bitrate = err;
           }
