@@ -65,9 +65,11 @@ describe('the useTestRunner hook', () => {
     expect(result.current.activeTest).toBe(undefined);
     expect(result.current.activeRegion).toBe(undefined);
 
-    // Expect these functions to be called once for every region
+    // Expect this function to be called once for every region
     expect(mockGetVoiceToken).toHaveBeenCalledTimes(2);
-    expect(mockGetTURNCredentils).toHaveBeenCalledTimes(2);
+
+    // Expect this function to be called twice for every region
+    expect(mockGetTURNCredentils).toHaveBeenCalledTimes(4);
   });
 
   it('should not run bitrate test when preflight test fails', async () => {
@@ -95,7 +97,7 @@ describe('the useTestRunner hook', () => {
     expect(result.current.isRunning).toBe(false);
 
     expect(mockGetVoiceToken).toHaveBeenCalledTimes(1);
-    expect(mockGetTURNCredentils).toHaveBeenCalledTimes(0);
+    expect(mockGetTURNCredentils).toHaveBeenCalledTimes(1);
   });
 
   it('should correctly report bitrate errors when the preflight test succeeds', async () => {
@@ -127,6 +129,6 @@ describe('the useTestRunner hook', () => {
     expect(result.current.isRunning).toBe(false);
 
     expect(mockGetVoiceToken).toHaveBeenCalledTimes(1);
-    expect(mockGetTURNCredentils).toHaveBeenCalledTimes(1);
+    expect(mockGetTURNCredentils).toHaveBeenCalledTimes(2);
   });
 });
