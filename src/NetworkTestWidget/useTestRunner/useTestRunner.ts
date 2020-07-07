@@ -39,8 +39,8 @@ export default function useTestRunner() {
         if (!testResults.errors.preflight) {
           setActiveTest('Bitrate Test');
           try {
-            const TURNCredentials = await getTURNCredentials();
-            testResults.results.bitrate = await bitrateTestRunner(region, TURNCredentials);
+            const iceServers = await getTURNCredentials();
+            testResults.results.bitrate = await bitrateTestRunner(region, iceServers);
           } catch (err) {
             testResults.errors.bitrate = err;
           }
