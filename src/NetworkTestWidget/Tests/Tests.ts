@@ -1,12 +1,15 @@
 import { testBitrate, BitrateTest } from '@twilio/rtc-diagnostics';
 import { Device, Connection, PreflightTest } from 'twilio-client';
+import log from 'loglevel';
 import { regionalizeIceUrls } from '../../utils';
 import { Region } from '../../types';
 import RTCSample from 'twilio-client/es5/twilio/rtc/sample';
 
+log.setLevel(process.env.NODE_ENV === 'development' ? 'debug' : 'error', false);
+
 const preflightOptions: PreflightTest.Options = {
   codecPreferences: [Connection.Codec.Opus, Connection.Codec.PCMU],
-  debug: false,
+  debug: process.env.NODE_ENV === 'development',
   signalingTimeoutMs: 10000,
   fakeMicInput: true,
 };
@@ -26,12 +29,12 @@ export function preflightTestRunner(region: Region, token: string, iceServers: R
     let latestSample: RTCSample;
 
     preflightTest.on(PreflightTest.Events.Completed, (report: PreflightTest.Report) => {
-      console.log('Preflight Test - report: ', report);
+      log.debug('Preflight Test - report: ', report);
       resolve(report);
     });
 
     preflightTest.on(PreflightTest.Events.Connected, () => {
-      console.log('Preflight Test - connected');
+      log.debug('Preflight Test - connected');
       hasConnected = true;
     });
 
@@ -40,14 +43,14 @@ export function preflightTestRunner(region: Region, token: string, iceServers: R
     });
 
     preflightTest.on(PreflightTest.Events.Failed, (error) => {
-      console.log('Preflight Test - failed: ', error);
+      log.debug('Preflight Test - failed: ', error);
       error.hasConnected = hasConnected;
       error.latestSample = latestSample;
       reject(error);
     });
 
     preflightTest.on(PreflightTest.Events.Warning, (warningName, warningData) => {
-      console.log('Preflight Test - warning: ', warningName, warningData);
+      log.debug('Preflight Test - warning: ', warningName, warningData);
     });
   });
 }
@@ -59,16 +62,16 @@ export function bitrateTestRunner(region: Region, iceServers: BitrateTest.Option
     const bitrateTest = testBitrate({ iceServers: updatedIceServers });
 
     bitrateTest.on(BitrateTest.Events.Bitrate, (bitrate) => {
-      console.log('Bitrate Test - bitrate: ', bitrate);
+      log.debug('Bitrate Test - bitrate: ', bitrate);
     });
 
     bitrateTest.on(BitrateTest.Events.Error, (error) => {
-      console.log('Bitrate Test - error: ', error);
+      log.debug('Bitrate Test - error: ', error);
       reject(error);
     });
 
     bitrateTest.on(BitrateTest.Events.End, (report) => {
-      console.log('Bitrate Test - end: ', report);
+      log.debug('Bitrate Test - end: ', report);
       resolve(report);
     });
 
