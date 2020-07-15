@@ -1,12 +1,12 @@
 import { testBitrate, BitrateTest } from '@twilio/rtc-diagnostics';
 import { Device, Connection, PreflightTest } from 'twilio-client';
 import { getLogger } from 'loglevel';
-import { name as packageName } from '../../../package.json';
+import { name as appName } from '../../../package.json';
 import { regionalizeIceUrls } from '../../utils';
 import { Region } from '../../types';
 import RTCSample from 'twilio-client/es5/twilio/rtc/sample';
 
-const log = getLogger(packageName);
+const log = getLogger(appName);
 const level = process.env.NODE_ENV === 'development' ? 'debug' : 'error';
 
 log.setLevel(level, false);
