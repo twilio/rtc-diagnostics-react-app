@@ -1,16 +1,17 @@
 import { testBitrate, BitrateTest } from '@twilio/rtc-diagnostics';
 import { Device, Connection, PreflightTest } from 'twilio-client';
 import { getLogger } from 'loglevel';
+import { name as packageName } from '../../../package.json';
 import { regionalizeIceUrls } from '../../utils';
 import { Region } from '../../types';
 import RTCSample from 'twilio-client/es5/twilio/rtc/sample';
 
-const log = getLogger(require('../../../package.json').name);
+const log = getLogger(packageName);
 const level = process.env.NODE_ENV === 'development' ? 'debug' : 'error';
 
 log.setLevel(level, false);
 // Set the log level for client js
-getLogger(Device.packageName).setLevel(level);
+getLogger(Device.packageName).setLevel(level, false);
 
 const preflightOptions: PreflightTest.Options = {
   codecPreferences: [Connection.Codec.Opus, Connection.Codec.PCMU],
