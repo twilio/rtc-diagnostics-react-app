@@ -25,6 +25,7 @@ jest.mock('@twilio/rtc-diagnostics', () => ({
 jest.mock('twilio-client', () => ({
   Device: {
     testPreflight: jest.fn(() => mockPreflightTest),
+    packageName: 'twilio-client',
   },
   PreflightTest: {
     Events: {
