@@ -85,7 +85,7 @@ export default function RegionResult(props: RegionResultProps) {
             {hasError && <CloseIcon style={{ fill: '#d00' }} />}
             {!hasError && hasWarning && <WarningIcon style={{ fill: '#ff0', stroke: '#555' }} />}
             {!hasError && !hasWarning && <CheckIcon style={{ fill: '#090' }} />}
-            <Tooltip title={getTooltipContent(result)} placement="top">
+            <Tooltip title={getTooltipContent(result)} placement="top" interactive>
               <InfoIcon />
             </Tooltip>
           </>
