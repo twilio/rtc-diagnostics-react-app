@@ -8,9 +8,9 @@ import CheckIcon from '@material-ui/icons/Check';
 import WarningIcon from '@material-ui/icons/Warning';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import { regionNameMap } from '../../utils';
-import { Typography as TooltipTypography } from '../../ResultWidget/rows/shared';
 
 import { BITRATE_TEST_DURATION } from '../Tests/Tests';
+import getTooltipContent from './getTooltipContent';
 import { NetworkTestName, Region, TestResults } from '../../types';
 
 import { rows } from '../../ResultWidget/rows';
@@ -63,29 +63,6 @@ const progressBarTimings = {
   },
 };
 
-function getTooltipContent(result?: TestResults) {
-  if (!result) return () => null;
-
-  const warnings = rows
-    .map((row) => {
-      const warning = row.getWarning?.(result);
-      return warning ? row.tooltipContent?.[warning] : null;
-    })
-    .filter((content) => content !== null)
-    .map((content, i) => <React.Fragment key={i}>{content}</React.Fragment>); // Adding keys to suppress dev warning
-
-  const expectedQualityRow = rows.find((row) => row.label === 'Expected Audio Quality (MOS)');
-  const expectedQualityValue = expectedQualityRow!.getValue(result);
-
-  if (expectedQualityValue) {
-    warnings.unshift(
-      <TooltipTypography key="quality">Expected call quality: {expectedQualityValue}</TooltipTypography>
-    );
-  }
-
-  return warnings;
-}
-
 export default function RegionResult(props: RegionResultProps) {
   const { region, isActive, result, activeTest } = props;
   const classes = useStyles();
@@ -95,8 +72,6 @@ export default function RegionResult(props: RegionResultProps) {
 
   const progressDuration = activeTest ? progressBarTimings[activeTest].duration : 0;
   const progressPosition = activeTest ? progressBarTimings[activeTest].position : 0;
-
-  const tooltipContent = getTooltipContent(result);
 
   return (
     <div className={clsx(classes.container, { [classes.pendingTest]: !isActive && !result })}>
@@ -110,7 +85,7 @@ export default function RegionResult(props: RegionResultProps) {
             {hasError && <CloseIcon style={{ fill: '#d00' }} />}
             {!hasError && hasWarning && <WarningIcon style={{ fill: '#ff0', stroke: '#555' }} />}
             {!hasError && !hasWarning && <CheckIcon style={{ fill: '#090' }} />}
-            <Tooltip title={tooltipContent} placement="top">
+            <Tooltip title={getTooltipContent(result)} placement="top">
               <InfoIcon />
             </Tooltip>
           </>
