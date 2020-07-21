@@ -1,9 +1,9 @@
 import React from 'react';
-import { TestResults } from '../types';
-import { maxBy } from 'lodash';
-import { getRegionName } from '../utils';
-import { Typography } from '@material-ui/core';
 import expectedQualityRow from '../ResultWidget/rows/expectedQuality/expectedQuality';
+import { getRegionName } from '../utils';
+import { maxBy } from 'lodash';
+import { TestResults } from '../types';
+import { Typography } from '@material-ui/core';
 
 export default function SummaryWidget({ results }: { results?: TestResults[] }) {
   if (!results) return null;

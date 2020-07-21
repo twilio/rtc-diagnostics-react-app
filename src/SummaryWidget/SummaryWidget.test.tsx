@@ -37,14 +37,13 @@ describe('the SummaryWidget component', () => {
     expect(wrapper.at(0).text()).toBe('Expected Call Quality: Great (5)Recommended Region: Dublin');
   });
 
-  it('should not render when "results" is null', () => {
+  it('should not render when "results" is undefined', () => {
     const wrapper = shallow(<SummaryWidget results={undefined} />);
     expect(wrapper.get(0)).toBe(null);
   });
 
   it('should not render when the "results" array has no results', () => {
-    const errors = [{ results: {} }, { results: {} }];
-    const wrapper = shallow(<SummaryWidget results={errors as any} />);
+    const wrapper = shallow(<SummaryWidget results={[{ results: {} }, { results: {} }] as any} />);
     expect(wrapper.get(0)).toBe(null);
   });
 });
