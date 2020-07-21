@@ -1,5 +1,5 @@
 import packetLossRow from './packetLoss';
-import set from 'lodash.set';
+import { set } from 'lodash';
 import { TestResults, TestWarnings } from '../../../types';
 
 describe('the packetLoss row', () => {
