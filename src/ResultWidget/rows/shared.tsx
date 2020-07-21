@@ -1,6 +1,7 @@
 import React from 'react';
 import { TestWarnings, TestResults } from '../../types';
 import { Link as LinkImpl, Typography as TypographyImpl } from '@material-ui/core';
+import { styled } from '@material-ui/core/styles';
 
 export type RowLabel =
   | 'Signalling Servers Reachable'
@@ -36,6 +37,12 @@ export const Link = ({ children, href }: { children: string; href: string }) => 
   </LinkImpl>
 );
 
+const StyledTypography = styled(TypographyImpl)({
+  '&:not(:last-child)': {
+    marginBottom: '0.6em',
+  },
+});
+
 export const Typography = ({ children }: { children: React.ReactNode }) => (
-  <TypographyImpl variant="body2">{children}</TypographyImpl>
+  <StyledTypography variant="body2">{children}</StyledTypography>
 );

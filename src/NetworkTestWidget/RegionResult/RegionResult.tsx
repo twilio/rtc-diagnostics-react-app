@@ -10,6 +10,7 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import { regionNameMap } from '../../utils';
 
 import { BITRATE_TEST_DURATION } from '../Tests/Tests';
+import getTooltipContent from './getTooltipContent';
 import { NetworkTestName, Region, TestResults } from '../../types';
 
 import { rows } from '../../ResultWidget/rows';
@@ -84,7 +85,7 @@ export default function RegionResult(props: RegionResultProps) {
             {hasError && <CloseIcon style={{ fill: '#d00' }} />}
             {!hasError && hasWarning && <WarningIcon style={{ fill: '#ff0', stroke: '#555' }} />}
             {!hasError && !hasWarning && <CheckIcon style={{ fill: '#090' }} />}
-            <Tooltip title="More information can be displayed here." placement="top">
+            <Tooltip title={getTooltipContent(result)} placement="top" interactive>
               <InfoIcon />
             </Tooltip>
           </>
