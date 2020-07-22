@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     table: {
       tableLayout: 'fixed',
+      borderTop: `1px solid ${theme.palette.divider}`,
       '& th:first-child': {
         width: '260px',
       },

@@ -1,5 +1,5 @@
 import signallingServersRow from './signallingServers';
-import set from 'lodash.set';
+import { set } from 'lodash';
 import { TestResults, TestWarnings } from '../../../types';
 
 describe('the signallingServers row', () => {

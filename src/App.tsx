@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { AppBar, Container, Toolbar, Grid, Paper, CssBaseline, makeStyles } from '@material-ui/core';
+import { AppBar, Container, Toolbar, Grid, Paper, CssBaseline, makeStyles, Typography } from '@material-ui/core';
 import CopyResultsWidget from './CopyResultsWidget/CopyResultsWidget';
 import NetworkTestWidget from './NetworkTestWidget/NetworkTestWidget';
 import ResultWidget from './ResultWidget/ResultWidget';
+import SummaryWidget from './SummaryWidget/SummaryWidget';
 
 const useStyles = makeStyles({
   container: {
@@ -10,6 +11,12 @@ const useStyles = makeStyles({
   },
   paper: {
     padding: '1.5em',
+  },
+  tableHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '1em',
   },
 });
 
@@ -49,15 +56,19 @@ function App() {
                 getVoiceToken={getVoiceToken}
                 getTURNCredentials={getTURNCredentials}
                 onComplete={(results) => setResults(results)}
-                regions={['roaming', 'tokyo']}
+                regions={['roaming', 'dublin']}
               />
+              <SummaryWidget results={results} />
             </Paper>
-          </Grid>
-          <Grid container justify="center">
-            <CopyResultsWidget results={results} />
           </Grid>
           <Grid item xs={12}>
             <Paper elevation={3}>
+              {results && (
+                <div className={classes.tableHeader}>
+                  <Typography variant="h5">Test Results:</Typography>
+                  <CopyResultsWidget results={results} />
+                </div>
+              )}
               <ResultWidget results={results} />
             </Paper>
           </Grid>
