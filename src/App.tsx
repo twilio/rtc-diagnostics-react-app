@@ -63,10 +63,12 @@ function App() {
           </Grid>
           <Grid item xs={12}>
             <Paper elevation={3}>
-              <div className={classes.tableHeader}>
-                <Typography variant="h5">Test Results:</Typography>
-                <CopyResultsWidget results={results} />
-              </div>
+              {results && (
+                <div className={classes.tableHeader}>
+                  <Typography variant="h5">Test Results:</Typography>
+                  <CopyResultsWidget results={results} />
+                </div>
+              )}
               <ResultWidget results={results} />
             </Paper>
           </Grid>
