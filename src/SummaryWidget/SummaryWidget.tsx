@@ -1,11 +1,23 @@
 import React from 'react';
+import { Alert } from '@material-ui/lab';
 import expectedQualityRow from '../ResultWidget/rows/expectedQuality/expectedQuality';
 import { getRegionName } from '../utils';
+import { makeStyles } from '@material-ui/core/styles';
 import { maxBy } from 'lodash';
 import { TestResults } from '../types';
-import { Typography } from '@material-ui/core';
+
+const useStyles = makeStyles({
+  container: {
+    marginTop: '1em 1em 0',
+    '& > div:not(:last-child)': {
+      marginBottom: '0.7em',
+    },
+  },
+});
 
 export default function SummaryWidget({ results }: { results?: TestResults[] }) {
+  const classes = useStyles();
+
   if (!results) return null;
 
   const bestRegion = maxBy(results, (result) => result.results.preflight?.stats?.mos?.average);
@@ -15,9 +27,13 @@ export default function SummaryWidget({ results }: { results?: TestResults[] }) 
     const bestRegionName = getRegionName(bestRegion);
 
     return (
-      <div>
-        <Typography variant="h6">Expected Call Quality: {bestRegionQuality}</Typography>
-        <Typography variant="h6">Recommended Region: {bestRegionName}</Typography>
+      <div className={classes.container}>
+        <Alert severity="info">
+          Expected Call Quality: <strong>{bestRegionQuality}</strong>
+        </Alert>
+        <Alert severity="info">
+          Recommended Region: <strong>{bestRegionName}</strong>
+        </Alert>
       </div>
     );
   } else {

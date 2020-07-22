@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.10.0",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@twilio-labs/serverless-api": "^2.0.1",
     "@twilio/rtc-diagnostics": "^1.0.0-preview3",
     "@types/node": "^12.12.39",

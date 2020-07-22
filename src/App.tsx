@@ -58,10 +58,6 @@ function App() {
                 onComplete={(results) => setResults(results)}
                 regions={['roaming', 'dublin']}
               />
-            </Paper>
-          </Grid>
-          <Grid container justify="center">
-            <Paper className={classes.paper} elevation={3}>
               <SummaryWidget results={results} />
             </Paper>
           </Grid>
