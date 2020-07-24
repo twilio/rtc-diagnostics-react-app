@@ -1,8 +1,10 @@
-import React from 'react';
-import { Button, Typography } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Button, Typography, IconButton, Grid } from '@material-ui/core';
 import useTestRunner from './useTestRunner/useTestRunner';
 import RegionResult from './RegionResult/RegionResult';
 import { Region } from '../types';
+import SettingsModal from './SettingsModal/SettingsModal';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 interface NetworkTestWidgetProps {
   getTURNCredentials: () => Promise<RTCIceServer[]>;
@@ -20,6 +22,7 @@ export default function NetworkTestWidget({
   regions,
 }: NetworkTestWidgetProps) {
   const { isRunning, results, activeRegion, runTests, activeTest } = useTestRunner();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   async function startTest() {
     const testResults = await runTests(getVoiceToken, getTURNCredentials, regions);
@@ -28,9 +31,12 @@ export default function NetworkTestWidget({
 
   return (
     <div>
-      <Typography variant="h4" style={{ marginBottom: '0.5em' }}>
-        Connectivity and Bandwidth Tests
-      </Typography>
+      <Grid container alignItems="center" justify="space-between" style={{ marginBottom: '1em' }}>
+        <Typography variant="h4">Connectivity and Bandwidth Tests</Typography>
+        <IconButton onClick={() => setIsSettingsOpen(true)}>
+          <SettingsIcon />
+        </IconButton>
+      </Grid>
       {(isRunning || results.length > 0) && (
         <div>
           {regions.map((region, i) => (
@@ -47,6 +53,7 @@ export default function NetworkTestWidget({
       <Button onClick={startTest} variant="contained" color="secondary" disabled={isRunning}>
         Start
       </Button>
+      <SettingsModal isOpen={isSettingsOpen} handleClose={() => setIsSettingsOpen(false)} />
     </div>
   );
 }
