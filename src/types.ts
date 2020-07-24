@@ -42,16 +42,16 @@ export enum TestWarnings {
 }
 
 export type Region =
-  | 'sydney'
-  | 'sao-paolo'
+  | 'ashburn'
   | 'dublin'
   | 'frankfurt'
-  | 'tokyo'
-  | 'singapore'
-  | 'ashburn'
   | 'roaming'
+  | 'sao-paolo'
+  | 'singapore'
+  | 'sydney'
+  | 'tokyo'
   | 'ashburn-ix'
-  | 'san-jose-ix'
   | 'london-ix'
   | 'frankfurt-ix'
+  | 'san-jose-ix'
   | 'singapore-ix';
