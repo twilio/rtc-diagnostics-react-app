@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Typography, IconButton, Grid } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import useTestRunner from './useTestRunner/useTestRunner';
 import RegionResult from './RegionResult/RegionResult';
 import { Region } from '../types';
@@ -31,12 +31,9 @@ export default function NetworkTestWidget({
 
   return (
     <div>
-      <Grid container alignItems="center" justify="space-between" style={{ marginBottom: '1em' }}>
-        <Typography variant="h4">Connectivity and Bandwidth Tests</Typography>
-        <IconButton onClick={() => setIsSettingsOpen(true)}>
-          <SettingsIcon />
-        </IconButton>
-      </Grid>
+      <Typography variant="h4" paragraph>
+        Connectivity and Bandwidth Tests
+      </Typography>
       {(isRunning || results.length > 0) && (
         <div>
           {regions.map((region, i) => (
@@ -50,8 +47,18 @@ export default function NetworkTestWidget({
           ))}
         </div>
       )}
-      <Button onClick={startTest} variant="contained" color="secondary" disabled={isRunning}>
+      <Button
+        onClick={startTest}
+        variant="contained"
+        color="secondary"
+        disabled={isRunning}
+        style={{ marginRight: '1em' }}
+      >
         Start
+      </Button>
+      <Button onClick={() => setIsSettingsOpen(true)} color="secondary" disabled={isRunning}>
+        <SettingsIcon style={{ marginRight: '0.3em' }} />
+        Settings
       </Button>
       <SettingsModal isOpen={isSettingsOpen} handleClose={() => setIsSettingsOpen(false)} />
     </div>
