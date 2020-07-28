@@ -14,7 +14,6 @@ log.setLevel(level, false);
 getLogger(Device.packageName).setLevel(level, false);
 
 const preflightOptions: PreflightTest.Options = {
-  codecPreferences: [Connection.Codec.Opus, Connection.Codec.PCMU],
   debug: false,
   signalingTimeoutMs: 10000,
   fakeMicInput: true,
@@ -22,7 +21,12 @@ const preflightOptions: PreflightTest.Options = {
 
 export const BITRATE_TEST_DURATION = 15000;
 
-export function preflightTestRunner(region: Region, token: string, iceServers: RTCIceServer[]) {
+export function preflightTestRunner(
+  region: Region,
+  token: string,
+  iceServers: RTCIceServer[],
+  codecPreferences: Connection.Codec[]
+) {
   const updatedIceServers = regionalizeIceUrls(region, iceServers);
 
   return new Promise<PreflightTest.Report>((resolve, reject) => {
@@ -30,6 +34,7 @@ export function preflightTestRunner(region: Region, token: string, iceServers: R
       ...preflightOptions,
       edge: region,
       iceServers: updatedIceServers,
+      codecPreferences,
     });
     let hasConnected = false;
     let latestSample: RTCSample;
