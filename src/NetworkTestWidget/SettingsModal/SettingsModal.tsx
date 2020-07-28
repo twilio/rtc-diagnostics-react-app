@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   Grid,
   Checkbox,
-  FormControl,
   FormControlLabel,
   FormGroup,
   Typography,
@@ -13,6 +12,8 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Region } from '../../types';
+import { Connection } from 'twilio-client';
+import { DEFAULT_CODEC_PREFERENCES, DEFAULT_REGIONS } from '../../constants';
 
 const useStyles = makeStyles({
   container: {
@@ -31,10 +32,10 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-  ashburn: true,
+  ashburn: false,
   dublin: false,
   frankfurt: false,
-  roaming: true,
+  roaming: false,
   'sao-paolo': false,
   singapore: false,
   sydney: false,
@@ -46,24 +47,63 @@ const initialState: InitialState = {
   'singapore-ix': false,
 };
 
-export default function SettingsModal({ isOpen, handleClose }: { isOpen: boolean; handleClose: () => void }) {
+DEFAULT_REGIONS.forEach((region) => (initialState[region] = true));
+
+const codecMap = {
+  [Connection.Codec.Opus]: [Connection.Codec.Opus],
+  [Connection.Codec.PCMU]: [Connection.Codec.PCMU],
+  [Connection.Codec.Opus + Connection.Codec.PCMU]: [Connection.Codec.Opus, Connection.Codec.PCMU],
+  [Connection.Codec.PCMU + Connection.Codec.Opus]: [Connection.Codec.PCMU, Connection.Codec.Opus],
+};
+
+export default function SettingsModal({
+  isOpen,
+  onSettingsChange,
+}: {
+  isOpen: boolean;
+  onSettingsChange: (q: any) => void;
+}) {
   const classes = useStyles();
 
-  const [regions, setRegions] = React.useState(initialState);
-  const [codecState, setCodecState] = React.useState<string>('Opus');
+  const [regions, setRegions] = useState(initialState);
+  const [codec, setCodec] = useState<string>(DEFAULT_CODEC_PREFERENCES.join(''));
+
+  const getRegionArray = (regionObj: InitialState) =>
+    Object.entries(regionObj)
+      .filter((e) => e[1])
+      .map((e) => e[0]);
 
   const handleRegionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRegions({ ...regions, [event.target.name]: event.target.checked });
+    const regionName = event.target.name;
+    const isChecked = event.target.checked;
+
+    setRegions((prevRegions) => {
+      const newRegions = { ...prevRegions, [regionName]: isChecked };
+      const newRegionsArrayLength = getRegionArray(newRegions).length;
+
+      if (newRegionsArrayLength > 0 && newRegionsArrayLength < 7) {
+        return newRegions;
+      } else {
+        return prevRegions;
+      }
+    });
   };
 
   const handleCodecChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCodecState(event.target.name);
+    setCodec(event.target.name);
+  };
+
+  const handleClose = () => {
+    onSettingsChange({
+      regions: getRegionArray(regions),
+      codecPreferences: codecMap[codec],
+    });
   };
 
   return (
-    <Dialog open={isOpen}>
+    <Dialog open={isOpen} onClose={handleClose}>
       <Grid container className={classes.container}>
-        <FormControl required error={false} className={classes.innerContainer}>
+        <form className={classes.innerContainer}>
           <Typography gutterBottom>
             <strong>Regions:</strong>
           </Typography>
@@ -133,31 +173,57 @@ export default function SettingsModal({ isOpen, handleClose }: { isOpen: boolean
               </Grid>
             </Grid>
           </FormGroup>
-        </FormControl>
 
-        <Divider style={{ width: '100%' }} />
+          <Divider style={{ margin: '1em 0' }} />
 
-        <FormControl required error={false} component="fieldset" className={classes.innerContainer}>
           <Typography gutterBottom>
             <strong>Audio Codecs:</strong>
           </Typography>
           <FormGroup>
             <Grid container direction="column">
               <FormControlLabel
-                control={<Radio checked={codecState === 'Opus'} onChange={handleCodecChange} name="Opus" />}
+                control={
+                  <Radio
+                    checked={codec === Connection.Codec.Opus}
+                    onChange={handleCodecChange}
+                    name={Connection.Codec.Opus}
+                  />
+                }
                 label="Opus"
               />
               <FormControlLabel
-                control={<Radio checked={codecState === 'PCMU'} onChange={handleCodecChange} name="PCMU" />}
+                control={
+                  <Radio
+                    checked={codec === Connection.Codec.PCMU}
+                    onChange={handleCodecChange}
+                    name={Connection.Codec.PCMU}
+                  />
+                }
                 label="PCMU"
               />
               <FormControlLabel
-                control={<Radio checked={codecState === 'both'} onChange={handleCodecChange} name="Both" />}
-                label="Both"
+                control={
+                  <Radio
+                    checked={codec === Connection.Codec.Opus + Connection.Codec.PCMU}
+                    onChange={handleCodecChange}
+                    name={Connection.Codec.Opus + Connection.Codec.PCMU}
+                  />
+                }
+                label="Opus, PCMU"
+              />
+              <FormControlLabel
+                control={
+                  <Radio
+                    checked={codec === Connection.Codec.PCMU + Connection.Codec.Opus}
+                    onChange={handleCodecChange}
+                    name={Connection.Codec.PCMU + Connection.Codec.Opus}
+                  />
+                }
+                label="PCMU, Opus"
               />
             </Grid>
           </FormGroup>
-        </FormControl>
+        </form>
       </Grid>
       <Divider />
       <Grid container justify="flex-end">
