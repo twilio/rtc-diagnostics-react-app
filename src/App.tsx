@@ -56,7 +56,6 @@ function App() {
                 getVoiceToken={getVoiceToken}
                 getTURNCredentials={getTURNCredentials}
                 onComplete={(results) => setResults(results)}
-                regions={['roaming', 'dublin']}
               />
               <SummaryWidget results={results} />
             </Paper>
