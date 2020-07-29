@@ -15,6 +15,8 @@ import { Region } from '../../types';
 import { Connection } from 'twilio-client';
 import { DEFAULT_CODEC_PREFERENCES, DEFAULT_REGIONS } from '../../constants';
 
+const { PCMU, Opus } = Connection.Codec;
+
 const useStyles = makeStyles({
   container: {
     padding: '1em',
@@ -50,10 +52,10 @@ const initialState: InitialState = {
 DEFAULT_REGIONS.forEach((region) => (initialState[region] = true));
 
 const codecMap = {
-  [Connection.Codec.Opus]: [Connection.Codec.Opus],
-  [Connection.Codec.PCMU]: [Connection.Codec.PCMU],
-  [Connection.Codec.Opus + Connection.Codec.PCMU]: [Connection.Codec.Opus, Connection.Codec.PCMU],
-  [Connection.Codec.PCMU + Connection.Codec.Opus]: [Connection.Codec.PCMU, Connection.Codec.Opus],
+  [Opus]: [Opus],
+  [PCMU]: [PCMU],
+  [Opus + PCMU]: [Opus, PCMU],
+  [PCMU + Opus]: [PCMU, Opus],
 };
 
 export default function SettingsModal({
@@ -182,43 +184,19 @@ export default function SettingsModal({
           <FormGroup>
             <Grid container direction="column">
               <FormControlLabel
-                control={
-                  <Radio
-                    checked={codec === Connection.Codec.Opus}
-                    onChange={handleCodecChange}
-                    name={Connection.Codec.Opus}
-                  />
-                }
+                control={<Radio checked={codec === Opus} onChange={handleCodecChange} name={Opus} />}
                 label="Opus"
               />
               <FormControlLabel
-                control={
-                  <Radio
-                    checked={codec === Connection.Codec.PCMU}
-                    onChange={handleCodecChange}
-                    name={Connection.Codec.PCMU}
-                  />
-                }
+                control={<Radio checked={codec === PCMU} onChange={handleCodecChange} name={PCMU} />}
                 label="PCMU"
               />
               <FormControlLabel
-                control={
-                  <Radio
-                    checked={codec === Connection.Codec.Opus + Connection.Codec.PCMU}
-                    onChange={handleCodecChange}
-                    name={Connection.Codec.Opus + Connection.Codec.PCMU}
-                  />
-                }
+                control={<Radio checked={codec === Opus + PCMU} onChange={handleCodecChange} name={Opus + PCMU} />}
                 label="Opus, PCMU"
               />
               <FormControlLabel
-                control={
-                  <Radio
-                    checked={codec === Connection.Codec.PCMU + Connection.Codec.Opus}
-                    onChange={handleCodecChange}
-                    name={Connection.Codec.PCMU + Connection.Codec.Opus}
-                  />
-                }
+                control={<Radio checked={codec === PCMU + Opus} onChange={handleCodecChange} name={PCMU + Opus} />}
                 label="PCMU, Opus"
               />
             </Grid>
