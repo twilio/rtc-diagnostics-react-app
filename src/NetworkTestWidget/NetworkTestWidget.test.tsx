@@ -23,7 +23,6 @@ describe('the NetworkTestWidget component', () => {
         getTURNCredentials={(() => {}) as any}
         getVoiceToken={(() => {}) as any}
         onComplete={() => {}}
-        regions={['ashburn', 'tokyo']}
       />
     );
 
@@ -45,7 +44,6 @@ describe('the NetworkTestWidget component', () => {
         getTURNCredentials={(() => {}) as any}
         getVoiceToken={(() => {}) as any}
         onComplete={() => {}}
-        regions={['ashburn', 'tokyo']}
       />
     );
 
@@ -72,7 +70,6 @@ describe('the NetworkTestWidget component', () => {
         getTURNCredentials={(() => {}) as any}
         getVoiceToken={(() => {}) as any}
         onComplete={() => {}}
-        regions={['ashburn', 'tokyo']}
       />
     );
 
@@ -100,7 +97,6 @@ describe('the NetworkTestWidget component', () => {
         getTURNCredentials={(() => {}) as any}
         getVoiceToken={(() => {}) as any}
         onComplete={mockOnComplete}
-        regions={['ashburn', 'tokyo']}
       />
     );
 

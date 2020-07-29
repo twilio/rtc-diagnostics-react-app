@@ -1,4 +1,5 @@
 import { bitrateTestRunner, preflightTestRunner, BITRATE_TEST_DURATION } from './Tests';
+import { Connection, Device } from 'twilio-client';
 import { EventEmitter } from 'events';
 
 class MockBitrateTest extends EventEmitter {
@@ -69,15 +70,27 @@ describe('the bitrateTestRunner function', () => {
 });
 
 describe('the preflightTestRunner function', () => {
+  it('should be called with the correct options', () => {
+    preflightTestRunner('ashburn', 'token', mockTurnServers, [Connection.Codec.Opus]);
+    return expect(Device.testPreflight).toHaveBeenCalledWith('token', {
+      codecPreferences: ['opus'],
+      debug: false,
+      edge: 'ashburn',
+      fakeMicInput: true,
+      iceServers: [{ url: '', urls: '' }],
+      signalingTimeoutMs: 10000,
+    });
+  });
+
   it('should resolve on "Completed" event', () => {
-    const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers);
+    const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers, [Connection.Codec.Opus]);
     mockPreflightTest.emit('Completed', { report: 'testReport' });
     return expect(preflightTest).resolves.toEqual({ report: 'testReport' });
   });
 
   describe('"Failed" event', () => {
     it('should reject', () => {
-      const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers);
+      const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers, [Connection.Codec.Opus]);
       mockPreflightTest.emit('Failed', { report: 'testReport' });
       return expect(preflightTest).rejects.toEqual({
         report: 'testReport',
@@ -87,7 +100,7 @@ describe('the preflightTestRunner function', () => {
     });
 
     it('should reject with "hasConnected" set to true after "Connected" event', () => {
-      const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers);
+      const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers, [Connection.Codec.Opus]);
       mockPreflightTest.emit('Connected');
       mockPreflightTest.emit('Failed', { report: 'testReport' });
       return expect(preflightTest).rejects.toEqual({
@@ -98,7 +111,7 @@ describe('the preflightTestRunner function', () => {
     });
 
     it('should reject with "latestSample" populated with the latest sample', () => {
-      const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers);
+      const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers, [Connection.Codec.Opus]);
       mockPreflightTest.emit('Connected');
       mockPreflightTest.emit('Sample', 'mockSample1');
       mockPreflightTest.emit('Sample', 'mockSample2');
