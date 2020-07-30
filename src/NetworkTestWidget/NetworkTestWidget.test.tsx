@@ -8,6 +8,11 @@ import useTestRunner from './useTestRunner/useTestRunner';
 jest.mock('./useTestRunner/useTestRunner');
 const mockUseTestRunner = useTestRunner as jest.Mock<any>;
 
+jest.mock('../constants', () => ({
+  DEFAULT_CODEC_PREFERENCES: ['opus'],
+  DEFAULT_REGIONS: ['ashburn', 'dublin', 'roaming'],
+}));
+
 describe('the NetworkTestWidget component', () => {
   it('should not render RegionResult components when there are no results', () => {
     mockUseTestRunner.mockImplementation(() => ({
@@ -27,16 +32,16 @@ describe('the NetworkTestWidget component', () => {
     );
 
     expect(wrapper.find(RegionResult).exists()).toBe(false);
-    expect(wrapper.find(Button).prop('disabled')).toBe(false);
+    expect(wrapper.find(Button).find({ disabled: false }).length).toBe(2);
   });
 
   it('should correctly render RegionResult components while tests are active', () => {
     mockUseTestRunner.mockImplementation(() => ({
       isRunning: true,
       results: [],
-      activeRegion: 'ashburn',
       activeTest: 'bitrate',
       runTests: jest.fn(),
+      activeRegion: 'ashburn',
     }));
 
     const wrapper = shallow(
@@ -47,13 +52,14 @@ describe('the NetworkTestWidget component', () => {
       />
     );
 
-    expect(wrapper.find(RegionResult).at(0).props()).toEqual({
+    expect(wrapper.find(RegionResult).find({ region: 'ashburn' }).props()).toEqual({
       activeTest: 'bitrate',
       isActive: true,
       region: 'ashburn',
       result: undefined,
     });
-    expect(wrapper.find(Button).prop('disabled')).toBe(true);
+
+    expect(wrapper.find(Button).find({ disabled: true }).length).toBe(2);
   });
 
   it('should correctly render RegionResult components when there are results', () => {
@@ -100,7 +106,7 @@ describe('the NetworkTestWidget component', () => {
       />
     );
 
-    wrapper.find(Button).simulate('click');
+    wrapper.find(Button).at(0).simulate('click');
 
     setImmediate(() => expect(mockOnComplete).toHaveBeenCalledWith('mockResults'));
   });
