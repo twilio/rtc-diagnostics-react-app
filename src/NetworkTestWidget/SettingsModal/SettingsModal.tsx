@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import {
-  Dialog,
-  Grid,
+  Button,
   Checkbox,
+  Dialog,
+  Divider,
   FormControlLabel,
   FormGroup,
-  Typography,
+  Grid,
   Radio,
-  Button,
-  Divider,
+  Typography,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Region } from '../../types';
 import { Connection } from 'twilio-client';
 import { DEFAULT_CODEC_PREFERENCES, DEFAULT_REGIONS } from '../../constants';
+import { makeStyles } from '@material-ui/core/styles';
+import { Region } from '../../types';
 
 const { PCMU, Opus } = Connection.Codec;
 
@@ -58,6 +58,11 @@ const codecMap = {
   [PCMU + Opus]: [PCMU, Opus],
 };
 
+const getRegionArray = (regionObj: InitialState) =>
+  Object.entries(regionObj)
+    .filter((e) => e[1])
+    .map((e) => e[0]);
+
 export default function SettingsModal({
   isOpen,
   onSettingsChange,
@@ -69,11 +74,6 @@ export default function SettingsModal({
 
   const [regions, setRegions] = useState(initialState);
   const [codec, setCodec] = useState<string>(DEFAULT_CODEC_PREFERENCES.join(''));
-
-  const getRegionArray = (regionObj: InitialState) =>
-    Object.entries(regionObj)
-      .filter((e) => e[1])
-      .map((e) => e[0]);
 
   const handleRegionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const regionName = event.target.name;
@@ -91,16 +91,13 @@ export default function SettingsModal({
     });
   };
 
-  const handleCodecChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCodec(event.target.name);
-  };
+  const handleCodecChange = (event: React.ChangeEvent<HTMLInputElement>) => setCodec(event.target.name);
 
-  const handleClose = () => {
+  const handleClose = () =>
     onSettingsChange({
       regions: getRegionArray(regions),
       codecPreferences: codecMap[codec],
     });
-  };
 
   return (
     <Dialog open={isOpen} onClose={handleClose}>

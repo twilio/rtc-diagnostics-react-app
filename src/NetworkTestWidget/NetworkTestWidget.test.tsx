@@ -39,9 +39,9 @@ describe('the NetworkTestWidget component', () => {
     mockUseTestRunner.mockImplementation(() => ({
       isRunning: true,
       results: [],
+      activeRegion: 'ashburn',
       activeTest: 'bitrate',
       runTests: jest.fn(),
-      activeRegion: 'ashburn',
     }));
 
     const wrapper = shallow(
@@ -58,7 +58,6 @@ describe('the NetworkTestWidget component', () => {
       region: 'ashburn',
       result: undefined,
     });
-
     expect(wrapper.find(Button).find({ disabled: true }).length).toBe(2);
   });
 
