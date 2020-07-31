@@ -104,7 +104,7 @@ export default function SettingsModal({
       <Grid container className={classes.container}>
         <form className={classes.innerContainer}>
           <Typography gutterBottom>
-            <strong>Regions:</strong>
+            <strong>Edge Locations:</strong>
           </Typography>
           <FormGroup>
             <Grid container>
@@ -176,7 +176,7 @@ export default function SettingsModal({
           <Divider style={{ margin: '1em 0' }} />
 
           <Typography gutterBottom>
-            <strong>Audio Codecs:</strong>
+            <strong>Codec Preferences:</strong>
           </Typography>
           <FormGroup>
             <Grid container direction="column">
