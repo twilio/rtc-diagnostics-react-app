@@ -1,6 +1,7 @@
-import useTestRunner from './useTestRunner';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { bitrateTestRunner, preflightTestRunner } from '../Tests/Tests';
+import { Connection } from 'twilio-client';
+import useTestRunner from './useTestRunner';
 
 const resolvePromise = (value: any) => new Promise<any>((resolve) => setTimeout(() => resolve(value), 10));
 const rejectPromise = (value: any) => new Promise<any>((_, reject) => setTimeout(() => reject(value), 10));
@@ -26,7 +27,7 @@ describe('the useTestRunner hook', () => {
 
     // Start the tests
     act(() => {
-      result.current.runTests(mockGetVoiceToken, mockGetTURNCredentils, ['ashburn', 'tokyo']);
+      result.current.runTests(mockGetVoiceToken, mockGetTURNCredentils, ['ashburn', 'tokyo'], [Connection.Codec.Opus]);
     });
 
     expect(result.current.isRunning).toBe(true);
@@ -81,7 +82,7 @@ describe('the useTestRunner hook', () => {
 
     // Start tests
     act(() => {
-      result.current.runTests(mockGetVoiceToken, mockGetTURNCredentils, ['ashburn']);
+      result.current.runTests(mockGetVoiceToken, mockGetTURNCredentils, ['ashburn'], [Connection.Codec.Opus]);
     });
 
     expect(result.current.isRunning).toBe(true);
@@ -109,7 +110,7 @@ describe('the useTestRunner hook', () => {
 
     // Start tests
     act(() => {
-      result.current.runTests(mockGetVoiceToken, mockGetTURNCredentils, ['ashburn']);
+      result.current.runTests(mockGetVoiceToken, mockGetTURNCredentils, ['ashburn'], [Connection.Codec.Opus]);
     });
 
     expect(result.current.isRunning).toBe(true);
