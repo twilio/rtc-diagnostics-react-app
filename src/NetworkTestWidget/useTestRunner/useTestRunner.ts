@@ -1,6 +1,7 @@
-import { useState, useCallback } from 'react';
-import { Region, TestResults, NetworkTestName } from '../../types';
+import { Connection } from 'twilio-client';
 import { bitrateTestRunner, preflightTestRunner } from '../Tests/Tests';
+import { Region, TestResults, NetworkTestName } from '../../types';
+import { useState, useCallback } from 'react';
 
 export default function useTestRunner() {
   const [isRunning, setIsRunning] = useState(false);
@@ -12,7 +13,8 @@ export default function useTestRunner() {
     async (
       getVoiceToken: () => Promise<string>,
       getTURNCredentials: () => Promise<RTCIceServer[]>,
-      regions: Region[]
+      regions: Region[],
+      codecPreferences: Connection.Codec[]
     ) => {
       setIsRunning(true);
       setResults([]);
@@ -31,7 +33,7 @@ export default function useTestRunner() {
         try {
           const voiceToken = await getVoiceToken();
           const iceServers = await getTURNCredentials();
-          testResults.results.preflight = await preflightTestRunner(region, voiceToken, iceServers);
+          testResults.results.preflight = await preflightTestRunner(region, voiceToken, iceServers, codecPreferences);
         } catch (err) {
           testResults.errors.preflight = err;
         }
