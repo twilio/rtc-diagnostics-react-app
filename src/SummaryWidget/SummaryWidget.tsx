@@ -53,7 +53,7 @@ export default function SummaryWidget({ results }: { results?: TestResults[] }) 
         <div className={classes.item}>
           <InfoIcon />
           <span>
-            Recommended Edge: <strong>{bestEdgeName}</strong>
+            Recommended Edge Location: <strong>{bestEdgeName}</strong>
           </span>
         </div>
       </div>

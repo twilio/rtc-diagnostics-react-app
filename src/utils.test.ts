@@ -26,7 +26,7 @@ describe('the round function', () => {
 });
 
 describe('the regionalizeIceUrl function', () => {
-  it('should replace "global" with the provided region', () => {
+  it('should replace "global" with the provided edge location', () => {
     expect(regionalizeIceUrls('ashburn', testIceUrls)).toEqual([
       {
         url: 'stun:ashburn.stun.twilio.com:3478?transport=udp',
@@ -39,7 +39,7 @@ describe('the regionalizeIceUrl function', () => {
     ]);
   });
 
-  it('should replace "global" with the provided region when "urls" property is an array', () => {
+  it('should replace "global" with the provided edge when "urls" property is an array', () => {
     const iceServers = [
       {
         url: 'stun:global.stun.twilio.com:3478?transport=udp',
@@ -55,7 +55,7 @@ describe('the regionalizeIceUrl function', () => {
     ]);
   });
 
-  it('should not replace any text when region is "roaming"', () => {
+  it('should not replace any text when edge is "roaming"', () => {
     expect(regionalizeIceUrls('roaming', testIceUrls)).toEqual(testIceUrls);
   });
 });

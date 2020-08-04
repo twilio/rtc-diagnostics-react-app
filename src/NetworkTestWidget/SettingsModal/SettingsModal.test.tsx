@@ -56,7 +56,7 @@ describe('the SettingsModal component', () => {
     });
   });
 
-  it('should not remove the last region', () => {
+  it('should not remove the last edge', () => {
     const wrapper = mount(<SettingsModal isOpen={true} onSettingsChange={handleSettingsChange} />);
     changeCheckbox(wrapper, 'ashburn', false);
     changeCheckbox(wrapper, 'roaming', false);

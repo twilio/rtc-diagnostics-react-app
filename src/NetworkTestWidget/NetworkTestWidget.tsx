@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Typography } from '@material-ui/core';
 import useTestRunner from './useTestRunner/useTestRunner';
-import RegionResult from './RegionResult/RegionResult';
+import EdgeResult from './EdgeResult/EdgeResult';
 import SettingsModal from './SettingsModal/SettingsModal';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { DEFAULT_EDGES, DEFAULT_CODEC_PREFERENCES } from '../constants';
@@ -37,7 +37,7 @@ export default function NetworkTestWidget({ getTURNCredentials, getVoiceToken, o
       {(isRunning || results.length > 0) && (
         <div>
           {settings.edges.map((edge, i) => (
-            <RegionResult
+            <EdgeResult
               key={edge}
               edge={edge}
               isActive={activeEdge === edge}

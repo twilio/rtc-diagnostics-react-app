@@ -64,7 +64,7 @@ const progressBarTimings = {
   },
 };
 
-export default function RegionResult(props: EdgeResultProps) {
+export default function EdgeResult(props: EdgeResultProps) {
   const { edge, isActive, result, activeTest } = props;
   const classes = useStyles();
 

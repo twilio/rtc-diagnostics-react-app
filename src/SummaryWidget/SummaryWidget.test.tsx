@@ -34,7 +34,7 @@ const results = [
 describe('the SummaryWidget component', () => {
   it('should choose the edge with the highest mos score and display it', () => {
     const wrapper = shallow(<SummaryWidget results={results as any} />);
-    expect(wrapper.at(0).text()).toBe('Expected Call Quality: Great (5)Recommended Edge: Dublin');
+    expect(wrapper.at(0).text()).toBe('Expected Call Quality: Great (5)Recommended Edge Location: Dublin');
   });
 
   it('should not render when "results" is undefined', () => {
