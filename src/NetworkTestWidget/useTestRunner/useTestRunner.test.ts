@@ -32,7 +32,7 @@ describe('the useTestRunner hook', () => {
 
     expect(result.current.isRunning).toBe(true);
     expect(result.current.activeTest).toBe('Preflight Test');
-    expect(result.current.activeRegion).toBe('ashburn');
+    expect(result.current.activeEdge).toBe('ashburn');
 
     await waitForNextUpdate(); // Wait for preflight test to complete
 
@@ -42,11 +42,11 @@ describe('the useTestRunner hook', () => {
 
     // Expect results for first reigon
     expect(result.current.results).toEqual([
-      { errors: {}, region: 'ashburn', results: { bitrate: 'mockBitrateResult', preflight: 'mockPreflightResult' } },
+      { errors: {}, edge: 'ashburn', results: { bitrate: 'mockBitrateResult', preflight: 'mockPreflightResult' } },
     ]);
 
-    // Prepare for next region
-    expect(result.current.activeRegion).toBe('tokyo');
+    // Prepare for next edge
+    expect(result.current.activeEdge).toBe('tokyo');
     expect(result.current.activeTest).toBe('Preflight Test');
 
     await waitForNextUpdate(); // Wait for preflight test to complete
@@ -57,19 +57,19 @@ describe('the useTestRunner hook', () => {
 
     // Expect all results
     expect(result.current.results).toEqual([
-      { errors: {}, region: 'ashburn', results: { bitrate: 'mockBitrateResult', preflight: 'mockPreflightResult' } },
-      { errors: {}, region: 'tokyo', results: { bitrate: 'mockBitrateResult', preflight: 'mockPreflightResult' } },
+      { errors: {}, edge: 'ashburn', results: { bitrate: 'mockBitrateResult', preflight: 'mockPreflightResult' } },
+      { errors: {}, edge: 'tokyo', results: { bitrate: 'mockBitrateResult', preflight: 'mockPreflightResult' } },
     ]);
 
     // Expect hook to reset its state
     expect(result.current.isRunning).toBe(false);
     expect(result.current.activeTest).toBe(undefined);
-    expect(result.current.activeRegion).toBe(undefined);
+    expect(result.current.activeEdge).toBe(undefined);
 
-    // Expect this function to be called once for every region
+    // Expect this function to be called once for every edge
     expect(mockGetVoiceToken).toHaveBeenCalledTimes(2);
 
-    // Expect this function to be called twice for every region
+    // Expect this function to be called twice for every edge
     expect(mockGetTURNCredentils).toHaveBeenCalledTimes(4);
   });
 
@@ -86,13 +86,13 @@ describe('the useTestRunner hook', () => {
     });
 
     expect(result.current.isRunning).toBe(true);
-    expect(result.current.activeRegion).toBe('ashburn');
+    expect(result.current.activeEdge).toBe('ashburn');
 
     await waitForNextUpdate(); // Wait for preflight test to fail
 
     // Expect results object with error
     expect(result.current.results).toEqual([
-      { errors: { preflight: 'mockPreflightError' }, region: 'ashburn', results: {} },
+      { errors: { preflight: 'mockPreflightError' }, edge: 'ashburn', results: {} },
     ]);
 
     expect(result.current.isRunning).toBe(false);
@@ -114,7 +114,7 @@ describe('the useTestRunner hook', () => {
     });
 
     expect(result.current.isRunning).toBe(true);
-    expect(result.current.activeRegion).toBe('ashburn');
+    expect(result.current.activeEdge).toBe('ashburn');
 
     await waitForNextUpdate(); // Wait for preflight test to complete
 
@@ -124,7 +124,7 @@ describe('the useTestRunner hook', () => {
 
     // Expect results with bitrate error
     expect(result.current.results).toEqual([
-      { errors: { bitrate: 'mockBitrateError' }, region: 'ashburn', results: { preflight: 'mockPreflightReport' } },
+      { errors: { bitrate: 'mockBitrateError' }, edge: 'ashburn', results: { preflight: 'mockPreflightReport' } },
     ]);
 
     expect(result.current.isRunning).toBe(false);

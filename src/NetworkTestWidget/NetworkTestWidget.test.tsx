@@ -10,7 +10,7 @@ const mockUseTestRunner = useTestRunner as jest.Mock<any>;
 
 jest.mock('../constants', () => ({
   DEFAULT_CODEC_PREFERENCES: ['opus'],
-  DEFAULT_REGIONS: ['ashburn', 'dublin', 'roaming'],
+  DEFAULT_EDGES: ['ashburn', 'dublin', 'roaming'],
 }));
 
 describe('the NetworkTestWidget component', () => {
@@ -18,7 +18,7 @@ describe('the NetworkTestWidget component', () => {
     mockUseTestRunner.mockImplementation(() => ({
       isRunning: false,
       results: [],
-      activeRegion: undefined,
+      activeEdge: undefined,
       activeTest: undefined,
       runTests: jest.fn(),
     }));
@@ -39,7 +39,7 @@ describe('the NetworkTestWidget component', () => {
     mockUseTestRunner.mockImplementation(() => ({
       isRunning: true,
       results: [],
-      activeRegion: 'ashburn',
+      activeEdge: 'ashburn',
       activeTest: 'bitrate',
       runTests: jest.fn(),
     }));
@@ -52,10 +52,10 @@ describe('the NetworkTestWidget component', () => {
       />
     );
 
-    expect(wrapper.find(RegionResult).find({ region: 'ashburn' }).props()).toEqual({
+    expect(wrapper.find(RegionResult).find({ edge: 'ashburn' }).props()).toEqual({
       activeTest: 'bitrate',
       isActive: true,
-      region: 'ashburn',
+      edge: 'ashburn',
       result: undefined,
     });
     expect(wrapper.find(Button).find({ disabled: true }).length).toBe(2);
@@ -65,7 +65,7 @@ describe('the NetworkTestWidget component', () => {
     mockUseTestRunner.mockImplementation(() => ({
       isRunning: false,
       results: ['mockResults'],
-      activeRegion: undefined,
+      activeEdge: undefined,
       activeTest: undefined,
       runTests: jest.fn(),
     }));
@@ -81,7 +81,7 @@ describe('the NetworkTestWidget component', () => {
     expect(wrapper.find(RegionResult).at(0).props()).toEqual({
       activeTest: undefined,
       isActive: false,
-      region: 'ashburn',
+      edge: 'ashburn',
       result: 'mockResults',
     });
   });
@@ -90,7 +90,7 @@ describe('the NetworkTestWidget component', () => {
     mockUseTestRunner.mockImplementation(() => ({
       isRunning: false,
       results: [],
-      activeRegion: undefined,
+      activeEdge: undefined,
       activeTest: undefined,
       runTests: jest.fn(() => Promise.resolve('mockResults')),
     }));

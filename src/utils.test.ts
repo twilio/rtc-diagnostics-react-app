@@ -1,4 +1,4 @@
-import { round, regionalizeIceUrls, getRegionName } from './utils';
+import { round, regionalizeIceUrls, getEdgeName } from './utils';
 
 const testIceUrls: RTCIceServer[] = [
   {

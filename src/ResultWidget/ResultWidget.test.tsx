@@ -7,7 +7,7 @@ import toJson, { OutputMapper } from 'enzyme-to-json';
 
 const testResults: any = [
   {
-    region: 'roaming',
+    edge: 'roaming',
     results: {
       preflight: {
         callSid: 'CA12345',
@@ -64,7 +64,7 @@ const testResults: any = [
     errors: {},
   },
   {
-    region: 'tokyo',
+    edge: 'tokyo',
     results: {},
     errors: {
       preflight: {

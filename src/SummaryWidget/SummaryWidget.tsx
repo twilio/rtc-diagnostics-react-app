@@ -36,24 +36,24 @@ export default function SummaryWidget({ results }: { results?: TestResults[] }) 
 
   if (!results) return null;
 
-  const bestRegion = maxBy(results, (result) => result.results.preflight?.stats?.mos?.average);
+  const bestEdge = maxBy(results, (result) => result.results.preflight?.stats?.mos?.average);
 
-  if (bestRegion) {
-    const bestRegionQuality = expectedQualityRow.getValue(bestRegion);
-    const bestRegionName = getEdgeName(bestRegion);
+  if (bestEdge) {
+    const bestEdgeQuality = expectedQualityRow.getValue(bestEdge);
+    const bestEdgeName = getEdgeName(bestEdge);
 
     return (
       <div className={classes.container}>
         <div className={classes.item}>
           <InfoIcon />
           <span>
-            Expected Call Quality: <strong>{bestRegionQuality}</strong>
+            Expected Call Quality: <strong>{bestEdgeQuality}</strong>
           </span>
         </div>
         <div className={classes.item}>
           <InfoIcon />
           <span>
-            Recommended Region: <strong>{bestRegionName}</strong>
+            Recommended Edge: <strong>{bestEdgeName}</strong>
           </span>
         </div>
       </div>
