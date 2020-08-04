@@ -4,7 +4,7 @@ import useTestRunner from './useTestRunner/useTestRunner';
 import RegionResult from './RegionResult/RegionResult';
 import SettingsModal from './SettingsModal/SettingsModal';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { DEFAULT_REGIONS, DEFAULT_CODEC_PREFERENCES } from '../constants';
+import { DEFAULT_EDGES, DEFAULT_CODEC_PREFERENCES } from '../constants';
 
 interface NetworkTestWidgetProps {
   getTURNCredentials: () => Promise<RTCIceServer[]>;
@@ -15,17 +15,17 @@ interface NetworkTestWidgetProps {
 }
 
 const initialSettings = {
-  regions: DEFAULT_REGIONS,
+  edges: DEFAULT_EDGES,
   codecPreferences: DEFAULT_CODEC_PREFERENCES,
 };
 
 export default function NetworkTestWidget({ getTURNCredentials, getVoiceToken, onComplete }: NetworkTestWidgetProps) {
-  const { isRunning, results, activeRegion, runTests, activeTest } = useTestRunner();
+  const { isRunning, results, activeEdge, runTests, activeTest } = useTestRunner();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [settings, setSettings] = useState(initialSettings);
 
   async function startTest() {
-    const testResults = await runTests(getVoiceToken, getTURNCredentials, settings.regions, settings.codecPreferences);
+    const testResults = await runTests(getVoiceToken, getTURNCredentials, settings.edges, settings.codecPreferences);
     onComplete(testResults);
   }
 
@@ -36,11 +36,11 @@ export default function NetworkTestWidget({ getTURNCredentials, getVoiceToken, o
       </Typography>
       {(isRunning || results.length > 0) && (
         <div>
-          {settings.regions.map((region, i) => (
+          {settings.edges.map((edge, i) => (
             <RegionResult
-              key={region}
-              region={region}
-              isActive={activeRegion === region}
+              key={edge}
+              edge={edge}
+              isActive={activeEdge === edge}
               result={results[i]}
               activeTest={activeTest}
             />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { darken, lighten, makeStyles, Theme } from '@material-ui/core/styles';
 import expectedQualityRow from '../ResultWidget/rows/expectedQuality/expectedQuality';
-import { getRegionName } from '../utils';
+import { getEdgeName } from '../utils';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
 import { maxBy } from 'lodash';
 import { TestResults } from '../types';
@@ -40,7 +40,7 @@ export default function SummaryWidget({ results }: { results?: TestResults[] }) 
 
   if (bestRegion) {
     const bestRegionQuality = expectedQualityRow.getValue(bestRegion);
-    const bestRegionName = getRegionName(bestRegion);
+    const bestRegionName = getEdgeName(bestRegion);
 
     return (
       <div className={classes.container}>

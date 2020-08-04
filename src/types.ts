@@ -21,7 +21,7 @@ declare module 'twilio-client' {
 }
 
 export interface TestResults {
-  region: Region;
+  edge: Edge;
   results: {
     bitrate?: BitrateTest.Report;
     preflight?: PreflightTest.Report;
@@ -41,7 +41,7 @@ export enum TestWarnings {
   warnTurnUDP = 'warnTurnUDP',
 }
 
-export type Region =
+export type Edge =
   | 'ashburn'
   | 'dublin'
   | 'frankfurt'

@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 
-import { getRegionName } from '../utils';
+import { getEdgeName } from '../utils';
 import { TestWarnings, TestResults } from '../types';
 import { darken, fade, lighten } from '@material-ui/core/styles/colorManipulator';
 import { rows } from './rows';
@@ -79,7 +79,7 @@ export default function ResultWidget(props: { results?: TestResults[] }) {
           <TableRow>
             <TableCell></TableCell>
             {results.map((result) => (
-              <TableCell key={result.region}>{getRegionName(result)}</TableCell>
+              <TableCell key={result.edge}>{getEdgeName(result)}</TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -105,7 +105,7 @@ export default function ResultWidget(props: { results?: TestResults[] }) {
                   const tooltipContent = warning ? row.tooltipContent?.[warning] : null;
 
                   return (
-                    <TableCell key={result.region} className={className}>
+                    <TableCell key={result.edge} className={className}>
                       <div className={classes.tableCellContent}>
                         {value}
                         {tooltipContent && (

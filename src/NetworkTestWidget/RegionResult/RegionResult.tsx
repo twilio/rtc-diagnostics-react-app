@@ -7,11 +7,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
 import WarningIcon from '@material-ui/icons/Warning';
 import ProgressBar from '../ProgressBar/ProgressBar';
-import { regionNameMap } from '../../utils';
+import { edgeNameMap } from '../../utils';
 
 import { BITRATE_TEST_DURATION } from '../Tests/Tests';
 import getTooltipContent from './getTooltipContent';
-import { NetworkTestName, Region, TestResults } from '../../types';
+import { NetworkTestName, Edge, TestResults } from '../../types';
 
 import { rows } from '../../ResultWidget/rows';
 
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
     flex: 1,
     padding: '0 1em',
   },
-  regionName: {
+  edgeName: {
     width: '15%',
   },
   iconContainer: {
@@ -46,12 +46,13 @@ const useStyles = makeStyles({
   },
 });
 
-interface RegionResultProps {
-  region: Region;
+interface EdgeResultProps {
+  edge: Edge;
   isActive: boolean;
   result?: TestResults;
   activeTest?: NetworkTestName;
 }
+
 const progressBarTimings = {
   'Preflight Test': {
     position: 62.5,
@@ -63,8 +64,8 @@ const progressBarTimings = {
   },
 };
 
-export default function RegionResult(props: RegionResultProps) {
-  const { region, isActive, result, activeTest } = props;
+export default function RegionResult(props: EdgeResultProps) {
+  const { edge, isActive, result, activeTest } = props;
   const classes = useStyles();
 
   const hasError = Object.values(result?.errors ?? {}).length > 0;
@@ -75,7 +76,7 @@ export default function RegionResult(props: RegionResultProps) {
 
   return (
     <div className={clsx(classes.container, { [classes.pendingTest]: !isActive && !result })}>
-      <Typography className={classes.regionName}>{regionNameMap[region]}</Typography>
+      <Typography className={classes.edgeName}>{edgeNameMap[edge]}</Typography>
       <div className={classes.progressContainer}>
         {isActive && <ProgressBar position={progressPosition} duration={progressDuration} />}
       </div>

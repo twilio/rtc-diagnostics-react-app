@@ -3,7 +3,7 @@ import { Device, Connection, PreflightTest } from 'twilio-client';
 import { getLogger } from 'loglevel';
 import { name as appName } from '../../../package.json';
 import { regionalizeIceUrls } from '../../utils';
-import { Region } from '../../types';
+import { Edge } from '../../types';
 import RTCSample from 'twilio-client/es5/twilio/rtc/sample';
 
 const log = getLogger(appName);
@@ -22,17 +22,17 @@ const preflightOptions: PreflightTest.Options = {
 export const BITRATE_TEST_DURATION = 15000;
 
 export function preflightTestRunner(
-  region: Region,
+  edge: Edge,
   token: string,
   iceServers: RTCIceServer[],
   codecPreferences: Connection.Codec[]
 ) {
-  const updatedIceServers = regionalizeIceUrls(region, iceServers);
+  const updatedIceServers = regionalizeIceUrls(edge, iceServers);
 
   return new Promise<PreflightTest.Report>((resolve, reject) => {
     const preflightTest = Device.testPreflight(token, {
       ...preflightOptions,
-      edge: region,
+      edge: edge,
       iceServers: updatedIceServers,
       codecPreferences,
     });
@@ -66,8 +66,8 @@ export function preflightTestRunner(
   });
 }
 
-export function bitrateTestRunner(region: Region, iceServers: BitrateTest.Options['iceServers']) {
-  const updatedIceServers = regionalizeIceUrls(region, iceServers);
+export function bitrateTestRunner(edge: Edge, iceServers: BitrateTest.Options['iceServers']) {
+  const updatedIceServers = regionalizeIceUrls(edge, iceServers);
 
   return new Promise<BitrateTest.Report>((resolve, reject) => {
     const bitrateTest = testBitrate({ iceServers: updatedIceServers });
