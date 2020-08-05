@@ -1,39 +1,39 @@
 import { Connection } from 'twilio-client';
 import { bitrateTestRunner, preflightTestRunner } from '../Tests/Tests';
-import { Region, TestResults, NetworkTestName } from '../../types';
+import { Edge, TestResults, NetworkTestName } from '../../types';
 import { useState, useCallback } from 'react';
 
 export default function useTestRunner() {
   const [isRunning, setIsRunning] = useState(false);
   const [activeTest, setActiveTest] = useState<NetworkTestName>();
   const [results, setResults] = useState<TestResults[]>([]);
-  const [activeRegion, setActiveRegion] = useState<Region>();
+  const [activeEdge, setActiveEdge] = useState<Edge>();
 
   const runTests = useCallback(
     async (
       getVoiceToken: () => Promise<string>,
       getTURNCredentials: () => Promise<RTCIceServer[]>,
-      regions: Region[],
+      edges: Edge[],
       codecPreferences: Connection.Codec[]
     ) => {
       setIsRunning(true);
       setResults([]);
       const allResults: TestResults[] = [];
 
-      for (const region of regions) {
+      for (const edge of edges) {
         const testResults: TestResults = {
-          region: region,
+          edge,
           results: {},
           errors: {},
         };
 
-        setActiveRegion(region);
+        setActiveEdge(edge);
         setActiveTest('Preflight Test');
 
         try {
           const voiceToken = await getVoiceToken();
           const iceServers = await getTURNCredentials();
-          testResults.results.preflight = await preflightTestRunner(region, voiceToken, iceServers, codecPreferences);
+          testResults.results.preflight = await preflightTestRunner(edge, voiceToken, iceServers, codecPreferences);
         } catch (err) {
           testResults.errors.preflight = err;
         }
@@ -42,7 +42,7 @@ export default function useTestRunner() {
           setActiveTest('Bitrate Test');
           try {
             const iceServers = await getTURNCredentials();
-            testResults.results.bitrate = await bitrateTestRunner(region, iceServers);
+            testResults.results.bitrate = await bitrateTestRunner(edge, iceServers);
           } catch (err) {
             testResults.errors.bitrate = err;
           }
@@ -53,7 +53,7 @@ export default function useTestRunner() {
       }
 
       setActiveTest(undefined);
-      setActiveRegion(undefined);
+      setActiveEdge(undefined);
       setIsRunning(false);
       return allResults;
     },
@@ -64,7 +64,7 @@ export default function useTestRunner() {
     isRunning,
     activeTest,
     results,
-    activeRegion,
+    activeEdge,
     runTests,
   };
 }

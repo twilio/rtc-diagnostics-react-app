@@ -1,7 +1,7 @@
 import React from 'react';
 import { darken, lighten, makeStyles, Theme } from '@material-ui/core/styles';
 import expectedQualityRow from '../ResultWidget/rows/expectedQuality/expectedQuality';
-import { getRegionName } from '../utils';
+import { getEdgeName } from '../utils';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
 import { maxBy } from 'lodash';
 import { TestResults } from '../types';
@@ -36,24 +36,24 @@ export default function SummaryWidget({ results }: { results?: TestResults[] }) 
 
   if (!results) return null;
 
-  const bestRegion = maxBy(results, (result) => result.results.preflight?.stats?.mos?.average);
+  const bestEdge = maxBy(results, (result) => result.results.preflight?.stats?.mos?.average);
 
-  if (bestRegion) {
-    const bestRegionQuality = expectedQualityRow.getValue(bestRegion);
-    const bestRegionName = getRegionName(bestRegion);
+  if (bestEdge) {
+    const bestEdgeQuality = expectedQualityRow.getValue(bestEdge);
+    const bestEdgeName = getEdgeName(bestEdge);
 
     return (
       <div className={classes.container}>
         <div className={classes.item}>
           <InfoIcon />
           <span>
-            Expected Call Quality: <strong>{bestRegionQuality}</strong>
+            Expected Call Quality: <strong>{bestEdgeQuality}</strong>
           </span>
         </div>
         <div className={classes.item}>
           <InfoIcon />
           <span>
-            Recommended Region: <strong>{bestRegionName}</strong>
+            Recommended Edge Location: <strong>{bestEdgeName}</strong>
           </span>
         </div>
       </div>

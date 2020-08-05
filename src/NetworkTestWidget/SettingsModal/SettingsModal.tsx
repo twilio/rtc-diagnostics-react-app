@@ -11,9 +11,9 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Connection } from 'twilio-client';
-import { DEFAULT_CODEC_PREFERENCES, DEFAULT_REGIONS } from '../../constants';
+import { DEFAULT_CODEC_PREFERENCES, DEFAULT_EDGES } from '../../constants';
 import { makeStyles } from '@material-ui/core/styles';
-import { Region } from '../../types';
+import { Edge } from '../../types';
 
 const { PCMU, Opus } = Connection.Codec;
 
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 });
 
 type InitialState = {
-  [key in Region]: boolean;
+  [key in Edge]: boolean;
 };
 
 const initialState: InitialState = {
@@ -49,7 +49,7 @@ const initialState: InitialState = {
   'singapore-ix': false,
 };
 
-DEFAULT_REGIONS.forEach((region) => (initialState[region] = true));
+DEFAULT_EDGES.forEach((edge) => (initialState[edge] = true));
 
 const codecMap = {
   [Opus]: [Opus],
@@ -58,8 +58,8 @@ const codecMap = {
   [PCMU + Opus]: [PCMU, Opus],
 };
 
-const getRegionArray = (regionObj: InitialState) =>
-  Object.entries(regionObj)
+const getEdgeArray = (edgeObj: InitialState) =>
+  Object.entries(edgeObj)
     .filter((e) => e[1])
     .map((e) => e[0]);
 
@@ -72,21 +72,21 @@ export default function SettingsModal({
 }) {
   const classes = useStyles();
 
-  const [regions, setRegions] = useState(initialState);
+  const [edges, setEdges] = useState(initialState);
   const [codec, setCodec] = useState<string>(DEFAULT_CODEC_PREFERENCES.join(''));
 
-  const handleRegionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const regionName = event.target.name;
+  const handleEdgeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const edgeName = event.target.name;
     const isChecked = event.target.checked;
 
-    setRegions((prevRegions) => {
-      const newRegions = { ...prevRegions, [regionName]: isChecked };
-      const newRegionsArrayLength = getRegionArray(newRegions).length;
+    setEdges((prevEdges) => {
+      const newEdges = { ...prevEdges, [edgeName]: isChecked };
+      const newEdgesArrayLength = getEdgeArray(newEdges).length;
 
-      if (newRegionsArrayLength > 0 && newRegionsArrayLength < 7) {
-        return newRegions;
+      if (newEdgesArrayLength > 0 && newEdgesArrayLength < 7) {
+        return newEdges;
       } else {
-        return prevRegions;
+        return prevEdges;
       }
     });
   };
@@ -95,7 +95,7 @@ export default function SettingsModal({
 
   const handleClose = () =>
     onSettingsChange({
-      regions: getRegionArray(regions),
+      edges: getEdgeArray(edges),
       codecPreferences: codecMap[codec],
     });
 
@@ -110,63 +110,57 @@ export default function SettingsModal({
             <Grid container>
               <Grid item xs={6}>
                 <FormControlLabel
-                  control={<Checkbox checked={regions.ashburn} onChange={handleRegionChange} name="ashburn" />}
+                  control={<Checkbox checked={edges.ashburn} onChange={handleEdgeChange} name="ashburn" />}
                   label="Ashburn"
                 />
                 <FormControlLabel
-                  control={<Checkbox checked={regions.dublin} onChange={handleRegionChange} name="dublin" />}
+                  control={<Checkbox checked={edges.dublin} onChange={handleEdgeChange} name="dublin" />}
                   label="Dublin"
                 />
                 <FormControlLabel
-                  control={<Checkbox checked={regions.frankfurt} onChange={handleRegionChange} name="frankfurt" />}
+                  control={<Checkbox checked={edges.frankfurt} onChange={handleEdgeChange} name="frankfurt" />}
                   label="Frankfurt"
                 />
                 <FormControlLabel
-                  control={<Checkbox checked={regions.roaming} onChange={handleRegionChange} name="roaming" />}
+                  control={<Checkbox checked={edges.roaming} onChange={handleEdgeChange} name="roaming" />}
                   label="Roaming"
                 />
                 <FormControlLabel
-                  control={<Checkbox checked={regions['sao-paolo']} onChange={handleRegionChange} name="sao-paolo" />}
+                  control={<Checkbox checked={edges['sao-paolo']} onChange={handleEdgeChange} name="sao-paolo" />}
                   label="Sao Paolo"
                 />
                 <FormControlLabel
-                  control={<Checkbox checked={regions.singapore} onChange={handleRegionChange} name="singapore" />}
+                  control={<Checkbox checked={edges.singapore} onChange={handleEdgeChange} name="singapore" />}
                   label="Singapore"
                 />
                 <FormControlLabel
-                  control={<Checkbox checked={regions.sydney} onChange={handleRegionChange} name="sydney" />}
+                  control={<Checkbox checked={edges.sydney} onChange={handleEdgeChange} name="sydney" />}
                   label="Sydney"
                 />
               </Grid>
               <Grid item xs={6}>
                 <FormControlLabel
-                  control={<Checkbox checked={regions.tokyo} onChange={handleRegionChange} name="tokyo" />}
+                  control={<Checkbox checked={edges.tokyo} onChange={handleEdgeChange} name="tokyo" />}
                   label="Tokyo"
                 />
                 <FormControlLabel
-                  control={<Checkbox checked={regions['ashburn-ix']} onChange={handleRegionChange} name="ashburn-ix" />}
+                  control={<Checkbox checked={edges['ashburn-ix']} onChange={handleEdgeChange} name="ashburn-ix" />}
                   label="Ashburn IX"
                 />
                 <FormControlLabel
-                  control={<Checkbox checked={regions['london-ix']} onChange={handleRegionChange} name="london-ix" />}
+                  control={<Checkbox checked={edges['london-ix']} onChange={handleEdgeChange} name="london-ix" />}
                   label="London IX"
                 />
                 <FormControlLabel
-                  control={
-                    <Checkbox checked={regions['frankfurt-ix']} onChange={handleRegionChange} name="frankfurt-ix" />
-                  }
+                  control={<Checkbox checked={edges['frankfurt-ix']} onChange={handleEdgeChange} name="frankfurt-ix" />}
                   label="Frankfurt IX"
                 />
                 <FormControlLabel
-                  control={
-                    <Checkbox checked={regions['san-jose-ix']} onChange={handleRegionChange} name="san-jose-ix" />
-                  }
+                  control={<Checkbox checked={edges['san-jose-ix']} onChange={handleEdgeChange} name="san-jose-ix" />}
                   label="San Jose IX"
                 />
                 <FormControlLabel
-                  control={
-                    <Checkbox checked={regions['singapore-ix']} onChange={handleRegionChange} name="singapore-ix" />
-                  }
+                  control={<Checkbox checked={edges['singapore-ix']} onChange={handleEdgeChange} name="singapore-ix" />}
                   label="Singapore IX"
                 />
               </Grid>

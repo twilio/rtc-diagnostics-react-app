@@ -1,10 +1,10 @@
-import { Region, TestResults } from './types';
+import { Edge, TestResults } from './types';
 
 export const round = (num: number, decimals = 2) =>
   Math.round((num + Number.EPSILON) * 10 ** decimals) / 10 ** decimals;
 
-export function regionalizeIceUrls(region: Region, iceServers: RTCIceServer[]) {
-  if (region === 'roaming') {
+export function regionalizeIceUrls(edge: Edge, iceServers: RTCIceServer[]) {
+  if (edge === 'roaming') {
     return iceServers;
   }
 
@@ -14,21 +14,21 @@ export function regionalizeIceUrls(region: Region, iceServers: RTCIceServer[]) {
     };
 
     if (result.url) {
-      result.url = result.url.replace('global', region);
+      result.url = result.url.replace('global', edge);
     }
 
     if (typeof result.urls === 'string') {
-      result.urls = result.urls.replace('global', region);
+      result.urls = result.urls.replace('global', edge);
     }
 
     if (Array.isArray(result.urls)) {
-      result.urls = result.urls.map((url) => url.replace('global', region));
+      result.urls = result.urls.map((url) => url.replace('global', edge));
     }
     return result;
   });
 }
 
-export const regionNameMap = {
+export const edgeNameMap = {
   sydney: 'Sydney',
   'sao-paolo': 'Sao Paolo',
   dublin: 'Dublin',
@@ -44,10 +44,10 @@ export const regionNameMap = {
   'singapore-ix': 'Singapore IX',
 };
 
-export function getRegionName(result: TestResults) {
+export function getEdgeName(result: TestResults) {
   if (result.results.preflight?.selectedEdge === 'roaming') {
-    return `Roaming (${regionNameMap[result.results.preflight?.edge as Region]})`;
+    return `Roaming (${edgeNameMap[result.results.preflight?.edge as Edge]})`;
   }
 
-  return regionNameMap[result.region as Region];
+  return edgeNameMap[result.edge as Edge];
 }

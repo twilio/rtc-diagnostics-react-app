@@ -1,4 +1,6 @@
-import { round, regionalizeIceUrls, getRegionName } from './utils';
+import { round, regionalizeIceUrls, getEdgeName } from './utils';
+import { set } from 'lodash';
+import { TestResults } from './types';
 
 const testIceUrls: RTCIceServer[] = [
   {
@@ -26,7 +28,7 @@ describe('the round function', () => {
 });
 
 describe('the regionalizeIceUrl function', () => {
-  it('should replace "global" with the provided region', () => {
+  it('should replace "global" with the provided edge location', () => {
     expect(regionalizeIceUrls('ashburn', testIceUrls)).toEqual([
       {
         url: 'stun:ashburn.stun.twilio.com:3478?transport=udp',
@@ -39,7 +41,7 @@ describe('the regionalizeIceUrl function', () => {
     ]);
   });
 
-  it('should replace "global" with the provided region when "urls" property is an array', () => {
+  it('should replace "global" with the provided edge when "urls" property is an array', () => {
     const iceServers = [
       {
         url: 'stun:global.stun.twilio.com:3478?transport=udp',
@@ -55,7 +57,22 @@ describe('the regionalizeIceUrl function', () => {
     ]);
   });
 
-  it('should not replace any text when region is "roaming"', () => {
+  it('should not replace any text when edge is "roaming"', () => {
     expect(regionalizeIceUrls('roaming', testIceUrls)).toEqual(testIceUrls);
+  });
+});
+
+describe('the getEdgeName function', () => {
+  it('should return the capitalized edge name when the selected edge is not roaming', () => {
+    const mockResult = set({ edge: 'ashburn' }, 'results.preflight.selectedEdge', 'ashburn') as TestResults;
+    const edgeName = getEdgeName(mockResult);
+    expect(edgeName).toBe('Ashburn');
+  });
+
+  it('should display the actual edge name when the selected edge is roaming', () => {
+    let mockResult = set({ edge: 'roaming' }, 'results.preflight.selectedEdge', 'roaming') as TestResults;
+    mockResult = set(mockResult, 'results.preflight.edge', 'ashburn');
+    const edgeName = getEdgeName(mockResult);
+    expect(edgeName).toBe('Roaming (Ashburn)');
   });
 });

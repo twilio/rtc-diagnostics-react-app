@@ -2,47 +2,47 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 import { Connection } from 'twilio-client';
 import { mount, ReactWrapper } from 'enzyme';
-import { Region } from '../../types';
+import { Edge } from '../../types';
 import SettingsModal from './SettingsModal';
 
 jest.mock('../../constants', () => ({
   DEFAULT_CODEC_PREFERENCES: ['opus'],
-  DEFAULT_REGIONS: ['ashburn', 'dublin', 'roaming'],
+  DEFAULT_EDGES: ['ashburn', 'dublin', 'roaming'],
 }));
 
 const { PCMU, Opus } = Connection.Codec;
 
-const changeCheckbox = (wrapper: ReactWrapper, region: Region, checked: boolean) =>
+const changeCheckbox = (wrapper: ReactWrapper, edge: Edge, checked: boolean) =>
   wrapper
     .find('input')
-    .find({ name: region, type: 'checkbox' })
-    .simulate('change', { target: { checked, name: region } });
+    .find({ name: edge, type: 'checkbox' })
+    .simulate('change', { target: { checked, name: edge } });
 
 describe('the SettingsModal component', () => {
   const handleSettingsChange = jest.fn();
   beforeEach(jest.clearAllMocks);
 
-  it('should remove regions', () => {
+  it('should remove edges', () => {
     const wrapper = mount(<SettingsModal isOpen={true} onSettingsChange={handleSettingsChange} />);
     changeCheckbox(wrapper, 'ashburn', false);
     wrapper.find(Button).simulate('click');
     expect(handleSettingsChange).toHaveBeenCalledWith({
       codecPreferences: [Opus],
-      regions: ['dublin', 'roaming'],
+      edges: ['dublin', 'roaming'],
     });
   });
 
-  it('should add regions', () => {
+  it('should add edges', () => {
     const wrapper = mount(<SettingsModal isOpen={true} onSettingsChange={handleSettingsChange} />);
     changeCheckbox(wrapper, 'tokyo', true);
     wrapper.find(Button).simulate('click');
     expect(handleSettingsChange).toHaveBeenCalledWith({
       codecPreferences: [Opus],
-      regions: ['ashburn', 'dublin', 'roaming', 'tokyo'],
+      edges: ['ashburn', 'dublin', 'roaming', 'tokyo'],
     });
   });
 
-  it('should not add more than six regions', () => {
+  it('should not add more than six edges', () => {
     const wrapper = mount(<SettingsModal isOpen={true} onSettingsChange={handleSettingsChange} />);
     changeCheckbox(wrapper, 'tokyo', true);
     changeCheckbox(wrapper, 'frankfurt-ix', true);
@@ -52,11 +52,11 @@ describe('the SettingsModal component', () => {
     wrapper.find(Button).simulate('click');
     expect(handleSettingsChange).toHaveBeenCalledWith({
       codecPreferences: [Opus],
-      regions: ['ashburn', 'dublin', 'roaming', 'sydney', 'tokyo', 'frankfurt-ix'],
+      edges: ['ashburn', 'dublin', 'roaming', 'sydney', 'tokyo', 'frankfurt-ix'],
     });
   });
 
-  it('should not remove the last region', () => {
+  it('should not remove the last edge', () => {
     const wrapper = mount(<SettingsModal isOpen={true} onSettingsChange={handleSettingsChange} />);
     changeCheckbox(wrapper, 'ashburn', false);
     changeCheckbox(wrapper, 'roaming', false);
@@ -64,7 +64,7 @@ describe('the SettingsModal component', () => {
     wrapper.find(Button).simulate('click');
     expect(handleSettingsChange).toHaveBeenCalledWith({
       codecPreferences: [Opus],
-      regions: ['dublin'],
+      edges: ['dublin'],
     });
   });
 
@@ -77,7 +77,7 @@ describe('the SettingsModal component', () => {
     wrapper.find(Button).simulate('click');
     expect(handleSettingsChange).toHaveBeenCalledWith({
       codecPreferences: [PCMU, Opus],
-      regions: ['ashburn', 'dublin', 'roaming'],
+      edges: ['ashburn', 'dublin', 'roaming'],
     });
   });
 
@@ -90,7 +90,7 @@ describe('the SettingsModal component', () => {
     wrapper.find(Button).simulate('click');
     expect(handleSettingsChange).toHaveBeenCalledWith({
       codecPreferences: [PCMU, Opus],
-      regions: ['ashburn', 'dublin', 'roaming'],
+      edges: ['ashburn', 'dublin', 'roaming'],
     });
   });
 });

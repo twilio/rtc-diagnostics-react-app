@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 
 const results = [
   {
-    region: 'ashburn',
+    edge: 'ashburn',
     results: {
       preflight: {
         callQuality: 'Good',
@@ -17,7 +17,7 @@ const results = [
     },
   },
   {
-    region: 'dublin',
+    edge: 'dublin',
     results: {
       preflight: {
         callQuality: 'Great',
@@ -32,9 +32,9 @@ const results = [
 ];
 
 describe('the SummaryWidget component', () => {
-  it('should choose the region with the highest mos score and display it', () => {
+  it('should choose the edge with the highest mos score and display it', () => {
     const wrapper = shallow(<SummaryWidget results={results as any} />);
-    expect(wrapper.at(0).text()).toBe('Expected Call Quality: Great (5)Recommended Region: Dublin');
+    expect(wrapper.at(0).text()).toBe('Expected Call Quality: Great (5)Recommended Edge Location: Dublin');
   });
 
   it('should not render when "results" is undefined', () => {
