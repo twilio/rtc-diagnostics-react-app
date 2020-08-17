@@ -12,7 +12,7 @@
     "@types/react-dom": "^16.9.8",
     "cli-ux": "^5.4.6",
     "dotenv": "^8.2.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "loglevel": "^1.6.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
