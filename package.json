@@ -16,7 +16,7 @@
     "loglevel": "^1.6.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "4.0.0",
     "twilio": "^3.43.1",
     "twilio-client": "^1.13.0-beta1",
     "typescript": "^3.7.5"
