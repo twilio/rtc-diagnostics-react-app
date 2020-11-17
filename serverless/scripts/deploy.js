@@ -1,8 +1,11 @@
 const { TwilioServerlessApiClient } = require('@twilio-labs/serverless-api');
 const { getListOfFunctionsAndAssets } = require('@twilio-labs/serverless-api/dist/utils/fs');
-const path = require('path');
 const cli = require('cli-ux').default;
 const constants = require('../constants');
+const { customAlphabet } = require('nanoid');
+const viewApp = require(`${__dirname}/list.js`);
+
+const getRandomString = customAlphabet('abcdefghijklmnopqrstuvwxyz1234567890', 8);
 
 require('dotenv').config();
 
@@ -37,12 +40,13 @@ async function deployFunctions() {
       API_KEY: api_key.sid,
       API_SECRET: api_key.secret,
       VOICE_IDENTITY: constants.VOICE_IDENTITY,
+      APP_EXPIRY: Date.now() + 1000 * 60 * 60 * 24 * 7, // One week
     },
     pkgJson: {},
     functionsEnv: 'dev',
     assets,
     functions,
-    serviceName: constants.SERVICE_NAME,
+    serviceName: `${constants.SERVICE_NAME}-${getRandomString()}`,
   });
 }
 
@@ -68,7 +72,7 @@ async function deploy() {
   await createTwiMLAppSidVariable(app, TwiMLApp);
 
   cli.action.stop();
-  console.log('Deployed to: https://' + app.domain);
+  await viewApp();
 }
 
 if (require.main === module) {
