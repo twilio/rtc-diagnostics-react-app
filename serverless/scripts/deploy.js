@@ -25,6 +25,14 @@ async function deployFunctions() {
     assetsFolderNames: ['../../build'],
   });
 
+  // Calling 'getListOfFunctionsAndAssets' twice is necessary because it only gets the assets from
+  // the first matching folder in the array
+  const { assets: fnAssets } = await getListOfFunctionsAndAssets(__dirname, {
+    assetsFolderNames: ['../assets'],
+  });
+
+  assets.push(...fnAssets);
+
   const indexHTML = assets.find((asset) => asset.name.includes('index.html'));
 
   if (indexHTML) {
