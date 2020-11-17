@@ -21,6 +21,19 @@ class Response {
 global.Twilio = require('twilio');
 global.Twilio.Response = Response;
 
+const verifyExpiryPath = `${__dirname}/../assets/verify_expiry.private.js`;
+
+global.Runtime = {
+  getAssets: () => ({
+    '/verify_expiry.js': {
+      path: verifyExpiryPath,
+    },
+  }),
+};
+
+// Mocking this as a no-op since this function is tested in '__tests__/assets/verify_expiry.ts'.
+jest.mock(verifyExpiryPath, () => ({ handler: () => {} }));
+
 process.on('unhandledRejection', (err) => {
   throw err;
 });

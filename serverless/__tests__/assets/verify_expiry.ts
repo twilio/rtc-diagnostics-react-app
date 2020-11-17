@@ -1,4 +1,4 @@
-import { handler } from '../../../serverless/assets/verify_expiry.private';
+const { handler } = jest.requireActual('../../../serverless/assets/verify_expiry.private');
 
 Date.now = () => 2;
 
@@ -37,3 +37,6 @@ describe('the verify_expiry asset', () => {
     });
   });
 });
+
+// To avoid the 'All files must be modules when the '--isolatedModules' flag is provided.' error
+export default null;
