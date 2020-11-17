@@ -14,6 +14,8 @@
     "dotenv": "^8.2.0",
     "lodash": "^4.17.20",
     "loglevel": "^1.6.8",
+    "moment": "^2.29.1",
+    "nanoid": "^3.1.16",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
@@ -31,7 +33,7 @@
     "test:ci": "npm run test:ci:app && npm run test:ci:serverless",
     "test:ci:app": "jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage",
     "test:ci:serverless": "jest -c jest.serverless.config.js --ci --runInBand",
-    "serverless:deploy": "npm run build && node serverless/scripts/deploy.js",
+    "serverless:deploy": "node serverless/scripts/deploy.js",
     "serverless:remove": "node serverless/scripts/remove.js",
     "serverless:list": "node serverless/scripts/list.js"
   },
