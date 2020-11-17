@@ -8,5 +8,5 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/serverless/__tests__/setupTests.js'],
   reporters: ['default', 'jest-junit'],
   testEnvironment: 'node',
-  testTimeout: 20000
+  testTimeout: 60000,
 };

@@ -35,5 +35,6 @@ global.Runtime = {
 jest.mock(verifyExpiryPath, () => ({ handler: () => {} }));
 
 process.on('unhandledRejection', (err) => {
+  console.error(err);
   throw err;
 });

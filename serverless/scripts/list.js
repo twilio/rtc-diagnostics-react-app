@@ -18,7 +18,7 @@ async function getAppInfo() {
   const expiryVar = variables.find((v) => v.key === 'APP_EXPIRY');
   const expiryDate = moment(Number(expiryVar.value)).toString();
 
-  console.log('https://' + environment.domainName);
+  console.log('App deployed to: https://' + environment.domainName);
   console.log(`This URL is for demo purposes only. It will expire on ${expiryDate}`);
 }
 
