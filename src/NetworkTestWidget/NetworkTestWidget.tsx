@@ -5,6 +5,7 @@ import EdgeResult from './EdgeResult/EdgeResult';
 import SettingsModal from './SettingsModal/SettingsModal';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { DEFAULT_EDGES, DEFAULT_CODEC_PREFERENCES } from '../constants';
+import Alert from './Alert/Alert';
 
 interface NetworkTestWidgetProps {
   getTURNCredentials: () => Promise<RTCIceServer[]>;
@@ -29,6 +30,10 @@ export default function NetworkTestWidget({ getTURNCredentials, getVoiceToken, o
     onComplete(testResults);
   }
 
+  const isExpired = results.some(
+    (result) => result.errors.bitrate?.message === 'expired' || result.errors.preflight?.message === 'expired'
+  );
+
   return (
     <div>
       <Typography variant="h4" paragraph>
@@ -36,6 +41,11 @@ export default function NetworkTestWidget({ getTURNCredentials, getVoiceToken, o
       </Typography>
       {(isRunning || results.length > 0) && (
         <div>
+          {isExpired && (
+            <Alert variant="error">
+              <strong>App has expired</strong> Please redeploy the app and try again.
+            </Alert>
+          )}
           {settings.edges.map((edge, i) => (
             <EdgeResult
               key={edge}
