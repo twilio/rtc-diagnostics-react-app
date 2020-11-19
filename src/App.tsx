@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AppBar, Container, Toolbar, Grid, Paper, CssBaseline, makeStyles, Typography } from '@material-ui/core';
 import CopyResultsWidget from './CopyResultsWidget/CopyResultsWidget';
+import { getJSON } from './utils';
 import NetworkTestWidget from './NetworkTestWidget/NetworkTestWidget';
 import ResultWidget from './ResultWidget/ResultWidget';
 import SummaryWidget from './SummaryWidget/SummaryWidget';
@@ -24,20 +25,12 @@ function App() {
   const classes = useStyles();
   const [results, setResults] = useState();
 
-  async function getTURNCredentials() {
-    const iceServers: RTCIceServer[] = await fetch('app/turn-credentials')
-      .then((res) => res.json())
-      .then((res) => res.iceServers);
-
-    return iceServers;
+  function getTURNCredentials() {
+    return getJSON('app/turn-credentials').then((res) => res.iceServers as RTCIceServer[]);
   }
 
-  async function getVoiceToken() {
-    const token: string = await fetch('app/token')
-      .then((res) => res.json())
-      .then((res) => res.token);
-
-    return token;
+  function getVoiceToken() {
+    return getJSON('app/token').then((res) => res.token as string);
   }
 
   return (
