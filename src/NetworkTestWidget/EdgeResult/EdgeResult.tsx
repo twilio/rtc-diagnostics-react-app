@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     padding: '0.8em',
     background: '#eee',
     alignItems: 'center',
-    margin: '1em',
+    margin: '1em 0',
     justifyContent: 'space-between',
   },
   progressContainer: {

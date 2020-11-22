@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import Alert from '../common/Alert/Alert';
 import { Button, Typography } from '@material-ui/core';
 import useTestRunner from './useTestRunner/useTestRunner';
 import EdgeResult from './EdgeResult/EdgeResult';
 import SettingsModal from './SettingsModal/SettingsModal';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { DEFAULT_EDGES, DEFAULT_CODEC_PREFERENCES } from '../constants';
-import Alert from './Alert/Alert';
 
 interface NetworkTestWidgetProps {
   getTURNCredentials: () => Promise<RTCIceServer[]>;
@@ -40,10 +40,10 @@ export default function NetworkTestWidget({ getTURNCredentials, getVoiceToken, o
         Connectivity and Bandwidth Tests
       </Typography>
       {(isRunning || results.length > 0) && (
-        <div>
+        <div style={{ margin: '1em 1em 0' }}>
           {isExpired && (
             <Alert variant="error">
-              <strong>App has expired</strong> Please redeploy the app and try again.
+              <strong>App has expired</strong>&nbsp;Please redeploy the app and try again.
             </Alert>
           )}
           {settings.edges.map((edge, i) => (

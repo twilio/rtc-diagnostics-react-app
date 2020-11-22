@@ -1,9 +1,9 @@
 import React from 'react';
+import Alert from '../common/Alert/Alert';
 import expectedQualityRow from '../ResultWidget/rows/expectedQuality/expectedQuality';
 import { getEdgeName } from '../utils';
 import { maxBy } from 'lodash';
 import { TestResults } from '../types';
-import Alert from '../NetworkTestWidget/Alert/Alert';
 
 export default function SummaryWidget({ results }: { results?: TestResults[] }) {
   if (!results) return null;
