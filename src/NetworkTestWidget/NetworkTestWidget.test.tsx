@@ -64,7 +64,7 @@ describe('the NetworkTestWidget component', () => {
   it('should correctly render EdgeResult components when there are results', () => {
     mockUseTestRunner.mockImplementation(() => ({
       isRunning: false,
-      results: ['mockResults'],
+      results: [{ errors: {} }],
       activeEdge: undefined,
       activeTest: undefined,
       runTests: jest.fn(),
@@ -82,7 +82,7 @@ describe('the NetworkTestWidget component', () => {
       activeTest: undefined,
       isActive: false,
       edge: 'ashburn',
-      result: 'mockResults',
+      result: { errors: {} },
     });
   });
 
