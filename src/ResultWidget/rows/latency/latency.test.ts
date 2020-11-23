@@ -15,6 +15,7 @@ describe('the latencyRow', () => {
 
     it('should return undefined when latency is not available', () => {
       const testResults = set({}, 'results', {}) as TestResults;
+      // eslint-disable-next-line
       expect(latencyRow.getValue(testResults)).toBeUndefined;
     });
   });
