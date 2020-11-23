@@ -8,26 +8,27 @@ import {
   TableRow,
   TableCell,
   Tooltip,
+  Typography,
   makeStyles,
   createStyles,
   Theme,
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 
-import { getEdgeName } from '../utils';
+import ResultIcon from './ResultIcon/ResultIcon';
+import { getBestEdge, getEdgeName } from '../utils';
 import { TestWarnings, TestResults } from '../types';
 import { darken, fade, lighten } from '@material-ui/core/styles/colorManipulator';
 import { rows } from './rows';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles((theme: Theme) => {
+  const getBackgroundColor = theme.palette.type === 'light' ? lighten : darken;
+  return createStyles({
     table: {
       tableLayout: 'fixed',
       borderTop: `1px solid ${theme.palette.divider}`,
-      '& th:first-child': {
-        width: '260px',
-      },
       '& td, & th': {
+        width: '260px',
         borderRight: `1px solid
       ${
         // Same implementation as material-ui's table borderBottom.
@@ -52,25 +53,38 @@ const useStyles = makeStyles((theme: Theme) =>
         fill: '#000',
       },
     },
+    headerContent: {
+      display: 'flex',
+      '& p': {
+        fontWeight: 'bold',
+        marginLeft: '12px',
+      },
+    },
+    bestEdgeCell: {
+      background: getBackgroundColor(theme.palette.success.main, 0.9),
+    },
     [TestWarnings.warn]: {
-      background: '#ff8',
+      background: getBackgroundColor(theme.palette.warning.main, 0.9),
     },
     [TestWarnings.error]: {
-      background: '#DE5858',
+      background: getBackgroundColor(theme.palette.error.main, 0.9),
     },
-  })
-);
+  });
+});
 
 export default function ResultWidget(props: { results?: TestResults[] }) {
   const { results } = props;
   const classes = useStyles();
 
-  const getTableCellClass = (warning?: TestWarnings) => {
+  const getTableCellClass = (isBestEdge: boolean, warning?: TestWarnings) => {
     if (warning?.includes('warn')) return classes[TestWarnings.warn];
     if (warning === TestWarnings.error) return classes[TestWarnings.error];
+    if (isBestEdge) return classes.bestEdgeCell;
   };
 
   if (!results) return null;
+
+  const bestEdge = getBestEdge(results);
 
   return (
     <TableContainer component={Paper}>
@@ -78,9 +92,19 @@ export default function ResultWidget(props: { results?: TestResults[] }) {
         <TableHead>
           <TableRow>
             <TableCell></TableCell>
-            {results.map((result) => (
-              <TableCell key={result.edge}>{getEdgeName(result)}</TableCell>
-            ))}
+            {results.map((result) => {
+              const isBestEdge = !!bestEdge && bestEdge.edge === result.edge;
+              const className = getTableCellClass(isBestEdge);
+              const edgeName = getEdgeName(result) + (isBestEdge ? ' (Recommended)' : '');
+              return (
+                <TableCell key={result.edge} className={className}>
+                  <div className={classes.headerContent}>
+                    <ResultIcon result={result} />
+                    <Typography>{edgeName}</Typography>
+                  </div>
+                </TableCell>
+              );
+            })}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -101,7 +125,7 @@ export default function ResultWidget(props: { results?: TestResults[] }) {
                 {results.map((result) => {
                   const value = row.getValue(result);
                   const warning = row.getWarning?.(result);
-                  const className = getTableCellClass(warning);
+                  const className = getTableCellClass(!!bestEdge && bestEdge.edge === result.edge, warning);
                   const tooltipContent = warning ? row.tooltipContent?.[warning] : null;
 
                   return (

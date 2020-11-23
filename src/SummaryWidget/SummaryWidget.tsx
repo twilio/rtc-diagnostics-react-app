@@ -1,9 +1,8 @@
 import React from 'react';
 import { darken, lighten, makeStyles, Theme } from '@material-ui/core/styles';
 import expectedQualityRow from '../ResultWidget/rows/expectedQuality/expectedQuality';
-import { getEdgeName } from '../utils';
-import InfoIcon from '@material-ui/icons/InfoOutlined';
-import { maxBy } from 'lodash';
+import { getBestEdge, getEdgeName } from '../utils';
+import CheckIcon from '@material-ui/icons/CheckCircleOutline';
 import { TestResults } from '../types';
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -18,12 +17,12 @@ const useStyles = makeStyles((theme: Theme) => {
       alignItems: 'center',
       padding: '0.85em',
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: getBackgroundColor(theme.palette.info.main, 0.9),
+      backgroundColor: getBackgroundColor(theme.palette.success.main, 0.9),
       '&:not(:last-child)': {
         marginBottom: '0.8em',
       },
       '& svg': {
-        fill: theme.palette.info.main,
+        fill: theme.palette.success.main,
         margin: '0 0.6em 0 0.3em',
         padding: '1px',
       },
@@ -36,7 +35,7 @@ export default function SummaryWidget({ results }: { results?: TestResults[] }) 
 
   if (!results) return null;
 
-  const bestEdge = maxBy(results, (result) => result.results.preflight?.stats?.mos?.average);
+  const bestEdge = getBestEdge(results);
 
   if (bestEdge) {
     const bestEdgeQuality = expectedQualityRow.getValue(bestEdge);
@@ -45,13 +44,13 @@ export default function SummaryWidget({ results }: { results?: TestResults[] }) 
     return (
       <div className={classes.container}>
         <div className={classes.item}>
-          <InfoIcon />
+          <CheckIcon />
           <span>
             Expected Call Quality: <strong>{bestEdgeQuality}</strong>
           </span>
         </div>
         <div className={classes.item}>
-          <InfoIcon />
+          <CheckIcon />
           <span>
             Recommended Edge Location: <strong>{bestEdgeName}</strong>
           </span>

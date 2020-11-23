@@ -1,4 +1,8 @@
+import { maxBy } from 'lodash';
 import { Edge, TestResults } from './types';
+
+export const getBestEdge = (results: TestResults[]) =>
+  maxBy(results, (result) => result.results.preflight?.stats?.mos?.average);
 
 export const round = (num: number, decimals = 2) =>
   Math.round((num + Number.EPSILON) * 10 ** decimals) / 10 ** decimals;
@@ -30,7 +34,7 @@ export function regionalizeIceUrls(edge: Edge, iceServers: RTCIceServer[]) {
 
 export const edgeNameMap = {
   sydney: 'Sydney',
-  'sao-paolo': 'Sao Paolo',
+  'sao-paulo': 'Sao Paulo',
   dublin: 'Dublin',
   frankfurt: 'Frankfurt',
   tokyo: 'Tokyo',
@@ -46,7 +50,7 @@ export const edgeNameMap = {
 
 export function getEdgeName(result: TestResults) {
   if (result.results.preflight?.selectedEdge === 'roaming') {
-    return `Roaming (${edgeNameMap[result.results.preflight?.edge as Edge]})`;
+    return `Roaming - ${edgeNameMap[result.results.preflight?.edge as Edge]}`;
   }
 
   return edgeNameMap[result.edge as Edge];

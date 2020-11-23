@@ -47,7 +47,7 @@ describe('the SettingsModal component', () => {
     changeCheckbox(wrapper, 'tokyo', true);
     changeCheckbox(wrapper, 'frankfurt-ix', true);
     changeCheckbox(wrapper, 'sydney', true);
-    changeCheckbox(wrapper, 'sao-paolo', true); // ignored
+    changeCheckbox(wrapper, 'sao-paulo', true); // ignored
     changeCheckbox(wrapper, 'singapore', true); // ignored
     wrapper.find(Button).simulate('click');
     expect(handleSettingsChange).toHaveBeenCalledWith({

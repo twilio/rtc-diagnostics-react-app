@@ -58,7 +58,7 @@ This will display the URL at which the Application can be accessed.
 
 In order to develop this app on your local machine, you will first need to deploy all needed endpoints to Twilio Serverless. To do this, complete the steps in the "Deploy the App to Twilio" section above.
 
-Once the endpoints are deployed, add the app's URL to the `src/setupProxy.js` file. Then you can start a local development server by running the following command:
+Once the endpoints are deployed, add the app's URL to the `.env` file. Then you can start a local development server by running the following command:
 
 `$ npm run start`
 

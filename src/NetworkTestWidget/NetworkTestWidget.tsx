@@ -34,19 +34,18 @@ export default function NetworkTestWidget({ getTURNCredentials, getVoiceToken, o
       <Typography variant="h4" paragraph>
         Connectivity and Bandwidth Tests
       </Typography>
-      {(isRunning || results.length > 0) && (
-        <div>
-          {settings.edges.map((edge, i) => (
-            <EdgeResult
-              key={edge}
-              edge={edge}
-              isActive={activeEdge === edge}
-              result={results[i]}
-              activeTest={activeTest}
-            />
-          ))}
-        </div>
-      )}
+      <div>
+        {settings.edges.map((edge, i) => (
+          <EdgeResult
+            key={edge}
+            codecPreferences={settings.codecPreferences}
+            edge={edge}
+            isActive={activeEdge === edge}
+            result={results[i]}
+            activeTest={activeTest}
+          />
+        ))}
+      </div>
       <Button
         onClick={startTest}
         variant="contained"
