@@ -4,6 +4,7 @@ import NetworkTestWidget from './NetworkTestWidget';
 import EdgeResult from './EdgeResult/EdgeResult';
 import { shallow } from 'enzyme';
 import useTestRunner from './useTestRunner/useTestRunner';
+import Alert from '../common/Alert/Alert';
 
 jest.mock('./useTestRunner/useTestRunner');
 const mockUseTestRunner = useTestRunner as jest.Mock<any>;
@@ -108,5 +109,63 @@ describe('the NetworkTestWidget component', () => {
     wrapper.find(Button).at(0).simulate('click');
 
     setImmediate(() => expect(mockOnComplete).toHaveBeenCalledWith('mockResults'));
+  });
+
+  it('should correctly render an Alert when the bitrate test returns an "expired" error', () => {
+    mockUseTestRunner.mockImplementation(() => ({
+      isRunning: false,
+      results: [{ errors: { bitrate: { message: 'expired' } } }],
+      activeEdge: undefined,
+      activeTest: undefined,
+      runTests: jest.fn(),
+    }));
+
+    const wrapper = shallow(
+      <NetworkTestWidget
+        getTURNCredentials={(() => {}) as any}
+        getVoiceToken={(() => {}) as any}
+        onComplete={() => {}}
+      />
+    );
+
+    expect(wrapper.find(Alert).at(0)).toMatchInlineSnapshot(`
+      <Alert
+        variant="error"
+      >
+        <strong>
+          App has expired
+        </strong>
+         Please redeploy the app and try again.
+      </Alert>
+    `);
+  });
+
+  it('should correctly render an Alert when the preflight test returns an "expired" error', () => {
+    mockUseTestRunner.mockImplementation(() => ({
+      isRunning: false,
+      results: [{ errors: { preflight: { message: 'expired' } } }],
+      activeEdge: undefined,
+      activeTest: undefined,
+      runTests: jest.fn(),
+    }));
+
+    const wrapper = shallow(
+      <NetworkTestWidget
+        getTURNCredentials={(() => {}) as any}
+        getVoiceToken={(() => {}) as any}
+        onComplete={() => {}}
+      />
+    );
+
+    expect(wrapper.find(Alert).at(0)).toMatchInlineSnapshot(`
+      <Alert
+        variant="error"
+      >
+        <strong>
+          App has expired
+        </strong>
+         Please redeploy the app and try again.
+      </Alert>
+    `);
   });
 });
