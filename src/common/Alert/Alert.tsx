@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
-import ErrorIcon from '@material-ui/icons/ErrorOutlined';
+import ErrorIcon from '@material-ui/icons/ErrorOutline';
 import { darken, lighten, makeStyles, Theme } from '@material-ui/core/styles';
 
 type AlertProps = {
@@ -13,9 +13,8 @@ const useStyles = makeStyles((theme: Theme) => {
   const getBackgroundColor = theme.palette.type === 'light' ? lighten : darken;
 
   return {
-    item: {
+    container: {
       display: 'flex',
-      alignItems: 'center',
       padding: '0.85em',
       borderRadius: theme.shape.borderRadius,
       '&:not(:last-child)': {
@@ -25,6 +24,10 @@ const useStyles = makeStyles((theme: Theme) => {
         margin: '0 0.6em 0 0.3em',
         padding: '1px',
       },
+    },
+    contentContainer: {
+      display: 'flex',
+      alignItems: 'center',
     },
     info: {
       backgroundColor: getBackgroundColor(theme.palette.info.main, 0.9),
@@ -45,10 +48,10 @@ export default function Alert({ variant, children }: AlertProps) {
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.item, classes[variant])}>
+    <div className={clsx(classes.container, classes[variant])}>
       {variant === 'info' && <InfoIcon />}
       {variant === 'error' && <ErrorIcon />}
-      {children}
+      <div className={classes.contentContainer}>{children}</div>
     </div>
   );
 }
