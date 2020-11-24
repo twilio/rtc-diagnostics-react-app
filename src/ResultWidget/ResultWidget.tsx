@@ -95,7 +95,7 @@ export default function ResultWidget(props: { results?: TestResults[] }) {
             {results.map((result) => {
               const isBestEdge = !!bestEdge && bestEdge.edge === result.edge;
               const className = getTableCellClass(isBestEdge);
-              const edgeName = getEdgeName(result) + (isBestEdge ? ' (Recommended)' : '');
+              const edgeName = getEdgeName(result) + (isBestEdge && results.length > 1 ? ' (Recommended)' : '');
               return (
                 <TableCell key={result.edge} className={className}>
                   <div className={classes.headerContent}>

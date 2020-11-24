@@ -49,12 +49,14 @@ export default function SummaryWidget({ results }: { results?: TestResults[] }) 
             Expected Call Quality: <strong>{bestEdgeQuality}</strong>
           </span>
         </div>
-        <div className={classes.item}>
-          <CheckIcon />
-          <span>
-            Recommended Edge Location: <strong>{bestEdgeName}</strong>
-          </span>
-        </div>
+        {results.length > 1 && (
+          <div className={classes.item}>
+            <CheckIcon />
+            <span>
+              Recommended Edge Location: <strong>{bestEdgeName}</strong>
+            </span>
+          </div>
+        )}
       </div>
     );
   } else {
