@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AppBar, Container, Toolbar, Grid, Paper, CssBaseline, makeStyles, Typography } from '@material-ui/core';
+import BrowserCompatibilityWidget from './BrowserCompatibilityWidget/BrowserCompatibilityWidget';
 import CopyResultsWidget from './CopyResultsWidget/CopyResultsWidget';
 import { getJSON } from './utils';
 import NetworkTestWidget from './NetworkTestWidget/NetworkTestWidget';
@@ -43,6 +44,9 @@ function App() {
       </AppBar>
       <Container className={classes.container}>
         <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <BrowserCompatibilityWidget />
+          </Grid>
           <Grid item xs={12}>
             <Paper className={classes.paper} elevation={3}>
               <NetworkTestWidget
