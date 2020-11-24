@@ -14,15 +14,15 @@ This application uses Programmable Voice and Twilio NTS to perform the tests and
 - VoIP quality measurements
 - Support for testing towards all of Twilio Edge locations including Private Interconnect
 - Side by side comparison of Edge locations connection results
-- JSON formatted report (coming soon)
-- Easy Copy of report to clipboard (coming soon)
+- JSON formatted report
+- Easy Copy of report to clipboard
 - Interactive Mic testing (coming soon)
 - Interactive Speaker tests (coming soon)
 
 ## Prerequisites
 
 - A Twilio account. Sign up for free [here](https://www.twilio.com/try-twilio)
-- Node.js v10+
+- Node.js v12+
 - NPM v6+ (comes installed with newer Node versions)
 
 ## Install Dependencies

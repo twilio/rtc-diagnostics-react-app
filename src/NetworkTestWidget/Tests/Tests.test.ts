@@ -13,8 +13,8 @@ const mockPreflightTest = new EventEmitter();
 const mockTurnServers: RTCIceServer[] = [{ url: '', urls: '' }];
 
 jest.mock('@twilio/rtc-diagnostics', () => ({
-  testBitrate: jest.fn(() => mockBitrateTest),
-  BitrateTest: {
+  testMediaConnectionBitrate: jest.fn(() => mockBitrateTest),
+  MediaConnectionBitrateTest: {
     Events: {
       Bitrate: 'Bitrate',
       Error: 'Error',
@@ -25,7 +25,7 @@ jest.mock('@twilio/rtc-diagnostics', () => ({
 
 jest.mock('twilio-client', () => ({
   Device: {
-    testPreflight: jest.fn(() => mockPreflightTest),
+    runPreflight: jest.fn(() => mockPreflightTest),
     packageName: 'twilio-client',
   },
   PreflightTest: {
@@ -72,7 +72,7 @@ describe('the bitrateTestRunner function', () => {
 describe('the preflightTestRunner function', () => {
   it('should be called with the correct options', () => {
     preflightTestRunner('ashburn', 'token', mockTurnServers, [Connection.Codec.Opus]);
-    return expect(Device.testPreflight).toHaveBeenCalledWith('token', {
+    return expect(Device.runPreflight).toHaveBeenCalledWith('token', {
       codecPreferences: ['opus'],
       debug: false,
       edge: 'ashburn',
