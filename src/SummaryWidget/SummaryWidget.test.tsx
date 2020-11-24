@@ -46,4 +46,9 @@ describe('the SummaryWidget component', () => {
     const wrapper = shallow(<SummaryWidget results={[{ results: {} }, { results: {} }] as any} />);
     expect(wrapper.get(0)).toBe(null);
   });
+
+  it('should not render recommended result if there is only one result', () => {
+    const wrapper = shallow(<SummaryWidget results={results.slice(1) as any} />);
+    expect(wrapper.at(0).text()).toBe('Expected Call Quality: Great (5)');
+  });
 });

@@ -8,14 +8,105 @@ exports[`the ResultWidget component should render correctly when results are pre
     <TableRow>
       <TableCell />
       <TableCell
+        className="makeStyles-bestEdgeCell-4"
         key="roaming"
       >
-        Roaming (Ashburn)
+        <div
+          className="makeStyles-headerContent-3"
+        >
+          <ResultIcon
+            result={
+              Object {
+                "edge": "roaming",
+                "errors": Object {},
+                "results": Object {
+                  "bitrate": Object {
+                    "averageBitrate": 2875.4694113266423,
+                  },
+                  "preflight": Object {
+                    "callQuality": "excellent",
+                    "callSid": "CA12345",
+                    "edge": "ashburn",
+                    "isTurnRequired": true,
+                    "networkTiming": Object {
+                      "peerConnection": Object {
+                        "duration": 1618,
+                      },
+                    },
+                    "samples": Array [
+                      Object {
+                        "bytesReceived": 6296,
+                      },
+                    ],
+                    "selectedEdge": "roaming",
+                    "selectedIceCandidatePairStats": Object {
+                      "localCandidate": Object {
+                        "relayProtocol": "udp",
+                      },
+                    },
+                    "stats": Object {
+                      "jitter": Object {
+                        "average": 5.4444,
+                        "max": 9,
+                        "min": 2,
+                      },
+                      "mos": Object {
+                        "average": 4.3868,
+                        "max": 4.4067161340069765,
+                        "min": 4.171315102552577,
+                      },
+                      "rtt": Object {
+                        "average": 69.667,
+                        "max": 212,
+                        "min": 54,
+                      },
+                    },
+                    "testTiming": Object {
+                      "duration": 27797,
+                      "end": 1593710025637,
+                      "start": 1593709997840,
+                    },
+                    "totals": Object {
+                      "packetsLostFraction": 2,
+                    },
+                    "warnings": Array [
+                      Object {
+                        "name": "high-latency",
+                      },
+                    ],
+                  },
+                },
+              }
+            }
+          />
+          <Typography>
+            Roaming - Ashburn (Recommended)
+          </Typography>
+        </div>
       </TableCell>
       <TableCell
         key="tokyo"
       >
-        Tokyo
+        <div
+          className="makeStyles-headerContent-3"
+        >
+          <ResultIcon
+            result={
+              Object {
+                "edge": "tokyo",
+                "errors": Object {
+                  "preflight": Object {
+                    "code": 31000,
+                  },
+                },
+                "results": Object {},
+              }
+            }
+          />
+          <Typography>
+            Tokyo
+          </Typography>
+        </div>
       </TableCell>
     </TableRow>
   </TableHead>
@@ -51,6 +142,7 @@ exports[`the ResultWidget component should render correctly when results are pre
         </div>
       </TableCell>
       <TableCell
+        className="makeStyles-bestEdgeCell-4"
         key="roaming"
       >
         <div
@@ -60,7 +152,7 @@ exports[`the ResultWidget component should render correctly when results are pre
         </div>
       </TableCell>
       <TableCell
-        className="makeStyles-error-4"
+        className="makeStyles-error-6"
         key="tokyo"
       >
         <div
@@ -118,7 +210,7 @@ exports[`the ResultWidget component should render correctly when results are pre
         </div>
       </TableCell>
       <TableCell
-        className="makeStyles-warn-3"
+        className="makeStyles-warn-5"
         key="roaming"
       >
         <div
@@ -160,6 +252,7 @@ exports[`the ResultWidget component should render correctly when results are pre
         </div>
       </TableCell>
       <TableCell
+        className="makeStyles-bestEdgeCell-4"
         key="roaming"
       >
         <div
@@ -199,6 +292,7 @@ exports[`the ResultWidget component should render correctly when results are pre
         </div>
       </TableCell>
       <TableCell
+        className="makeStyles-bestEdgeCell-4"
         key="roaming"
       >
         <div
@@ -238,6 +332,7 @@ exports[`the ResultWidget component should render correctly when results are pre
         </div>
       </TableCell>
       <TableCell
+        className="makeStyles-bestEdgeCell-4"
         key="roaming"
       >
         <div
@@ -277,6 +372,7 @@ exports[`the ResultWidget component should render correctly when results are pre
         </div>
       </TableCell>
       <TableCell
+        className="makeStyles-bestEdgeCell-4"
         key="roaming"
       >
         <div
@@ -316,6 +412,7 @@ exports[`the ResultWidget component should render correctly when results are pre
         </div>
       </TableCell>
       <TableCell
+        className="makeStyles-bestEdgeCell-4"
         key="roaming"
       >
         <div
@@ -355,6 +452,7 @@ exports[`the ResultWidget component should render correctly when results are pre
         </div>
       </TableCell>
       <TableCell
+        className="makeStyles-bestEdgeCell-4"
         key="roaming"
       >
         <div
@@ -382,6 +480,7 @@ exports[`the ResultWidget component should render correctly when results are pre
         </div>
       </TableCell>
       <TableCell
+        className="makeStyles-bestEdgeCell-4"
         key="roaming"
       >
         <div
