@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme: Theme) => {
     },
     contentContainer: {
       display: 'flex',
-      alignItems: 'center',
+      flexDirection: 'column',
+      justifyContent: 'center',
     },
     info: {
       backgroundColor: getBackgroundColor(theme.palette.info.main, 0.9),

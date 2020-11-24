@@ -132,10 +132,14 @@ describe('the NetworkTestWidget component', () => {
       <Alert
         variant="error"
       >
-        <strong>
-          App has expired
-        </strong>
-         Please redeploy the app and try again.
+        <WithStyles(ForwardRef(Typography))
+          variant="body1"
+        >
+          <strong>
+            App has expired
+          </strong>
+           Please redeploy the app and try again.
+        </WithStyles(ForwardRef(Typography))>
       </Alert>
     `);
   });
@@ -161,10 +165,14 @@ describe('the NetworkTestWidget component', () => {
       <Alert
         variant="error"
       >
-        <strong>
-          App has expired
-        </strong>
-         Please redeploy the app and try again.
+        <WithStyles(ForwardRef(Typography))
+          variant="body1"
+        >
+          <strong>
+            App has expired
+          </strong>
+           Please redeploy the app and try again.
+        </WithStyles(ForwardRef(Typography))>
       </Alert>
     `);
   });

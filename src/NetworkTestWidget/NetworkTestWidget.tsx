@@ -43,7 +43,9 @@ export default function NetworkTestWidget({ getTURNCredentials, getVoiceToken, o
         <div style={{ margin: '1em 1em 0' }}>
           {isExpired && (
             <Alert variant="error">
-              <strong>App has expired</strong>&nbsp;Please redeploy the app and try again.
+              <Typography variant="body1">
+                <strong>App has expired</strong>&nbsp;Please redeploy the app and try again.
+              </Typography>
             </Alert>
           )}
           {settings.edges.map((edge, i) => (
