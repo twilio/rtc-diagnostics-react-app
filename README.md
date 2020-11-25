@@ -16,8 +16,8 @@ This application uses Programmable Voice and Twilio NTS to perform the tests and
 - Side by side comparison of Edge locations connection results
 - JSON formatted report
 - Easy Copy of report to clipboard
-- Interactive Mic testing (coming soon)
-- Interactive Speaker tests (coming soon)
+- Interactive Mic testing
+- Interactive Speaker tests
 
 ## Prerequisites
 

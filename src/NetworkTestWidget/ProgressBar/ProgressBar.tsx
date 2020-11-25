@@ -24,7 +24,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function ProgressBar({ position, duration }: { position: number; duration: number }) {
+interface ProgressBarProps {
+  duration: number;
+  position: number;
+  style?: { [key: string]: string };
+}
+
+export default function ProgressBar({ duration, position, style }: ProgressBarProps) {
   const classes = useStyles();
   const progressBarRef = useRef<HTMLDivElement>(null);
 
@@ -41,7 +47,7 @@ export default function ProgressBar({ position, duration }: { position: number; 
   }, [duration, position]);
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} style={{...style}}>
       <div className={classes.progress} ref={progressBarRef}></div>
       <div className={classes.background}></div>
     </div>
