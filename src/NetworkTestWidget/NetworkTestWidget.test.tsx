@@ -15,7 +15,7 @@ jest.mock('../constants', () => ({
 }));
 
 describe('the NetworkTestWidget component', () => {
-  it('should not render EdgeResult components when there are no results', () => {
+  it('should render EdgeResult components when there are no results', () => {
     mockUseTestRunner.mockImplementation(() => ({
       isRunning: false,
       results: [],
@@ -32,7 +32,7 @@ describe('the NetworkTestWidget component', () => {
       />
     );
 
-    expect(wrapper.find(EdgeResult).exists()).toBe(false);
+    expect(wrapper.find(EdgeResult).exists()).toBe(true);
     expect(wrapper.find(Button).find({ disabled: false }).length).toBe(2);
   });
 
@@ -55,6 +55,7 @@ describe('the NetworkTestWidget component', () => {
 
     expect(wrapper.find(EdgeResult).find({ edge: 'ashburn' }).props()).toEqual({
       activeTest: 'bitrate',
+      codecPreferences: ['opus'],
       isActive: true,
       edge: 'ashburn',
       result: undefined,
@@ -81,6 +82,7 @@ describe('the NetworkTestWidget component', () => {
 
     expect(wrapper.find(EdgeResult).at(0).props()).toEqual({
       activeTest: undefined,
+      codecPreferences: ['opus'],
       isActive: false,
       edge: 'ashburn',
       result: { errors: {} },

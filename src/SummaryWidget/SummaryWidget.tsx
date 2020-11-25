@@ -1,14 +1,13 @@
 import React from 'react';
 import Alert from '../common/Alert/Alert';
 import expectedQualityRow from '../ResultWidget/rows/expectedQuality/expectedQuality';
-import { getEdgeName } from '../utils';
-import { maxBy } from 'lodash';
+import { getBestEdge, getEdgeName } from '../utils';
 import { TestResults } from '../types';
 
 export default function SummaryWidget({ results }: { results?: TestResults[] }) {
   if (!results) return null;
 
-  const bestEdge = maxBy(results, (result) => result.results.preflight?.stats?.mos?.average);
+  const bestEdge = getBestEdge(results);
 
   if (bestEdge) {
     const bestEdgeQuality = expectedQualityRow.getValue(bestEdge);
