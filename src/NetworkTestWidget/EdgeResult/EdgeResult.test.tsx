@@ -1,10 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { Connection } from 'twilio-client';
 import EdgeResult from './EdgeResult';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import { Tooltip } from '@material-ui/core';
 
 import ResultIcon from '../../ResultWidget/ResultIcon/ResultIcon';
+
+const { PCMU, Opus } = Connection.Codec;
 
 const testResult: any = {
   errors: {},
@@ -52,5 +55,34 @@ describe('the EdgeResult component', () => {
   it('should not render ResultIcon when there are not results', () => {
     const wrapper = mount(<EdgeResult codecPreferences={[]} edge="ashburn" isActive={false} />);
     expect(wrapper.find(ResultIcon).exists()).toBe(false);
+  });
+
+  [{
+    codecPreferences: [Opus],
+    label: 'Ashburn (opus)',
+  },{
+    codecPreferences: [PCMU],
+    label: 'Ashburn (pcmu)',
+  },{
+    codecPreferences: [Opus, PCMU],
+    label: 'Ashburn (opus, pcmu)',
+  },{
+    codecPreferences: [PCMU, Opus],
+    label: 'Ashburn (pcmu, opus)',
+  }].forEach(test => {
+    it(`should render label properly if test is not active and codecPreferences is [${test.codecPreferences.join()}]`, () => {
+      const wrapper = mount(<EdgeResult codecPreferences={test.codecPreferences} edge="ashburn" isActive={false} />);
+      expect(wrapper.at(0).text()).toBe(test.label);
+    });
+
+    it(`should render label properly if test is active and codecPreferences is [${test.codecPreferences.join()}]`, () => {
+      const wrapper = mount(<EdgeResult codecPreferences={test.codecPreferences} edge="ashburn" isActive={true} />);
+      expect(wrapper.at(0).text()).toBe(test.label);
+    });
+
+    it(`should render label properly if there is result and codecPreferences is [${test.codecPreferences.join()}]`, () => {
+      const wrapper = mount(<EdgeResult codecPreferences={test.codecPreferences} edge="ashburn" isActive={false} result={testResult} />);
+      expect(wrapper.at(0).text()).toBe(test.label);
+    });
   });
 });

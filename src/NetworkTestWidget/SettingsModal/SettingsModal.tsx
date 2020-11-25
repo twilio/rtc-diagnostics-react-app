@@ -78,6 +78,7 @@ export default function SettingsModal({
 
   const [edges, setEdges] = useState(initialState);
   const [codec, setCodec] = useState<string>(DEFAULT_CODEC_PREFERENCES.join(''));
+  const selectedEdges = Object.values(edges).filter((isSelected) => isSelected).length;
 
   const handleEdgeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const edgeName = event.target.name;
@@ -112,7 +113,7 @@ export default function SettingsModal({
               <strong>Edge Locations:</strong>
             </Typography>
             <Typography>
-              {`${Object.values(edges).filter((isSelected) => isSelected).length} of ${MAX_SELECTED_EDGES}`}
+              {`${selectedEdges} of ${MAX_SELECTED_EDGES}`}
             </Typography>
           </div>
           <FormGroup>
