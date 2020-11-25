@@ -28,7 +28,7 @@ async function deployFunctions() {
   // Calling 'getListOfFunctionsAndAssets' twice is necessary because it only gets the assets from
   // the first matching folder in the array
   const { assets: fnAssets } = await getListOfFunctionsAndAssets(__dirname, {
-    assetsFolderNames: ['../assets'],
+    assetsFolderNames: ['../middleware'],
   });
 
   assets.push(...fnAssets);
