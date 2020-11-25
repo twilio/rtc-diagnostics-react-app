@@ -20,12 +20,13 @@ export default function SummaryWidget({ results }: { results?: TestResults[] }) 
             Expected Call Quality: <strong>{bestEdgeQuality}</strong>
           </span>
         </Alert>
-        <div></div>
-        <Alert variant="success">
-          <span>
-            Recommended Edge Location: <strong>{bestEdgeName}</strong>
-          </span>
-        </Alert>
+        {results.length > 1 && (
+          <Alert variant="success">
+            <span>
+              Recommended Edge Location: <strong>{bestEdgeName}</strong>
+            </span>
+          </Alert>
+        )}
       </div>
     );
   } else {
