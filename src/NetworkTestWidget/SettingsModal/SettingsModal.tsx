@@ -112,9 +112,7 @@ export default function SettingsModal({
             <Typography gutterBottom>
               <strong>Edge Locations:</strong>
             </Typography>
-            <Typography>
-              {`${selectedEdges} of ${MAX_SELECTED_EDGES}`}
-            </Typography>
+            <Typography>{`${selectedEdges} of ${MAX_SELECTED_EDGES}`}</Typography>
           </div>
           <FormGroup>
             <Grid container>

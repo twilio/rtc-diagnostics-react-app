@@ -6,7 +6,7 @@ const constants = require('../constants');
 async function remove() {
   cli.action.start('Removing service');
   const services = await client.serverless.services.list();
-  const app = services.find((service) => service.friendlyName === constants.SERVICE_NAME);
+  const app = services.find((service) => service.friendlyName.includes(constants.SERVICE_NAME));
   if (app) {
     await client.serverless.services(app.sid).remove();
   }

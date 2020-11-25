@@ -1,4 +1,7 @@
 exports.handler = function (context, event, callback) {
+  const verifyExpiry = require(Runtime.getAssets()['/verify_expiry.js'].path);
+  verifyExpiry.handler(context, event, callback);
+
   const AccessToken = Twilio.jwt.AccessToken;
   const VoiceGrant = AccessToken.VoiceGrant;
 

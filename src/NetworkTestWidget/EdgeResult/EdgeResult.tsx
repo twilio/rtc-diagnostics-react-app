@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '0.8em',
     background: '#eee',
     alignItems: 'center',
-    margin: '1em',
+    margin: '1em 0',
     justifyContent: 'space-between',
   },
   progressContainer: {
@@ -72,7 +72,7 @@ export default function EdgeResult(props: EdgeResultProps) {
   const progressDuration = activeTest ? progressBarTimings[activeTest].duration : 0;
   const progressPosition = activeTest ? progressBarTimings[activeTest].position : 0;
 
-  const codecLabel = codecPreferences.map(codec => codecNameMap[codec]).join(', ');
+  const codecLabel = codecPreferences.map((codec) => codecNameMap[codec]).join(', ');
 
   return (
     <div className={clsx(classes.container, { [classes.pendingTest]: !isActive && !result })}>

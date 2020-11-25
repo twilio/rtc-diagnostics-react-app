@@ -1,6 +1,20 @@
 import { maxBy } from 'lodash';
 import { Edge, TestResults } from './types';
 
+export function getJSON(url: string) {
+  return fetch(url).then(async (res) => {
+    if (res.status === 401) {
+      throw new Error('expired');
+    }
+
+    if (!res.ok) {
+      throw new Error(res.statusText);
+    }
+
+    return await res.json();
+  });
+}
+
 export const getBestEdge = (results: TestResults[]) =>
   maxBy(results, (result) => result.results.preflight?.stats?.mos?.average);
 

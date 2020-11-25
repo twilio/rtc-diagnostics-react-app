@@ -57,19 +57,24 @@ describe('the EdgeResult component', () => {
     expect(wrapper.find(ResultIcon).exists()).toBe(false);
   });
 
-  [{
-    codecPreferences: [Opus],
-    label: 'Ashburn (Opus)',
-  },{
-    codecPreferences: [PCMU],
-    label: 'Ashburn (PCMU)',
-  },{
-    codecPreferences: [Opus, PCMU],
-    label: 'Ashburn (Opus, PCMU)',
-  },{
-    codecPreferences: [PCMU, Opus],
-    label: 'Ashburn (PCMU, Opus)',
-  }].forEach(test => {
+  [
+    {
+      codecPreferences: [Opus],
+      label: 'Ashburn (Opus)',
+    },
+    {
+      codecPreferences: [PCMU],
+      label: 'Ashburn (PCMU)',
+    },
+    {
+      codecPreferences: [Opus, PCMU],
+      label: 'Ashburn (Opus, PCMU)',
+    },
+    {
+      codecPreferences: [PCMU, Opus],
+      label: 'Ashburn (PCMU, Opus)',
+    },
+  ].forEach((test) => {
     it(`should render label properly if test is not active and codecPreferences is [${test.codecPreferences.join()}]`, () => {
       const wrapper = mount(<EdgeResult codecPreferences={test.codecPreferences} edge="ashburn" isActive={false} />);
       expect(wrapper.at(0).text()).toBe(test.label);
@@ -81,7 +86,9 @@ describe('the EdgeResult component', () => {
     });
 
     it(`should render label properly if there is result and codecPreferences is [${test.codecPreferences.join()}]`, () => {
-      const wrapper = mount(<EdgeResult codecPreferences={test.codecPreferences} edge="ashburn" isActive={false} result={testResult} />);
+      const wrapper = mount(
+        <EdgeResult codecPreferences={test.codecPreferences} edge="ashburn" isActive={false} result={testResult} />
+      );
       expect(wrapper.at(0).text()).toBe(test.label);
     });
   });

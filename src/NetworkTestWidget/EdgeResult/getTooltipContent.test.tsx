@@ -24,7 +24,7 @@ describe('the getTooltipContent function', () => {
       ];
 
       // @ts-ignore
-      const result = shallow(<div>{getTooltipContent({} as any)}</div>);
+      const result = shallow(<div>{getTooltipContent({ errors: {} } as any)}</div>);
       expect(result).toMatchInlineSnapshot(`
         <div>
           <Component
@@ -56,7 +56,7 @@ describe('the getTooltipContent function', () => {
       ];
 
       // @ts-ignore
-      const result = shallow(<div>{getTooltipContent({} as any)}</div>);
+      const result = shallow(<div>{getTooltipContent({ errors: {} } as any)}</div>);
       expect(result).toMatchInlineSnapshot(`
         <div>
           <span>
@@ -65,5 +65,31 @@ describe('the getTooltipContent function', () => {
         </div>
       `);
     });
+  });
+
+  it('should render an error when the bitrate test returns an "expired" error', () => {
+    const result = shallow(<div>{getTooltipContent({ errors: { bitrate: { message: 'expired' } } } as any)}</div>);
+    expect(result).toMatchInlineSnapshot(`
+      <div>
+        <Component
+          key="expired"
+        >
+          App has expired. Please redeploy the app and try again.
+        </Component>
+      </div>
+    `);
+  });
+
+  it('should render an error when the preflight test returns an "expired" error', () => {
+    const result = shallow(<div>{getTooltipContent({ errors: { preflight: { message: 'expired' } } } as any)}</div>);
+    expect(result).toMatchInlineSnapshot(`
+      <div>
+        <Component
+          key="expired"
+        >
+          App has expired. Please redeploy the app and try again.
+        </Component>
+      </div>
+    `);
   });
 });

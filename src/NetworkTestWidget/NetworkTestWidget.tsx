@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Alert from '../common/Alert/Alert';
 import { Button, Typography } from '@material-ui/core';
 import useTestRunner from './useTestRunner/useTestRunner';
 import EdgeResult from './EdgeResult/EdgeResult';
@@ -29,12 +30,23 @@ export default function NetworkTestWidget({ getTURNCredentials, getVoiceToken, o
     onComplete(testResults);
   }
 
+  const isExpired = results.some(
+    (result) => result.errors.bitrate?.message === 'expired' || result.errors.preflight?.message === 'expired'
+  );
+
   return (
     <div>
       <Typography variant="h4" paragraph>
         Connectivity and Bandwidth Tests
       </Typography>
-      <div>
+      <div style={{ margin: '1em 1em 0' }}>
+        {isExpired && (
+          <Alert variant="error">
+            <Typography variant="body1">
+              <strong>App has expired</strong>&nbsp;Please redeploy the app and try again.
+            </Typography>
+          </Alert>
+        )}
         {settings.edges.map((edge, i) => (
           <EdgeResult
             key={edge}
