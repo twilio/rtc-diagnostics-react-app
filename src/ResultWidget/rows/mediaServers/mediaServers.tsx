@@ -20,7 +20,7 @@ const row: Row = {
       testResults.errors.preflight?.latestSample?.bytesReceived
     ) {
       if (testResults.results.preflight?.isTurnRequired) {
-        const turnProtocol = testResults.results.preflight?.selectedIceCandidatePair?.localCandidate.relayProtocol;
+        const turnProtocol = testResults.results.preflight?.selectedIceCandidatePairStats?.localCandidate.relayProtocol;
         if (turnProtocol === 'tcp') {
           return 'Yes (TURN TCP)';
         }
@@ -46,7 +46,7 @@ const row: Row = {
       testResults.errors.preflight?.latestSample?.bytesReceived
     ) {
       if (testResults.results.preflight?.isTurnRequired) {
-        const turnProtocol = testResults.results.preflight?.selectedIceCandidatePair?.localCandidate.relayProtocol;
+        const turnProtocol = testResults.results.preflight?.selectedIceCandidatePairStats?.localCandidate.relayProtocol;
         if (turnProtocol === 'tcp') {
           return TestWarnings.warnTurnTCP;
         }

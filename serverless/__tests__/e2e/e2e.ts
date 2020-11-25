@@ -2,6 +2,9 @@ import runDeploy from '../../scripts/deploy';
 import runRemove from '../../scripts/remove';
 import jwt from 'jsonwebtoken';
 import constants from '../../constants';
+import Twilio from 'twilio';
+
+const client = Twilio(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
 
 constants.SERVICE_NAME = 'rtc-diagnostics-e2e-test';
 
@@ -24,10 +27,9 @@ describe('the serverless endpoints', () => {
     await runRemove();
     stdout.stop();
 
-    expect(superagent.get(`${appURL}/app/token`)).rejects.toEqual(new Error('Not Found'));
-    expect(superagent.get(`${appURL}/app/turn-credentials`)).rejects.toEqual(new Error('Not Found'));
-    expect(superagent.get(`${appURL}/twiml/play`)).rejects.toEqual(new Error('Not Found'));
-    expect(superagent.get(`${appURL}/twiml/record`)).rejects.toEqual(new Error('Not Found'));
+    const services = await client.serverless.services.list();
+    const app = services.find((service) => service.friendlyName.includes(constants.SERVICE_NAME));
+    expect(app).toBe(undefined);
   });
 
   describe('the app URL', () => {

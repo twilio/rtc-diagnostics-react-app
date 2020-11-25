@@ -23,7 +23,7 @@ const testResults: any = [
           },
         ],
         selectedEdge: 'roaming',
-        selectedIceCandidatePair: {
+        selectedIceCandidatePairStats: {
           localCandidate: {
             relayProtocol: 'udp',
           },

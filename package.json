@@ -6,7 +6,7 @@
     "@material-ui/core": "^4.10.0",
     "@material-ui/icons": "^4.9.1",
     "@twilio-labs/serverless-api": "^2.0.1",
-    "@twilio/rtc-diagnostics": "^1.0.0-preview3",
+    "@twilio/rtc-diagnostics": "^1.0.0",
     "@types/node": "^12.12.39",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
@@ -20,7 +20,7 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "twilio": "^3.43.1",
-    "twilio-client": "^1.13.0-beta1",
+    "twilio-client": "^1.13.0",
     "typescript": "^3.7.5"
   },
   "scripts": {

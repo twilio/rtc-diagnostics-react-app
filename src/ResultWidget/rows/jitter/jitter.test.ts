@@ -15,6 +15,7 @@ describe('the Jitter row', () => {
 
     it('should return undefined when jitter is not available', () => {
       const testResults = set({}, 'results', {}) as TestResults;
+      // eslint-disable-next-line
       expect(jitterRow.getValue(testResults)).toBeUndefined;
     });
   });
