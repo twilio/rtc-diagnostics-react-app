@@ -1,12 +1,12 @@
 import React from 'react';
 import clsx from 'clsx';
-import InfoIcon from '@material-ui/icons/InfoOutlined';
+import CheckIcon from '@material-ui/icons/CheckCircleOutline';
 import ErrorIcon from '@material-ui/icons/ErrorOutline';
 import { darken, lighten, makeStyles, Theme } from '@material-ui/core/styles';
 
 type AlertProps = {
   children: React.ReactNode;
-  variant: 'info' | 'error';
+  variant: 'success' | 'error';
 };
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -30,10 +30,10 @@ const useStyles = makeStyles((theme: Theme) => {
       flexDirection: 'column',
       justifyContent: 'center',
     },
-    info: {
-      backgroundColor: getBackgroundColor(theme.palette.info.main, 0.9),
+    success: {
+      backgroundColor: getBackgroundColor(theme.palette.success.main, 0.9),
       '& svg': {
-        fill: theme.palette.info.main,
+        fill: theme.palette.success.main,
       },
     },
     error: {
@@ -50,7 +50,7 @@ export default function Alert({ variant, children }: AlertProps) {
 
   return (
     <div className={clsx(classes.container, classes[variant])}>
-      {variant === 'info' && <InfoIcon />}
+      {variant === 'success' && <CheckIcon />}
       {variant === 'error' && <ErrorIcon />}
       <div className={classes.contentContainer}>{children}</div>
     </div>

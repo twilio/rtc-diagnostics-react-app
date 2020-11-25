@@ -3,9 +3,9 @@ import Alert from './Alert';
 import { shallow } from 'enzyme';
 
 describe('the Alert component', () => {
-  it('should render the "info" variant correctly', () => {
+  it('should render the "success" variant correctly', () => {
     const wrapper = shallow(
-      <Alert variant="info">
+      <Alert variant="success">
         <span>Test Info Content</span>
       </Alert>
     );

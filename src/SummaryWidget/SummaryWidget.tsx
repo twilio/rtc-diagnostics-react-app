@@ -15,13 +15,13 @@ export default function SummaryWidget({ results }: { results?: TestResults[] }) 
 
     return (
       <div style={{ margin: '1em 1em 0' }}>
-        <Alert variant="info">
+        <Alert variant="success">
           <span>
             Expected Call Quality: <strong>{bestEdgeQuality}</strong>
           </span>
         </Alert>
         <div></div>
-        <Alert variant="info">
+        <Alert variant="success">
           <span>
             Recommended Edge Location: <strong>{bestEdgeName}</strong>
           </span>
