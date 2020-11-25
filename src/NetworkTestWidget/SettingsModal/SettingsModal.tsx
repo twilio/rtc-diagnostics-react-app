@@ -186,19 +186,19 @@ export default function SettingsModal({
             <Grid container direction="column">
               <FormControlLabel
                 control={<Radio checked={codec === Opus} onChange={handleCodecChange} name={Opus} />}
-                label="opus"
+                label="Opus"
               />
               <FormControlLabel
                 control={<Radio checked={codec === PCMU} onChange={handleCodecChange} name={PCMU} />}
-                label="pcmu"
+                label="PCMU"
               />
               <FormControlLabel
                 control={<Radio checked={codec === Opus + PCMU} onChange={handleCodecChange} name={Opus + PCMU} />}
-                label="opus, pcmu"
+                label="Opus, PCMU"
               />
               <FormControlLabel
                 control={<Radio checked={codec === PCMU + Opus} onChange={handleCodecChange} name={PCMU + Opus} />}
-                label="pcmu, opus"
+                label="PCMU, Opus"
               />
             </Grid>
           </FormGroup>

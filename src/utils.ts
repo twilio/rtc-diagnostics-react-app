@@ -32,6 +32,11 @@ export function regionalizeIceUrls(edge: Edge, iceServers: RTCIceServer[]) {
   });
 }
 
+export const codecNameMap = {
+  opus: 'Opus',
+  pcmu: 'PCMU',
+};
+
 export const edgeNameMap = {
   sydney: 'Sydney',
   'sao-paulo': 'Sao Paulo',

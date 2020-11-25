@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 import InfoIcon from '@material-ui/icons/Info';
 import ProgressBar from '../ProgressBar/ProgressBar';
-import { edgeNameMap } from '../../utils';
+import { codecNameMap, edgeNameMap } from '../../utils';
 
 import { BITRATE_TEST_DURATION } from '../Tests/Tests';
 import ResultIcon from '../../ResultWidget/ResultIcon/ResultIcon';
@@ -72,9 +72,11 @@ export default function EdgeResult(props: EdgeResultProps) {
   const progressDuration = activeTest ? progressBarTimings[activeTest].duration : 0;
   const progressPosition = activeTest ? progressBarTimings[activeTest].position : 0;
 
+  const codecLabel = codecPreferences.map(codec => codecNameMap[codec]).join(', ');
+
   return (
     <div className={clsx(classes.container, { [classes.pendingTest]: !isActive && !result })}>
-      <Typography className={classes.edgeLabel}>{`${edgeNameMap[edge]} (${codecPreferences.join(', ')})`}</Typography>
+      <Typography className={classes.edgeLabel}>{`${edgeNameMap[edge]} (${codecLabel})`}</Typography>
       <div className={classes.progressContainer}>
         {isActive && <ProgressBar position={progressPosition} duration={progressDuration} />}
       </div>

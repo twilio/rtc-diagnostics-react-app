@@ -59,16 +59,16 @@ describe('the EdgeResult component', () => {
 
   [{
     codecPreferences: [Opus],
-    label: 'Ashburn (opus)',
+    label: 'Ashburn (Opus)',
   },{
     codecPreferences: [PCMU],
-    label: 'Ashburn (pcmu)',
+    label: 'Ashburn (PCMU)',
   },{
     codecPreferences: [Opus, PCMU],
-    label: 'Ashburn (opus, pcmu)',
+    label: 'Ashburn (Opus, PCMU)',
   },{
     codecPreferences: [PCMU, Opus],
-    label: 'Ashburn (pcmu, opus)',
+    label: 'Ashburn (PCMU, Opus)',
   }].forEach(test => {
     it(`should render label properly if test is not active and codecPreferences is [${test.codecPreferences.join()}]`, () => {
       const wrapper = mount(<EdgeResult codecPreferences={test.codecPreferences} edge="ashburn" isActive={false} />);
