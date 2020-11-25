@@ -1,4 +1,4 @@
-const { handler } = jest.requireActual('../../../serverless/assets/verify_expiry.private');
+const { handler } = jest.requireActual('../../../serverless/middleware/verify_expiry.private');
 
 Date.now = () => 2;
 

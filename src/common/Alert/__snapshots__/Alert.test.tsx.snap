@@ -15,11 +15,11 @@ exports[`the Alert component should render the "error" variant correctly 1`] = `
 </div>
 `;
 
-exports[`the Alert component should render the "info" variant correctly 1`] = `
+exports[`the Alert component should render the "success" variant correctly 1`] = `
 <div
-  className="makeStyles-container-1 makeStyles-info-3"
+  className="makeStyles-container-1 makeStyles-success-3"
 >
-  <InfoOutlinedIcon />
+  <CheckCircleOutlineIcon />
   <div
     className="makeStyles-contentContainer-2"
   >

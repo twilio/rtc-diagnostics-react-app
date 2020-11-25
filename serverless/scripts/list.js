@@ -1,4 +1,3 @@
-const moment = require('moment');
 const constants = require('../constants');
 require('dotenv').config();
 const client = require('twilio')(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
@@ -16,7 +15,7 @@ async function getAppInfo() {
   const [environment] = await appInstance.environments.list();
   const variables = await appInstance.environments(environment.sid).variables.list();
   const expiryVar = variables.find((v) => v.key === 'APP_EXPIRY');
-  const expiryDate = moment(Number(expiryVar.value)).toString();
+  const expiryDate = new Date(Number(expiryVar.value)).toString();
 
   console.log('App deployed to: https://' + environment.domainName);
   console.log(`This URL is for demo purposes only. It will expire on ${expiryDate}`);
