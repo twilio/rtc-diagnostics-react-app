@@ -46,7 +46,7 @@ export type Edge =
   | 'dublin'
   | 'frankfurt'
   | 'roaming'
-  | 'sao-paolo'
+  | 'sao-paulo'
   | 'singapore'
   | 'sydney'
   | 'tokyo'

@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Connection } from 'twilio-client';
-import { DEFAULT_CODEC_PREFERENCES, DEFAULT_EDGES } from '../../constants';
+import { DEFAULT_CODEC_PREFERENCES, DEFAULT_EDGES, MAX_SELECTED_EDGES, MIN_SELECTED_EDGES } from '../../constants';
 import { makeStyles } from '@material-ui/core/styles';
 import { Edge } from '../../types';
 
@@ -20,12 +20,16 @@ const { PCMU, Opus } = Connection.Codec;
 const useStyles = makeStyles({
   container: {
     padding: '1em',
-    width: '400px',
+    maxWidth: '400px',
   },
   innerContainer: {
     display: 'block',
     padding: '1em',
     width: '100%',
+  },
+  headerContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
 });
 
@@ -38,7 +42,7 @@ const initialState: InitialState = {
   dublin: false,
   frankfurt: false,
   roaming: false,
-  'sao-paolo': false,
+  'sao-paulo': false,
   singapore: false,
   sydney: false,
   tokyo: false,
@@ -74,6 +78,7 @@ export default function SettingsModal({
 
   const [edges, setEdges] = useState(initialState);
   const [codec, setCodec] = useState<string>(DEFAULT_CODEC_PREFERENCES.join(''));
+  const selectedEdges = Object.values(edges).filter((isSelected) => isSelected).length;
 
   const handleEdgeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const edgeName = event.target.name;
@@ -83,7 +88,7 @@ export default function SettingsModal({
       const newEdges = { ...prevEdges, [edgeName]: isChecked };
       const newEdgesArrayLength = getEdgeArray(newEdges).length;
 
-      if (newEdgesArrayLength > 0 && newEdgesArrayLength < 7) {
+      if (newEdgesArrayLength >= MIN_SELECTED_EDGES && newEdgesArrayLength <= MAX_SELECTED_EDGES) {
         return newEdges;
       } else {
         return prevEdges;
@@ -103,9 +108,14 @@ export default function SettingsModal({
     <Dialog open={isOpen} onClose={handleClose}>
       <Grid container className={classes.container}>
         <form className={classes.innerContainer}>
-          <Typography gutterBottom>
-            <strong>Edge Locations:</strong>
-          </Typography>
+          <div className={classes.headerContainer}>
+            <Typography gutterBottom>
+              <strong>Edge Locations:</strong>
+            </Typography>
+            <Typography>
+              {`${selectedEdges} of ${MAX_SELECTED_EDGES}`}
+            </Typography>
+          </div>
           <FormGroup>
             <Grid container>
               <Grid item xs={6}>
@@ -126,8 +136,8 @@ export default function SettingsModal({
                   label="Roaming"
                 />
                 <FormControlLabel
-                  control={<Checkbox checked={edges['sao-paolo']} onChange={handleEdgeChange} name="sao-paolo" />}
-                  label="Sao Paolo"
+                  control={<Checkbox checked={edges['sao-paulo']} onChange={handleEdgeChange} name="sao-paulo" />}
+                  label="Sao Paulo"
                 />
                 <FormControlLabel
                   control={<Checkbox checked={edges.singapore} onChange={handleEdgeChange} name="singapore" />}

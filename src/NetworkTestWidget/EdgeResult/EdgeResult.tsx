@@ -1,21 +1,19 @@
 import React from 'react';
-import { makeStyles, Typography, Tooltip } from '@material-ui/core';
+import { Connection } from 'twilio-client';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Typography, Tooltip } from '@material-ui/core';
 import clsx from 'clsx';
 
 import InfoIcon from '@material-ui/icons/Info';
-import CloseIcon from '@material-ui/icons/Close';
-import CheckIcon from '@material-ui/icons/Check';
-import WarningIcon from '@material-ui/icons/Warning';
 import ProgressBar from '../ProgressBar/ProgressBar';
-import { edgeNameMap } from '../../utils';
+import { codecNameMap, edgeNameMap } from '../../utils';
 
 import { BITRATE_TEST_DURATION } from '../Tests/Tests';
+import ResultIcon from '../../ResultWidget/ResultIcon/ResultIcon';
 import getTooltipContent from './getTooltipContent';
 import { NetworkTestName, Edge, TestResults } from '../../types';
 
-import { rows } from '../../ResultWidget/rows';
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     border: '1px solid #ddd',
     borderRadius: '3px',
@@ -30,8 +28,10 @@ const useStyles = makeStyles({
     flex: 1,
     padding: '0 1em',
   },
-  edgeName: {
+  edgeLabel: {
+    minWidth: '170px',
     width: '15%',
+    whiteSpace: 'nowrap',
   },
   iconContainer: {
     width: '15%',
@@ -42,11 +42,12 @@ const useStyles = makeStyles({
     },
   },
   pendingTest: {
-    opacity: 0.3,
+    opacity: 0.5,
   },
-});
+}));
 
 interface EdgeResultProps {
+  codecPreferences: Connection.Codec[];
   edge: Edge;
   isActive: boolean;
   result?: TestResults;
@@ -65,33 +66,28 @@ const progressBarTimings = {
 };
 
 export default function EdgeResult(props: EdgeResultProps) {
-  const { edge, isActive, result, activeTest } = props;
+  const { codecPreferences, edge, isActive, result, activeTest } = props;
   const classes = useStyles();
-
-  const hasError = Object.values(result?.errors ?? {}).length > 0;
-  const hasWarning = result && rows.some((row) => row.getWarning?.(result));
 
   const progressDuration = activeTest ? progressBarTimings[activeTest].duration : 0;
   const progressPosition = activeTest ? progressBarTimings[activeTest].position : 0;
 
+  const codecLabel = codecPreferences.map(codec => codecNameMap[codec]).join(', ');
+
   return (
     <div className={clsx(classes.container, { [classes.pendingTest]: !isActive && !result })}>
-      <Typography className={classes.edgeName}>{edgeNameMap[edge]}</Typography>
+      <Typography className={classes.edgeLabel}>{`${edgeNameMap[edge]} (${codecLabel})`}</Typography>
       <div className={classes.progressContainer}>
         {isActive && <ProgressBar position={progressPosition} duration={progressDuration} />}
       </div>
-      <div className={classes.iconContainer}>
-        {result && (
-          <>
-            {hasError && <CloseIcon style={{ fill: '#d00' }} />}
-            {!hasError && hasWarning && <WarningIcon style={{ fill: '#ff0', stroke: '#555' }} />}
-            {!hasError && !hasWarning && <CheckIcon style={{ fill: '#090' }} />}
-            <Tooltip title={getTooltipContent(result)} placement="top" interactive>
-              <InfoIcon />
-            </Tooltip>
-          </>
-        )}
-      </div>
+      {result && (
+        <div className={classes.iconContainer}>
+          <ResultIcon result={result} />
+          <Tooltip title={getTooltipContent(result)} placement="top" interactive>
+            <InfoIcon />
+          </Tooltip>
+        </div>
+      )}
     </div>
   );
 }

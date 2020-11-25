@@ -7,7 +7,9 @@ import SettingsModal from './SettingsModal';
 
 jest.mock('../../constants', () => ({
   DEFAULT_CODEC_PREFERENCES: ['opus'],
-  DEFAULT_EDGES: ['ashburn', 'dublin', 'roaming'],
+  DEFAULT_EDGES: ['ashburn', 'roaming'],
+  MAX_SELECTED_EDGES: 3,
+  MIN_SELECTED_EDGES: 1,
 }));
 
 const { PCMU, Opus } = Connection.Codec;
@@ -28,7 +30,7 @@ describe('the SettingsModal component', () => {
     wrapper.find(Button).simulate('click');
     expect(handleSettingsChange).toHaveBeenCalledWith({
       codecPreferences: [Opus],
-      edges: ['dublin', 'roaming'],
+      edges: ['roaming'],
     });
   });
 
@@ -38,33 +40,29 @@ describe('the SettingsModal component', () => {
     wrapper.find(Button).simulate('click');
     expect(handleSettingsChange).toHaveBeenCalledWith({
       codecPreferences: [Opus],
-      edges: ['ashburn', 'dublin', 'roaming', 'tokyo'],
+      edges: ['ashburn', 'roaming', 'tokyo'],
     });
   });
 
-  it('should not add more than six edges', () => {
+  it('should not add more than 3 edges', () => {
     const wrapper = mount(<SettingsModal isOpen={true} onSettingsChange={handleSettingsChange} />);
-    changeCheckbox(wrapper, 'tokyo', true);
-    changeCheckbox(wrapper, 'frankfurt-ix', true);
-    changeCheckbox(wrapper, 'sydney', true);
-    changeCheckbox(wrapper, 'sao-paolo', true); // ignored
+    changeCheckbox(wrapper, 'sao-paulo', true);
     changeCheckbox(wrapper, 'singapore', true); // ignored
     wrapper.find(Button).simulate('click');
     expect(handleSettingsChange).toHaveBeenCalledWith({
       codecPreferences: [Opus],
-      edges: ['ashburn', 'dublin', 'roaming', 'sydney', 'tokyo', 'frankfurt-ix'],
+      edges: ['ashburn', 'roaming', 'sao-paulo'],
     });
   });
 
   it('should not remove the last edge', () => {
     const wrapper = mount(<SettingsModal isOpen={true} onSettingsChange={handleSettingsChange} />);
     changeCheckbox(wrapper, 'ashburn', false);
-    changeCheckbox(wrapper, 'roaming', false);
-    changeCheckbox(wrapper, 'dublin', false); // ignored
+    changeCheckbox(wrapper, 'roaming', false); // ignored
     wrapper.find(Button).simulate('click');
     expect(handleSettingsChange).toHaveBeenCalledWith({
       codecPreferences: [Opus],
-      edges: ['dublin'],
+      edges: ['roaming'],
     });
   });
 
@@ -77,7 +75,7 @@ describe('the SettingsModal component', () => {
     wrapper.find(Button).simulate('click');
     expect(handleSettingsChange).toHaveBeenCalledWith({
       codecPreferences: [PCMU, Opus],
-      edges: ['ashburn', 'dublin', 'roaming'],
+      edges: ['ashburn', 'roaming'],
     });
   });
 
@@ -90,7 +88,7 @@ describe('the SettingsModal component', () => {
     wrapper.find(Button).simulate('click');
     expect(handleSettingsChange).toHaveBeenCalledWith({
       codecPreferences: [PCMU, Opus],
-      edges: ['ashburn', 'dublin', 'roaming'],
+      edges: ['ashburn', 'roaming'],
     });
   });
 });

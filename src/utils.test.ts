@@ -1,4 +1,4 @@
-import { round, regionalizeIceUrls, getEdgeName } from './utils';
+import { round, regionalizeIceUrls, getEdgeName, getBestEdge } from './utils';
 import { set } from 'lodash';
 import { TestResults } from './types';
 
@@ -73,6 +73,15 @@ describe('the getEdgeName function', () => {
     let mockResult = set({ edge: 'roaming' }, 'results.preflight.selectedEdge', 'roaming') as TestResults;
     mockResult = set(mockResult, 'results.preflight.edge', 'ashburn');
     const edgeName = getEdgeName(mockResult);
-    expect(edgeName).toBe('Roaming (Ashburn)');
+    expect(edgeName).toBe('Roaming - Ashburn');
+  });
+});
+
+describe('the getBestEdge function', () => {
+  it('should return the capitalized edge name when the selected edge is not roaming', () => {
+    const mockResult1 = set({ edge: 'ashburn' }, 'results.preflight.stats.mos.average', 5) as TestResults;
+    const mockResult2 = set({ edge: 'roaming' }, 'results.preflight.stats.mos.average', 3) as TestResults;
+    const bestEdge = getBestEdge([mockResult1, mockResult2]);
+    expect(bestEdge).toEqual(mockResult1);
   });
 });
