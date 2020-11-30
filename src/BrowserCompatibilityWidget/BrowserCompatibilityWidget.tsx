@@ -1,6 +1,5 @@
 import React from 'react';
 import Alert from '../common/Alert/Alert';
-import { Device } from 'twilio-client';
 import { Link as LinkImpl, Typography } from '@material-ui/core';
 import { styled } from '@material-ui/core';
 
@@ -10,8 +9,6 @@ const Link = styled(LinkImpl)({
 });
 
 export default function () {
-  if (Device.isSupported) return null;
-
   return (
     <Alert variant="error">
       <Typography variant="body1">
