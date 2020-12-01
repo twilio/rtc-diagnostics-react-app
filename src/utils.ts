@@ -28,7 +28,7 @@ export function getStandardDeviation (values: number[]): number {
     0,
   ) / diffSquared.length);
 
-  return stdDev;
+  return round(stdDev);
 }
 
 export function getJSON(url: string) {
