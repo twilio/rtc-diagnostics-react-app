@@ -10,8 +10,10 @@ jest.mock('./useTestRunner/useTestRunner');
 const mockUseTestRunner = useTestRunner as jest.Mock<any>;
 
 jest.mock('../constants', () => ({
+  APP_NAME: 'foo',
   DEFAULT_CODEC_PREFERENCES: ['opus'],
   DEFAULT_EDGES: ['ashburn', 'dublin', 'roaming'],
+  LOG_LEVEL: 'debug',
 }));
 
 describe('the NetworkTestWidget component', () => {

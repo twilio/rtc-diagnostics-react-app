@@ -6,7 +6,9 @@ import { shallow } from 'enzyme';
 
 let mockDevice = { isSupported: true };
 jest.mock('twilio-client', () => ({
-  // This is a getter to avoid the "Cannot access 'mockDevice' before initialization error"
+  get Connection() {
+    return { Codec: {PCMU: 'pcmu', Opus: 'opus'} }
+  },
   get Device() {
     return mockDevice;
   },
