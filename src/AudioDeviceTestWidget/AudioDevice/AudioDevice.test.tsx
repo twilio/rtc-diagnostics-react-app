@@ -65,11 +65,11 @@ describe('the AudioDevice component', () => {
   describe('props.level', () => {
     it('should set progress to 0 if level is 0', () => {
       const wrapper = shallow(<AudioDevice disabled={false} level={1} kind="audioinput" onDeviceChange={noop} />);
-      expect(wrapper.find(ProgressBar).prop('position')).toBe(1);
+      expect(wrapper.find(ProgressBar).prop('position')).toEqual(1);
     });
     it('should set progress to 20 if level is 20', () => {
       const wrapper = shallow(<AudioDevice disabled={false} level={20} kind="audioinput" onDeviceChange={noop} />);
-      expect(wrapper.find(ProgressBar).prop('position')).toBe(20);
+      expect(wrapper.find(ProgressBar).prop('position')).toEqual(20);
     });
   });
 

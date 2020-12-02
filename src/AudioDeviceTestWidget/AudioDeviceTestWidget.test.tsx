@@ -34,7 +34,7 @@ describe('the AudioDeviceTestWidget component', () => {
 
   it('should render correct components on load', () => {
     const wrapper = shallow(<AudioDeviceTestWidget/>);
-    expect(wrapper.find(AudioDevice).length).toBe(2);
+    expect(wrapper.find(AudioDevice).length).toEqual(2);
 
     const outputDevice = wrapper.find(AudioDevice).at(0);
     const inputDevice = wrapper.find(AudioDevice).at(1);
@@ -111,24 +111,24 @@ describe('the AudioDeviceTestWidget component', () => {
   describe('button labels', () => {
     it('should set record button label to Record', () => {
       const wrapper = shallow(<AudioDeviceTestWidget/>);
-      expect(wrapper.find(Button).at(0).text()).toBe('Record');
+      expect(wrapper.find(Button).at(0).text()).toEqual('Record');
     });
 
     it('should set record button label to Recording...', () => {
       hookProps = {...hookProps, isRecording: true};
       const wrapper = shallow(<AudioDeviceTestWidget/>);
-      expect(wrapper.find(Button).at(0).text()).toBe('Recording...');
+      expect(wrapper.find(Button).at(0).text()).toEqual('Recording...');
     });
 
     it('should set play button label to Play', () => {
       const wrapper = shallow(<AudioDeviceTestWidget/>);
-      expect(wrapper.find(Button).at(1).text()).toBe('Play');
+      expect(wrapper.find(Button).at(1).text()).toEqual('Play');
     });
 
     it('should set play button label to Playing...', () => {
       hookProps = {...hookProps, isAudioOutputTestRunning: true};
       const wrapper = shallow(<AudioDeviceTestWidget/>);
-      expect(wrapper.find(Button).at(1).text()).toBe('Playing...');
+      expect(wrapper.find(Button).at(1).text()).toEqual('Playing...');
     });
   });
 
@@ -136,13 +136,13 @@ describe('the AudioDeviceTestWidget component', () => {
     it('should pass output levels to AudioDevice', () => {
       hookProps = {...hookProps, outputLevel: 32};
       const wrapper = shallow(<AudioDeviceTestWidget/>);
-      expect(wrapper.find(AudioDevice).at(0).props().level).toBe(32);
+      expect(wrapper.find(AudioDevice).at(0).props().level).toEqual(32);
     });
 
     it('should pass input levels to AudioDevice', () => {
       hookProps = {...hookProps, inputLevel: 64};
       const wrapper = shallow(<AudioDeviceTestWidget/>);
-      expect(wrapper.find(AudioDevice).at(1).props().level).toBe(64);
+      expect(wrapper.find(AudioDevice).at(1).props().level).toEqual(64);
     });
   });
 
@@ -152,7 +152,7 @@ describe('the AudioDeviceTestWidget component', () => {
       const wrapper = shallow(<AudioDeviceTestWidget/>);
       const alert = wrapper.find(Alert).at(0);
 
-      expect(wrapper.find(Alert).length).toBe(1);
+      expect(wrapper.find(Alert).length).toEqual(1);
       expect(alert.props().variant).toEqual('error');
       expect(alert.find(Typography).text()).toEqual('foo');
     });
@@ -162,7 +162,7 @@ describe('the AudioDeviceTestWidget component', () => {
       const wrapper = shallow(<AudioDeviceTestWidget/>);
       const alert = wrapper.find(Alert).at(0);
 
-      expect(wrapper.find(Alert).length).toBe(1);
+      expect(wrapper.find(Alert).length).toEqual(1);
       expect(alert.props().variant).toEqual('success');
       expect(alert.find(Typography).text()).toEqual('No issues detected');
     });
@@ -172,7 +172,7 @@ describe('the AudioDeviceTestWidget component', () => {
       const wrapper = shallow(<AudioDeviceTestWidget/>);
       const alert = wrapper.find(Alert).at(0);
 
-      expect(wrapper.find(Alert).length).toBe(1);
+      expect(wrapper.find(Alert).length).toEqual(1);
       expect(alert.props().variant).toEqual('error');
       expect(alert.find(Typography).text()).toEqual('foo');
     });
@@ -180,7 +180,7 @@ describe('the AudioDeviceTestWidget component', () => {
     it('should disable all controls if there is an error', () => {
       hookProps = {...hookProps, error: 'foo', testEnded: true};
       const wrapper = shallow(<AudioDeviceTestWidget/>);
-      expect(wrapper.find(AudioDevice).length).toBe(2);
+      expect(wrapper.find(AudioDevice).length).toEqual(2);
 
       const outputDevice = wrapper.find(AudioDevice).at(0);
       const inputDevice = wrapper.find(AudioDevice).at(1);
