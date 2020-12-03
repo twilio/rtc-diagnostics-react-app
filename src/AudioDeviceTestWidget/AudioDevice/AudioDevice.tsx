@@ -64,7 +64,7 @@ export default function AudioDevice({ disabled, level, kind, onDeviceChange }: A
   }, [devices]);
 
   return (
-    <div style={{ width: 'calc(50% - 1em)', minWidth: '300px' }}>
+    <div style={{ width: 'calc(50% - 1em)', minWidth: '300px', marginBottom: '30px' }}>
       <Typography variant="h5">{headerText}</Typography>
 
       {noAudioRedirect && (

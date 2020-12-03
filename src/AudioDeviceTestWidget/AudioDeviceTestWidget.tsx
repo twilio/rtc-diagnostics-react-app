@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
+    marginBottom: '-30px',
   },
   busy: {
     backgroundColor: `${theme.palette.error.dark} !important`,
