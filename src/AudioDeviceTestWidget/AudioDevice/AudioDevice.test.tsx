@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import { shallow } from 'enzyme';
 
 import AudioDevice from './AudioDevice';
-import ProgressBar from '../../NetworkTestWidget/ProgressBar/ProgressBar';
+import ProgressBar from '../../common/ProgressBar/ProgressBar';
 
 const mediaInfoProps = { groupId: 'foo', toJSON: () => {} };
 const mockDevices = [{

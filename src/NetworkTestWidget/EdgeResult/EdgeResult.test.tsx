@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Connection } from 'twilio-client';
 import EdgeResult from './EdgeResult';
-import ProgressBar from '../ProgressBar/ProgressBar';
+import ProgressBar from '../../common/ProgressBar/ProgressBar';
 import { Tooltip } from '@material-ui/core';
 
 import ResultIcon from '../../ResultWidget/ResultIcon/ResultIcon';

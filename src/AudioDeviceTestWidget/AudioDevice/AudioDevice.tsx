@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import ProgressBar from '../../NetworkTestWidget/ProgressBar/ProgressBar';
+import ProgressBar from '../../common/ProgressBar/ProgressBar';
 import { useDevices } from '../useDevices/useDevices';
 
 const labels = {
