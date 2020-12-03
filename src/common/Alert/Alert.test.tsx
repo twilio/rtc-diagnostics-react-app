@@ -13,6 +13,16 @@ describe('the Alert component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('should render the "warning" variant correctly', () => {
+    const wrapper = shallow(
+      <Alert variant="warning">
+        <span>Test Warning Content</span>
+      </Alert>
+    );
+
+    expect(wrapper).toMatchSnapshot();
+  });
+
   it('should render the "error" variant correctly', () => {
     const wrapper = shallow(
       <Alert variant="error">

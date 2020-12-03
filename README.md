@@ -1,5 +1,3 @@
-⚠️ **Please note, this application is currently in beta. We welcome all feedback through Github issues**
-
 # Voice Diagnostics Tool
 
 [![CircleCI](https://circleci.com/gh/twilio/rtc-diagnostics-react-app.svg?style=svg)](https://circleci.com/gh/twilio/rtc-diagnostics-react-app)
@@ -16,8 +14,8 @@ This application uses Programmable Voice and Twilio NTS to perform the tests and
 - Side by side comparison of Edge locations connection results
 - JSON formatted report
 - Easy Copy of report to clipboard
-- Interactive Mic testing (coming soon)
-- Interactive Speaker tests (coming soon)
+- Interactive Mic testing
+- Interactive Speaker tests
 
 ## Prerequisites
 

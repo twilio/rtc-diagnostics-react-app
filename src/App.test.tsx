@@ -1,12 +1,15 @@
 import React from 'react';
 import App from './App';
 import BrowserCompatibilityWidget from './BrowserCompatibilityWidget/BrowserCompatibilityWidget';
+import AudioDeviceTestWidget from './AudioDeviceTestWidget/AudioDeviceTestWidget';
 import NetworkTestWidget from './NetworkTestWidget/NetworkTestWidget';
 import { shallow } from 'enzyme';
 
 let mockDevice = { isSupported: true };
 jest.mock('twilio-client', () => ({
-  // This is a getter to avoid the "Cannot access 'mockDevice' before initialization error"
+  get Connection() {
+    return { Codec: {PCMU: 'pcmu', Opus: 'opus'} }
+  },
   get Device() {
     return mockDevice;
   },
@@ -31,6 +34,11 @@ describe('the App component', () => {
       const wrapper = shallow(<App />);
       expect(wrapper.find(NetworkTestWidget).exists()).toBe(true);
     });
+
+    it('should render the AudioDeviceTestWidget component', () => {
+      const wrapper = shallow(<App />);
+      expect(wrapper.find(AudioDeviceTestWidget).exists()).toBe(true);
+    });
   });
 
   describe('when the browser is not supported', () => {
@@ -44,6 +52,11 @@ describe('the App component', () => {
     it('should not render the NetworkTestWidget component', () => {
       const wrapper = shallow(<App />);
       expect(wrapper.find(NetworkTestWidget).exists()).toBe(false);
+    });
+
+    it('should not render the AudioDeviceTestWidget component', () => {
+      const wrapper = shallow(<App />);
+      expect(wrapper.find(AudioDeviceTestWidget).exists()).toBe(false);
     });
   });
 });

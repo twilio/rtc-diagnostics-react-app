@@ -1,17 +1,14 @@
 import { testMediaConnectionBitrate, MediaConnectionBitrateTest } from '@twilio/rtc-diagnostics';
 import { Device, Connection, PreflightTest } from 'twilio-client';
 import { getLogger } from 'loglevel';
-import { name as appName } from '../../../package.json';
 import { regionalizeIceUrls } from '../../utils';
+import { APP_NAME, LOG_LEVEL } from '../../constants';
 import { Edge } from '../../types';
 import RTCSample from 'twilio-client/es5/twilio/rtc/sample';
 
-const log = getLogger(appName);
-const level = process.env.NODE_ENV === 'development' ? 'debug' : 'error';
+const log = getLogger(APP_NAME);
 
-log.setLevel(level, false);
-// Set the log level for client js
-getLogger(Device.packageName).setLevel(level, false);
+getLogger(Device.packageName).setLevel(LOG_LEVEL, false);
 
 const preflightOptions: PreflightTest.Options = {
   debug: false,

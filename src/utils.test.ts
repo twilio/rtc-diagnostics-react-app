@@ -1,4 +1,11 @@
-import { round, regionalizeIceUrls, getEdgeName, getBestEdge } from './utils';
+import {
+  getAudioLevelPercentage,
+  getBestEdge,
+  getEdgeName,
+  getStandardDeviation,
+  regionalizeIceUrls,
+  round,
+} from './utils';
 import { set } from 'lodash';
 import { TestResults } from './types';
 
@@ -84,4 +91,31 @@ describe('the getBestEdge function', () => {
     const bestEdge = getBestEdge([mockResult1, mockResult2]);
     expect(bestEdge).toEqual(mockResult1);
   });
+});
+
+describe('the getAudioLevelPercentage function', () => {
+  [
+    { inputLevel: 0, outputPercentage: 0 },
+    { inputLevel: 1, outputPercentage: 0.5 },
+    { inputLevel: 200, outputPercentage: 100 },
+    { inputLevel: 30, outputPercentage: 15 },
+  ]
+    .forEach(({inputLevel, outputPercentage}) => {
+      it(`should return ${outputPercentage} if input level is ${inputLevel}`, () => {
+        expect(getAudioLevelPercentage(inputLevel)).toEqual(outputPercentage);
+      });
+    });
+});
+
+describe('the getStandardDeviation function', () => {
+  [
+    { stdDev: 0, values: [0,0,0,0] },
+    { stdDev: 0, values: [] },
+    { stdDev: 12.03, values: [30,20,10,10,43,32] },
+  ]
+    .forEach(({stdDev, values}) => {
+      it(`should return ${stdDev}`, () => {
+        expect(getStandardDeviation(values)).toEqual(stdDev);
+      });
+    });
 });

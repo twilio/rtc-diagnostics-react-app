@@ -2,7 +2,7 @@
 
 exports[`the Alert component should render the "error" variant correctly 1`] = `
 <div
-  className="makeStyles-container-1 makeStyles-error-4"
+  className="makeStyles-container-1 makeStyles-error-5"
 >
   <ErrorOutlineIcon />
   <div
@@ -25,6 +25,21 @@ exports[`the Alert component should render the "success" variant correctly 1`] =
   >
     <span>
       Test Info Content
+    </span>
+  </div>
+</div>
+`;
+
+exports[`the Alert component should render the "warning" variant correctly 1`] = `
+<div
+  className="makeStyles-container-1 makeStyles-warning-4"
+>
+  <ReportProblemOutlinedIcon />
+  <div
+    className="makeStyles-contentContainer-2"
+  >
+    <span>
+      Test Warning Content
     </span>
   </div>
 </div>

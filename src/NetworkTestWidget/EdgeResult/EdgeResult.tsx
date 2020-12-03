@@ -5,7 +5,7 @@ import { Typography, Tooltip } from '@material-ui/core';
 import clsx from 'clsx';
 
 import InfoIcon from '@material-ui/icons/Info';
-import ProgressBar from '../ProgressBar/ProgressBar';
+import ProgressBar from '../../common/ProgressBar/ProgressBar';
 import { codecNameMap, edgeNameMap } from '../../utils';
 
 import { BITRATE_TEST_DURATION } from '../Tests/Tests';
