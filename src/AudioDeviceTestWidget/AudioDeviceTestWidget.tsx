@@ -32,13 +32,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const styles = {
-  audioDevice: {
-    width: 'calc(50% - 1em)',
-    minWidth: '300px',
-  }
-};
-
 export default function AudioDeviceTestWidget() {
   const classes = useStyles();
   const [inputDeviceId, setInputDeviceId] = useState('');
@@ -115,9 +108,9 @@ export default function AudioDeviceTestWidget() {
       )}
 
       <div className={classes.deviceContainer}>
-        <AudioDevice disabled={disableAll} kind="audiooutput" style={styles.audioDevice}
+        <AudioDevice disabled={disableAll} kind="audiooutput"
           level={outputLevel} onDeviceChange={setOutputDeviceId}/>
-        <AudioDevice disabled={disableAll} kind="audioinput" style={styles.audioDevice}
+        <AudioDevice disabled={disableAll} kind="audioinput"
           level={inputLevel} onDeviceChange={setInputDeviceId}/>
       </div>
     </div>

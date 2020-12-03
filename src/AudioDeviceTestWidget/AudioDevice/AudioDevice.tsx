@@ -39,11 +39,10 @@ interface AudioDeviceProps {
   disabled: boolean;
   level: number;
   kind: 'audioinput' | 'audiooutput';
-  style?: { [key: string]: string };
   onDeviceChange: (value: string) => void;
 }
 
-export default function AudioDevice({ disabled, level, kind, style, onDeviceChange }: AudioDeviceProps) {
+export default function AudioDevice({ disabled, level, kind, onDeviceChange }: AudioDeviceProps) {
   const classes = useStyles();
   const devices = useDevices().filter(device => device.kind === kind);
   const [selectedDevice, setSelectedDevice] = useState('');
@@ -65,7 +64,7 @@ export default function AudioDevice({ disabled, level, kind, style, onDeviceChan
   }, [devices]);
 
   return (
-    <div style={{...style}}>
+    <div style={{ width: 'calc(50% - 1em)', minWidth: '300px' }}>
       <Typography variant="h5">{headerText}</Typography>
 
       {noAudioRedirect && (

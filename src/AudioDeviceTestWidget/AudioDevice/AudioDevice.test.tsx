@@ -83,12 +83,4 @@ describe('the AudioDevice component', () => {
       expect(wrapper.find(Select).at(0).text()).toEqual('deviceoutput1');
     });
   });
-
-  describe('props.style', () => {
-    it('should should apply style', () => {
-      const { container } = render(<AudioDevice style={{ width: '100px' }} disabled={false} level={1} kind="audioinput" onDeviceChange={noop} />);
-      const el = container.querySelector('.MuiFormControl-root') as HTMLDivElement;
-      expect(el.parentElement?.style.width).toEqual('100px');
-    });
-  });
 });
