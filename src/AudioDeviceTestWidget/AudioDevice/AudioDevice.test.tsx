@@ -1,7 +1,7 @@
 import React from 'react';
 import { Select, Typography } from '@material-ui/core';
 import { render } from '@testing-library/react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 
 import AudioDevice from './AudioDevice';
 import ProgressBar from '../../common/ProgressBar/ProgressBar';
@@ -81,6 +81,38 @@ describe('the AudioDevice component', () => {
     it('should render output devices if kind is audiooutput', () => {
       const wrapper = shallow(<AudioDevice disabled={false} level={1} kind="audiooutput" onDeviceChange={noop} />);
       expect(wrapper.find(Select).at(0).text()).toEqual('deviceoutput1');
+    });
+  });
+
+  describe('props.onDeviceChange', () => {
+    let onDeviceChange: () => any;
+
+    beforeEach(() => {
+      onDeviceChange = jest.fn();
+    });
+
+    it('should trigger onDeviceChange when a new device is added', () => {
+      mount(<AudioDevice disabled={false} level={1} kind="audioinput" onDeviceChange={onDeviceChange} />);
+      mockDevices.push({
+        deviceId: 'output1a',
+        label: 'deviceoutput1a',
+        kind: 'audiooutput',
+        ...mediaInfoProps,
+      });
+      expect(onDeviceChange).toHaveBeenCalled();
+    });
+
+    it('should trigger onDeviceChange when a device is removed', () => {
+      mount(<AudioDevice disabled={false} level={1} kind="audioinput" onDeviceChange={onDeviceChange} />);
+      mockDevices.pop();
+      expect(onDeviceChange).toHaveBeenCalled();
+    });
+
+    it('should trigger onDeviceChange when a new device is selected', () => {
+      const wrapper = mount(<AudioDevice disabled={false} level={1} kind="audioinput" onDeviceChange={onDeviceChange} />);
+      const selectEl = wrapper.find(Select);
+      selectEl.simulate('change', 'input1');
+      expect(onDeviceChange).toHaveBeenCalledWith('input1');
     });
   });
 });
