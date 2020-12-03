@@ -2,11 +2,12 @@ import React from 'react';
 import clsx from 'clsx';
 import CheckIcon from '@material-ui/icons/CheckCircleOutline';
 import ErrorIcon from '@material-ui/icons/ErrorOutline';
+import WarningIcon from '@material-ui/icons/ReportProblemOutlined';
 import { darken, lighten, makeStyles, Theme } from '@material-ui/core/styles';
 
 type AlertProps = {
   children: React.ReactNode;
-  variant: 'success' | 'error';
+  variant: 'success' | 'warning' | 'error';
 };
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -36,6 +37,12 @@ const useStyles = makeStyles((theme: Theme) => {
         fill: theme.palette.success.main,
       },
     },
+    warning: {
+      backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.9),
+      '& svg': {
+        fill: theme.palette.warning.main,
+      },
+    },
     error: {
       backgroundColor: getBackgroundColor(theme.palette.error.main, 0.9),
       '& svg': {
@@ -51,6 +58,7 @@ export default function Alert({ variant, children }: AlertProps) {
   return (
     <div className={clsx(classes.container, classes[variant])}>
       {variant === 'success' && <CheckIcon />}
+      {variant === 'warning' && <WarningIcon />}
       {variant === 'error' && <ErrorIcon />}
       <div className={classes.contentContainer}>{children}</div>
     </div>

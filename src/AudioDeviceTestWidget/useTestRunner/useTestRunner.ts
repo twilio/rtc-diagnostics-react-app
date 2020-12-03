@@ -36,6 +36,7 @@ export default function useTestRunner() {
   const [outputLevel, setOutputLevel] = useState(0);
   const [playbackURI, setPlaybackURI] = useState('');
   const [error, setError] = useState('');
+  const [warning, setWarning] = useState('');
   const [testEnded, setTestEnded] = useState(false);
 
   const playAudio = useCallback((options: AudioOutputTest.Options) => {
@@ -45,6 +46,7 @@ export default function useTestRunner() {
     const audioOutputTest = testAudioOutputDevice(options);
     setIAudioOutputTestRunning(true);
     setTestEnded(false);
+    setWarning('');
 
     audioOutputTest.on(AudioOutputTest.Events.Volume, (value: number) => {
       setOutputLevel(getAudioLevelPercentage(value));
@@ -59,7 +61,7 @@ export default function useTestRunner() {
       if (stdDev === 0) {
         setError('No audio detected');
       } else if (stdDev < AUDIO_LEVEL_STANDARD_DEVIATION_THRESHOLD) {
-        setError('Low audio levels detected');
+        setWarning('Low audio levels detected');
       }
 
       log.debug('AudioOutputTest ended', report);
@@ -86,6 +88,7 @@ export default function useTestRunner() {
       log.debug('Recording audio');
       setTestEnded(false);
       setIsRecording(true);
+      setWarning('');
     }
 
     audioInputTest.on(AudioInputTest.Events.Volume, (value: number) => {
@@ -120,6 +123,7 @@ export default function useTestRunner() {
 
   return {
     error,
+    warning,
     inputLevel,
     isRecording,
     isAudioInputTestRunning,

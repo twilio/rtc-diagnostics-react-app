@@ -40,6 +40,7 @@ export default function AudioDeviceTestWidget() {
 
   const {
     error,
+    warning,
     inputLevel,
     isRecording,
     isAudioInputTestRunning,
@@ -81,6 +82,12 @@ export default function AudioDeviceTestWidget() {
         </Alert>
       )}
 
+      {!!warning && (
+        <Alert variant="warning">
+          <Typography variant="body1">{warning}</Typography>
+        </Alert>
+      )}
+
       <Button
         disabled={disableAll}
         onClick={handleRecordClick}
@@ -101,7 +108,7 @@ export default function AudioDeviceTestWidget() {
 
       <Divider style={{ margin: '1.5em 0' }} />
 
-      {testEnded && !error && (
+      {testEnded && !error && !warning && (
         <Alert variant="success">
           <Typography variant="body1">No issues detected</Typography>
         </Alert>

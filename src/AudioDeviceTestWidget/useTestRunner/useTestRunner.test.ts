@@ -129,20 +129,23 @@ describe('the useTestRunner hook', () => {
           mockAudioOutputTest.emit('end', { values: [0,0,0,0] });
         });
         expect(result.current.error).toEqual('No audio detected');
+        expect(result.current.warning).toEqual('');
       });
 
-      it('should set error when low audio levels detected', () => {
+      it('should set warning when low audio levels detected', () => {
         act(() => {
           mockAudioOutputTest.emit('end', { values: [9,2,4,4] });
         });
-        expect(result.current.error).toEqual('Low audio levels detected');
+        expect(result.current.warning).toEqual('Low audio levels detected');
+        expect(result.current.error).toEqual('');
       });
 
-      it('should not set error when audio levels are normal', () => {
+      it('should not set error and warning when audio levels are normal', () => {
         act(() => {
           mockAudioOutputTest.emit('end', { values: [10,11,11,10] });
         });
         expect(result.current.error).toEqual('');
+        expect(result.current.warning).toEqual('');
       });
     });
   });

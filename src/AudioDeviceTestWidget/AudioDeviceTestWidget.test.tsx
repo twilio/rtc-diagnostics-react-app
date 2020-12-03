@@ -157,8 +157,28 @@ describe('the AudioDeviceTestWidget component', () => {
       expect(alert.find(Typography).text()).toEqual('foo');
     });
 
+    it('should render warning', () => {
+      hookProps = {...hookProps, warning: 'foo'};
+      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      const alert = wrapper.find(Alert).at(0);
+
+      expect(wrapper.find(Alert).length).toEqual(1);
+      expect(alert.props().variant).toEqual('warning');
+      expect(alert.find(Typography).text()).toEqual('foo');
+    });
+
     it('should render success if there is no error', () => {
       hookProps = {...hookProps, error: '', testEnded: true};
+      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      const alert = wrapper.find(Alert).at(0);
+
+      expect(wrapper.find(Alert).length).toEqual(1);
+      expect(alert.props().variant).toEqual('success');
+      expect(alert.find(Typography).text()).toEqual('No issues detected');
+    });
+
+    it('should render success if there is no warning', () => {
+      hookProps = {...hookProps, warning: '', testEnded: true};
       const wrapper = shallow(<AudioDeviceTestWidget/>);
       const alert = wrapper.find(Alert).at(0);
 
@@ -177,6 +197,16 @@ describe('the AudioDeviceTestWidget component', () => {
       expect(alert.find(Typography).text()).toEqual('foo');
     });
 
+    it('should not render success if there is a warning', () => {
+      hookProps = {...hookProps, warning: 'foo', testEnded: true};
+      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      const alert = wrapper.find(Alert).at(0);
+
+      expect(wrapper.find(Alert).length).toEqual(1);
+      expect(alert.props().variant).toEqual('warning');
+      expect(alert.find(Typography).text()).toEqual('foo');
+    });
+
     it('should disable all controls if there is an error', () => {
       hookProps = {...hookProps, error: 'foo', testEnded: true};
       const wrapper = shallow(<AudioDeviceTestWidget/>);
@@ -191,6 +221,22 @@ describe('the AudioDeviceTestWidget component', () => {
       expect(inputDevice.prop('disabled')).toBeTruthy();
       expect(recordBtn.prop('disabled')).toBeTruthy();
       expect(playBtn.prop('disabled')).toBeTruthy();
+    });
+
+    it('should not disable all controls if there is a warning', () => {
+      hookProps = {...hookProps, warning: 'foo', testEnded: true, playbackURI: 'bar' };
+      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      expect(wrapper.find(AudioDevice).length).toEqual(2);
+
+      const outputDevice = wrapper.find(AudioDevice).at(0);
+      const inputDevice = wrapper.find(AudioDevice).at(1);
+      const recordBtn = wrapper.find(Button).at(0);
+      const playBtn = wrapper.find(Button).at(1);
+
+      expect(outputDevice.prop('disabled')).toBeFalsy();
+      expect(inputDevice.prop('disabled')).toBeFalsy();
+      expect(recordBtn.prop('disabled')).toBeFalsy();
+      expect(playBtn.prop('disabled')).toBeFalsy();
     });
   });
 });
