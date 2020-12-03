@@ -51,15 +51,14 @@ export default function AudioDevice({ disabled, level, kind, onDeviceChange }: A
   const noAudioRedirect = !Audio.prototype.setSinkId && kind === 'audiooutput';
 
   const updateSelectedDevice = useCallback((value: string) => {
-    if (value !== selectedDevice) {
-      onDeviceChange(value);
-      setSelectedDevice(value);
-    }
-  }, [onDeviceChange, selectedDevice, setSelectedDevice]);
+    onDeviceChange(value);
+    setSelectedDevice(value);
+  }, [onDeviceChange, setSelectedDevice]);
 
   useEffect(() => {
-    if (devices.length) {
-      updateSelectedDevice(selectedDevice || devices[0].deviceId);
+    const hasSelectedDevice = devices.some((device) => device.deviceId === selectedDevice);
+    if (devices.length && !hasSelectedDevice) {
+      updateSelectedDevice(devices[0].deviceId);
     }
   }, [devices, selectedDevice, updateSelectedDevice]);
 
