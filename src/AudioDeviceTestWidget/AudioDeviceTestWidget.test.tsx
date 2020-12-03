@@ -58,32 +58,32 @@ describe('the AudioDeviceTestWidget component', () => {
 
     [
       {
-        isCalled: true, props: { error: '', isRecording: false, isAudioInputTestRunning: false }
+        shouldBeCalled: true, props: { error: '', isRecording: false, isAudioInputTestRunning: false }
       },{
-        isCalled: false, props: { error: '', isRecording: true, isAudioInputTestRunning: false }
+        shouldBeCalled: false, props: { error: '', isRecording: true, isAudioInputTestRunning: false }
       },{
-        isCalled: false, props: { error: '', isRecording: false, isAudioInputTestRunning: true }
+        shouldBeCalled: false, props: { error: '', isRecording: false, isAudioInputTestRunning: true }
       },{
-        isCalled: false, props: { error: '', isRecording: true, isAudioInputTestRunning: true }
+        shouldBeCalled: false, props: { error: '', isRecording: true, isAudioInputTestRunning: true }
       },{
-        isCalled: false, props: { error: 'foo', isRecording: false, isAudioInputTestRunning: false }
+        shouldBeCalled: false, props: { error: 'foo', isRecording: false, isAudioInputTestRunning: false }
       },{
-        isCalled: false, props: { error: 'foo', isRecording: true, isAudioInputTestRunning: false }
+        shouldBeCalled: false, props: { error: 'foo', isRecording: true, isAudioInputTestRunning: false }
       },{
-        isCalled: false, props: { error: 'foo', isRecording: false, isAudioInputTestRunning: true }
+        shouldBeCalled: false, props: { error: 'foo', isRecording: false, isAudioInputTestRunning: true }
       },{
-        isCalled: false, props: { error: 'foo', isRecording: true, isAudioInputTestRunning: true }
+        shouldBeCalled: false, props: { error: 'foo', isRecording: true, isAudioInputTestRunning: true }
       }
-    ].forEach(({isCalled, props}) => {
+    ].forEach(({shouldBeCalled, props}) => {
       it(`when props are ${JSON.stringify(props)}`, () => {
         hookProps = {...hookProps, ...props};
         mount(<AudioDeviceTestWidget/>);
 
-        let test = expect(hookProps.readAudioInput) as any;
-        if (!isCalled) {
-          test = test['not'];
+        if (shouldBeCalled) {
+          expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: '' });
+        } else {
+          expect(hookProps.readAudioInput).not.toHaveBeenCalledWith({ deviceId: '' });
         }
-        test.toHaveBeenCalledWith({ deviceId: '' });
       });
     });
   });
