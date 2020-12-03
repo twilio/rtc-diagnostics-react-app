@@ -2,11 +2,11 @@ import { maxBy } from 'lodash';
 import { Edge, TestResults } from './types';
 import { AUDIO_LEVEL_THRESHOLD } from './constants';
 
-export function getAudioLevelPercentage (level: number) {
+export function getAudioLevelPercentage(level: number) {
   return (level * 100) / AUDIO_LEVEL_THRESHOLD; // 0 to 100
-};
+}
 
-export function getStandardDeviation (values: number[]): number {
+export function getStandardDeviation(values: number[]): number {
   // Same method used in client sdks
   // https://github.com/twilio/twilio-client.js/blob/master/lib/twilio/statsMonitor.ts#L88
 
@@ -14,19 +14,14 @@ export function getStandardDeviation (values: number[]): number {
     return 0;
   }
 
-  const valueAverage: number = values.reduce(
-    (partialSum: number, value: number) => partialSum + value,
-    0,
-  ) / values.length;
+  const valueAverage: number =
+    values.reduce((partialSum: number, value: number) => partialSum + value, 0) / values.length;
 
-  const diffSquared: number[] = values.map(
-    (value: number) => Math.pow(value - valueAverage, 2),
+  const diffSquared: number[] = values.map((value: number) => Math.pow(value - valueAverage, 2));
+
+  const stdDev: number = Math.sqrt(
+    diffSquared.reduce((partialSum: number, value: number) => partialSum + value, 0) / diffSquared.length
   );
-
-  const stdDev: number = Math.sqrt(diffSquared.reduce(
-    (partialSum: number, value: number) => partialSum + value,
-    0,
-  ) / diffSquared.length);
 
   return round(stdDev);
 }

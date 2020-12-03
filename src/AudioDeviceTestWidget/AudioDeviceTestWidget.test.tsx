@@ -33,7 +33,7 @@ describe('the AudioDeviceTestWidget component', () => {
   });
 
   it('should render correct components on load', () => {
-    const wrapper = shallow(<AudioDeviceTestWidget/>);
+    const wrapper = shallow(<AudioDeviceTestWidget />);
     expect(wrapper.find(AudioDevice).length).toEqual(2);
 
     const outputDevice = wrapper.find(AudioDevice).at(0);
@@ -52,32 +52,47 @@ describe('the AudioDeviceTestWidget component', () => {
 
   describe('passive testing', () => {
     it('should start passive testing by default', () => {
-      mount(<AudioDeviceTestWidget/>);
+      mount(<AudioDeviceTestWidget />);
       expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: '' });
     });
 
     [
       {
-        shouldBeCalled: true, props: { error: '', isRecording: false, isAudioInputTestRunning: false }
-      },{
-        shouldBeCalled: false, props: { error: '', isRecording: true, isAudioInputTestRunning: false }
-      },{
-        shouldBeCalled: false, props: { error: '', isRecording: false, isAudioInputTestRunning: true }
-      },{
-        shouldBeCalled: false, props: { error: '', isRecording: true, isAudioInputTestRunning: true }
-      },{
-        shouldBeCalled: false, props: { error: 'foo', isRecording: false, isAudioInputTestRunning: false }
-      },{
-        shouldBeCalled: false, props: { error: 'foo', isRecording: true, isAudioInputTestRunning: false }
-      },{
-        shouldBeCalled: false, props: { error: 'foo', isRecording: false, isAudioInputTestRunning: true }
-      },{
-        shouldBeCalled: false, props: { error: 'foo', isRecording: true, isAudioInputTestRunning: true }
-      }
-    ].forEach(({shouldBeCalled, props}) => {
+        shouldBeCalled: true,
+        props: { error: '', isRecording: false, isAudioInputTestRunning: false },
+      },
+      {
+        shouldBeCalled: false,
+        props: { error: '', isRecording: true, isAudioInputTestRunning: false },
+      },
+      {
+        shouldBeCalled: false,
+        props: { error: '', isRecording: false, isAudioInputTestRunning: true },
+      },
+      {
+        shouldBeCalled: false,
+        props: { error: '', isRecording: true, isAudioInputTestRunning: true },
+      },
+      {
+        shouldBeCalled: false,
+        props: { error: 'foo', isRecording: false, isAudioInputTestRunning: false },
+      },
+      {
+        shouldBeCalled: false,
+        props: { error: 'foo', isRecording: true, isAudioInputTestRunning: false },
+      },
+      {
+        shouldBeCalled: false,
+        props: { error: 'foo', isRecording: false, isAudioInputTestRunning: true },
+      },
+      {
+        shouldBeCalled: false,
+        props: { error: 'foo', isRecording: true, isAudioInputTestRunning: true },
+      },
+    ].forEach(({ shouldBeCalled, props }) => {
       it(`should${shouldBeCalled ? ' ' : ' not '}call readAudioInput when props are ${JSON.stringify(props)}`, () => {
-        hookProps = {...hookProps, ...props};
-        mount(<AudioDeviceTestWidget/>);
+        hookProps = { ...hookProps, ...props };
+        mount(<AudioDeviceTestWidget />);
 
         if (shouldBeCalled) {
           expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: '' });
@@ -90,18 +105,18 @@ describe('the AudioDeviceTestWidget component', () => {
 
   describe('button clicks', () => {
     beforeEach(() => {
-      hookProps = {...hookProps, isAudioInputTestRunning: true, playbackURI: 'foo'};
+      hookProps = { ...hookProps, isAudioInputTestRunning: true, playbackURI: 'foo' };
     });
 
     it('should start recording when record is clicked', () => {
-      const wrapper = mount(<AudioDeviceTestWidget/>);
+      const wrapper = mount(<AudioDeviceTestWidget />);
       const recordBtn = wrapper.find(Button).at(0);
       recordBtn.simulate('click');
       expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: '', enableRecording: true });
     });
 
     it('should play recorded click when play is clicked', () => {
-      const wrapper = mount(<AudioDeviceTestWidget/>);
+      const wrapper = mount(<AudioDeviceTestWidget />);
       const playBtn = wrapper.find(Button).at(1);
       playBtn.simulate('click');
       expect(hookProps.playAudio).toHaveBeenCalledWith({ deviceId: '', testURI: 'foo' });
@@ -110,46 +125,46 @@ describe('the AudioDeviceTestWidget component', () => {
 
   describe('button labels', () => {
     it('should set record button label to Record', () => {
-      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      const wrapper = shallow(<AudioDeviceTestWidget />);
       expect(wrapper.find(Button).at(0).text()).toEqual('Record');
     });
 
     it('should set record button label to Recording...', () => {
-      hookProps = {...hookProps, isRecording: true};
-      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      hookProps = { ...hookProps, isRecording: true };
+      const wrapper = shallow(<AudioDeviceTestWidget />);
       expect(wrapper.find(Button).at(0).text()).toEqual('Recording...');
     });
 
     it('should set play button label to Play', () => {
-      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      const wrapper = shallow(<AudioDeviceTestWidget />);
       expect(wrapper.find(Button).at(1).text()).toEqual('Play');
     });
 
     it('should set play button label to Playing...', () => {
-      hookProps = {...hookProps, isAudioOutputTestRunning: true};
-      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      hookProps = { ...hookProps, isAudioOutputTestRunning: true };
+      const wrapper = shallow(<AudioDeviceTestWidget />);
       expect(wrapper.find(Button).at(1).text()).toEqual('Playing...');
     });
   });
 
   describe('audio levels', () => {
     it('should pass output levels to AudioDevice', () => {
-      hookProps = {...hookProps, outputLevel: 32};
-      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      hookProps = { ...hookProps, outputLevel: 32 };
+      const wrapper = shallow(<AudioDeviceTestWidget />);
       expect(wrapper.find(AudioDevice).at(0).props().level).toEqual(32);
     });
 
     it('should pass input levels to AudioDevice', () => {
-      hookProps = {...hookProps, inputLevel: 64};
-      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      hookProps = { ...hookProps, inputLevel: 64 };
+      const wrapper = shallow(<AudioDeviceTestWidget />);
       expect(wrapper.find(AudioDevice).at(1).props().level).toEqual(64);
     });
   });
 
   describe('alerts', () => {
     it('should render error', () => {
-      hookProps = {...hookProps, error: 'foo'};
-      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      hookProps = { ...hookProps, error: 'foo' };
+      const wrapper = shallow(<AudioDeviceTestWidget />);
       const alert = wrapper.find(Alert).at(0);
 
       expect(wrapper.find(Alert).length).toEqual(1);
@@ -158,8 +173,8 @@ describe('the AudioDeviceTestWidget component', () => {
     });
 
     it('should render warning', () => {
-      hookProps = {...hookProps, warning: 'foo'};
-      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      hookProps = { ...hookProps, warning: 'foo' };
+      const wrapper = shallow(<AudioDeviceTestWidget />);
       const alert = wrapper.find(Alert).at(0);
 
       expect(wrapper.find(Alert).length).toEqual(1);
@@ -168,8 +183,8 @@ describe('the AudioDeviceTestWidget component', () => {
     });
 
     it('should render success if there is no error', () => {
-      hookProps = {...hookProps, error: '', testEnded: true};
-      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      hookProps = { ...hookProps, error: '', testEnded: true };
+      const wrapper = shallow(<AudioDeviceTestWidget />);
       const alert = wrapper.find(Alert).at(0);
 
       expect(wrapper.find(Alert).length).toEqual(1);
@@ -178,8 +193,8 @@ describe('the AudioDeviceTestWidget component', () => {
     });
 
     it('should render success if there is no warning', () => {
-      hookProps = {...hookProps, warning: '', testEnded: true};
-      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      hookProps = { ...hookProps, warning: '', testEnded: true };
+      const wrapper = shallow(<AudioDeviceTestWidget />);
       const alert = wrapper.find(Alert).at(0);
 
       expect(wrapper.find(Alert).length).toEqual(1);
@@ -188,8 +203,8 @@ describe('the AudioDeviceTestWidget component', () => {
     });
 
     it('should not render success if there is an error', () => {
-      hookProps = {...hookProps, error: 'foo', testEnded: true};
-      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      hookProps = { ...hookProps, error: 'foo', testEnded: true };
+      const wrapper = shallow(<AudioDeviceTestWidget />);
       const alert = wrapper.find(Alert).at(0);
 
       expect(wrapper.find(Alert).length).toEqual(1);
@@ -198,8 +213,8 @@ describe('the AudioDeviceTestWidget component', () => {
     });
 
     it('should not render success if there is a warning', () => {
-      hookProps = {...hookProps, warning: 'foo', testEnded: true};
-      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      hookProps = { ...hookProps, warning: 'foo', testEnded: true };
+      const wrapper = shallow(<AudioDeviceTestWidget />);
       const alert = wrapper.find(Alert).at(0);
 
       expect(wrapper.find(Alert).length).toEqual(1);
@@ -208,8 +223,8 @@ describe('the AudioDeviceTestWidget component', () => {
     });
 
     it('should disable all controls if there is an error', () => {
-      hookProps = {...hookProps, error: 'foo', testEnded: true};
-      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      hookProps = { ...hookProps, error: 'foo', testEnded: true };
+      const wrapper = shallow(<AudioDeviceTestWidget />);
       expect(wrapper.find(AudioDevice).length).toEqual(2);
 
       const outputDevice = wrapper.find(AudioDevice).at(0);
@@ -224,8 +239,8 @@ describe('the AudioDeviceTestWidget component', () => {
     });
 
     it('should not disable all controls if there is a warning', () => {
-      hookProps = {...hookProps, warning: 'foo', testEnded: true, playbackURI: 'bar' };
-      const wrapper = shallow(<AudioDeviceTestWidget/>);
+      hookProps = { ...hookProps, warning: 'foo', testEnded: true, playbackURI: 'bar' };
+      const wrapper = shallow(<AudioDeviceTestWidget />);
       expect(wrapper.find(AudioDevice).length).toEqual(2);
 
       const outputDevice = wrapper.find(AudioDevice).at(0);

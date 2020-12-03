@@ -9,24 +9,27 @@ describe('the useDevices hook', () => {
   let originalMediaDevices: any;
 
   beforeEach(() => {
-    mockDevices = [{
-      deviceId: 'input1',
-      label: '',
-      kind: 'audioinput',
-      ...mediaInfoProps,
-    },{
-      deviceId: 'output1',
-      label: '',
-      kind: 'audiooutput',
-      ...mediaInfoProps,
-    }];
+    mockDevices = [
+      {
+        deviceId: 'input1',
+        label: '',
+        kind: 'audioinput',
+        ...mediaInfoProps,
+      },
+      {
+        deviceId: 'output1',
+        label: '',
+        kind: 'audiooutput',
+        ...mediaInfoProps,
+      },
+    ];
 
     mockGetUserMedia = () => {
       mockDevices[0].label = 'deviceinput1';
       mockDevices[1].label = 'deviceoutput1';
       return Promise.resolve();
     };
-    
+
     originalMediaDevices = root.navigator.mediaDevices;
     root.navigator.mediaDevices = {
       enumerateDevices: () => Promise.resolve(mockDevices),
@@ -70,20 +73,25 @@ describe('the useDevices hook', () => {
     await waitForNextUpdate();
     expect(root.navigator.mediaDevices.addEventListener).toHaveBeenCalledWith('devicechange', expect.any(Function));
     act(() => {
-      root.navigator.mediaDevices.enumerateDevices = () => Promise.resolve([{
+      root.navigator.mediaDevices.enumerateDevices = () =>
+        Promise.resolve([
+          {
+            deviceId: 'inputFoo',
+            label: 'labelBar',
+            kind: 'audioinput',
+            ...mediaInfoProps,
+          },
+        ]);
+      root.navigator.mediaDevices.addEventListener.mock.calls[0][1]();
+    });
+    await waitForNextUpdate();
+    expect(result.current).toEqual([
+      {
         deviceId: 'inputFoo',
         label: 'labelBar',
         kind: 'audioinput',
         ...mediaInfoProps,
-      }]);
-      root.navigator.mediaDevices.addEventListener.mock.calls[0][1]();
-    });
-    await waitForNextUpdate();
-    expect(result.current).toEqual([{
-      deviceId: 'inputFoo',
-      label: 'labelBar',
-      kind: 'audioinput',
-      ...mediaInfoProps,
-    }]);
+      },
+    ]);
   });
 });
