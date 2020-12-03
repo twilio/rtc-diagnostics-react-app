@@ -36,7 +36,7 @@ jest.mock('@twilio/rtc-diagnostics', () => ({
       Error: 'error',
       Volume: 'volume',
     },
-  }
+  },
 }));
 
 jest.mock('../../utils', () => ({
@@ -84,8 +84,8 @@ describe('the useTestRunner hook', () => {
           result.current.playAudio({});
           mockAudioOutputTest.emit('error', {
             domError: {
-              toString: () => 'dom error'
-            }
+              toString: () => 'dom error',
+            },
           });
         });
         expect(result.current.error).toEqual('dom error');
@@ -97,7 +97,7 @@ describe('the useTestRunner hook', () => {
         act(() => {
           result.current.playAudio({});
           mockAudioOutputTest.emit('error', {
-            message: 'error message'
+            message: 'error message',
           });
         });
         expect(result.current.error).toEqual('error message');
@@ -126,7 +126,7 @@ describe('the useTestRunner hook', () => {
 
       it('should set error when no audio detected', () => {
         act(() => {
-          mockAudioOutputTest.emit('end', { values: [0,0,0,0] });
+          mockAudioOutputTest.emit('end', { values: [0, 0, 0, 0] });
         });
         expect(result.current.error).toEqual('No audio detected');
         expect(result.current.warning).toEqual('');
@@ -134,7 +134,7 @@ describe('the useTestRunner hook', () => {
 
       it('should set warning when low audio levels detected', () => {
         act(() => {
-          mockAudioOutputTest.emit('end', { values: [9,2,4,4] });
+          mockAudioOutputTest.emit('end', { values: [9, 2, 4, 4] });
         });
         expect(result.current.warning).toEqual('Low audio levels detected');
         expect(result.current.error).toEqual('');
@@ -142,7 +142,7 @@ describe('the useTestRunner hook', () => {
 
       it('should not set error and warning when audio levels are normal', () => {
         act(() => {
-          mockAudioOutputTest.emit('end', { values: [10,11,11,10] });
+          mockAudioOutputTest.emit('end', { values: [10, 11, 11, 10] });
         });
         expect(result.current.error).toEqual('');
         expect(result.current.warning).toEqual('');
@@ -217,8 +217,8 @@ describe('the useTestRunner hook', () => {
           result.current.readAudioInput({});
           mockAudioInputTest.emit('error', {
             domError: {
-              toString: () => 'dom error'
-            }
+              toString: () => 'dom error',
+            },
           });
         });
         expect(result.current.error).toEqual('dom error');
@@ -230,7 +230,7 @@ describe('the useTestRunner hook', () => {
         act(() => {
           result.current.readAudioInput({});
           mockAudioInputTest.emit('error', {
-            message: 'error message'
+            message: 'error message',
           });
         });
         expect(result.current.error).toEqual('error message');

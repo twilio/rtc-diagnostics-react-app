@@ -14,12 +14,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.secondary.main,
     color: '#fff',
     marginRight: '1em',
-    '&:hover':{
-      backgroundColor: theme.palette.secondary.dark
-    }
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.dark,
+    },
   },
   icon: {
-    marginRight: '0.3em'
+    marginRight: '0.3em',
   },
   deviceContainer: {
     display: 'flex',
@@ -75,7 +75,9 @@ export default function AudioDeviceTestWidget() {
 
   return (
     <div>
-      <Typography variant="h4" paragraph>Audio Device Tests</Typography>
+      <Typography variant="h4" paragraph>
+        Audio Device Tests
+      </Typography>
 
       {!!error && (
         <Alert variant="error">
@@ -95,7 +97,8 @@ export default function AudioDeviceTestWidget() {
         className={clsx(classes.button, { [classes.busy]: isRecording })}
         variant="contained"
       >
-        <RecordIcon className={classes.icon}/>{'Record' + (isRecording ? 'ing...' : '')}
+        <RecordIcon className={classes.icon} />
+        {'Record' + (isRecording ? 'ing...' : '')}
       </Button>
 
       <Button
@@ -104,7 +107,8 @@ export default function AudioDeviceTestWidget() {
         className={clsx(classes.button, { [classes.busy]: isAudioOutputTestRunning })}
         variant="contained"
       >
-        <PlayIcon className={classes.icon}/>{'Play' + (isAudioOutputTestRunning ? 'ing...' : '')}
+        <PlayIcon className={classes.icon} />
+        {'Play' + (isAudioOutputTestRunning ? 'ing...' : '')}
       </Button>
 
       <Divider style={{ margin: '1.5em 0' }} />
@@ -116,10 +120,8 @@ export default function AudioDeviceTestWidget() {
       )}
 
       <div className={classes.deviceContainer}>
-        <AudioDevice disabled={disableAll} kind="audiooutput"
-          level={outputLevel} onDeviceChange={setOutputDeviceId}/>
-        <AudioDevice disabled={disableAll} kind="audioinput"
-          level={inputLevel} onDeviceChange={setInputDeviceId}/>
+        <AudioDevice disabled={disableAll} kind="audiooutput" level={outputLevel} onDeviceChange={setOutputDeviceId} />
+        <AudioDevice disabled={disableAll} kind="audioinput" level={inputLevel} onDeviceChange={setInputDeviceId} />
       </div>
     </div>
   );

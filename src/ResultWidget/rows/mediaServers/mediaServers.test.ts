@@ -32,7 +32,11 @@ describe('the mediaServers row', () => {
       let testResults = set({}, 'errors', {}) as TestResults;
       testResults = set(testResults, 'results.preflight.samples[1].bytesReceived', 1);
       testResults = set(testResults, 'results.preflight.isTurnRequired', true);
-      testResults = set(testResults, 'results.preflight.selectedIceCandidatePairStats.localCandidate.relayProtocol', 'udp');
+      testResults = set(
+        testResults,
+        'results.preflight.selectedIceCandidatePairStats.localCandidate.relayProtocol',
+        'udp'
+      );
       expect(mediaServersRow.getValue(testResults)).toBe('Yes (TURN UDP)');
     });
 
@@ -40,7 +44,11 @@ describe('the mediaServers row', () => {
       let testResults = set({}, 'errors', {}) as TestResults;
       testResults = set(testResults, 'results.preflight.samples[1].bytesReceived', 1);
       testResults = set(testResults, 'results.preflight.isTurnRequired', true);
-      testResults = set(testResults, 'results.preflight.selectedIceCandidatePairStats.localCandidate.relayProtocol', 'tcp');
+      testResults = set(
+        testResults,
+        'results.preflight.selectedIceCandidatePairStats.localCandidate.relayProtocol',
+        'tcp'
+      );
       expect(mediaServersRow.getValue(testResults)).toBe('Yes (TURN TCP)');
     });
 
@@ -88,7 +96,11 @@ describe('the mediaServers row', () => {
       let testResults = set({}, 'errors', {}) as TestResults;
       testResults = set(testResults, 'results.preflight.samples[1].bytesReceived', 1);
       testResults = set(testResults, 'results.preflight.isTurnRequired', true);
-      testResults = set(testResults, 'results.preflight.selectedIceCandidatePairStats.localCandidate.relayProtocol', 'udp');
+      testResults = set(
+        testResults,
+        'results.preflight.selectedIceCandidatePairStats.localCandidate.relayProtocol',
+        'udp'
+      );
       expect(mediaServersRow.getWarning?.(testResults)).toBe(TestWarnings.warnTurnUDP);
     });
 
@@ -96,7 +108,11 @@ describe('the mediaServers row', () => {
       let testResults = set({}, 'errors', {}) as TestResults;
       testResults = set(testResults, 'results.preflight.samples[1].bytesReceived', 1);
       testResults = set(testResults, 'results.preflight.isTurnRequired', true);
-      testResults = set(testResults, 'results.preflight.selectedIceCandidatePairStats.localCandidate.relayProtocol', 'tcp');
+      testResults = set(
+        testResults,
+        'results.preflight.selectedIceCandidatePairStats.localCandidate.relayProtocol',
+        'tcp'
+      );
       expect(mediaServersRow.getWarning?.(testResults)).toBe(TestWarnings.warnTurnTCP);
     });
 

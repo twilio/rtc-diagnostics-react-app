@@ -7,15 +7,17 @@ export function useDevices() {
     const getDevices = () =>
       navigator.mediaDevices
         .enumerateDevices()
-        .then(mediaDevices => mediaDevices
-          .filter(device => device.kind === 'audioinput' || device.kind === 'audiooutput')
-          .every(device => !(device.deviceId && device.label)))
-        .then(shouldAskForMediaPermissions => {
+        .then((mediaDevices) =>
+          mediaDevices
+            .filter((device) => device.kind === 'audioinput' || device.kind === 'audiooutput')
+            .every((device) => !(device.deviceId && device.label))
+        )
+        .then((shouldAskForMediaPermissions) => {
           if (shouldAskForMediaPermissions) {
-            return navigator.mediaDevices.getUserMedia({ audio: true })
+            return navigator.mediaDevices.getUserMedia({ audio: true });
           }
         })
-        .then(() => navigator.mediaDevices.enumerateDevices().then(mediaDevices => setDevices(mediaDevices)));
+        .then(() => navigator.mediaDevices.enumerateDevices().then((mediaDevices) => setDevices(mediaDevices)));
 
     navigator.mediaDevices.addEventListener('devicechange', getDevices);
     getDevices();

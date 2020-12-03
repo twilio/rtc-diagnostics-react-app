@@ -73,53 +73,56 @@ export default function useTestRunner() {
     });
   }, []);
 
-  const readAudioInput = useCallback((options: AudioInputTest.Options) => {
-    if (audioInputTest) {
-      audioInputTest.stop();
-    }
-
-    log.debug('AudioInputTest running');
-    const duration = options.enableRecording ? RECORD_DURATION : INPUT_TEST_DURATION;
-    options = { duration, ...options };
-    audioInputTest = testAudioInputDevice(options);
-
-    setIsAudioInputTestRunning(true);
-    if (options.enableRecording) {
-      log.debug('Recording audio');
-      setTestEnded(false);
-      setIsRecording(true);
-      setWarning('');
-    }
-
-    audioInputTest.on(AudioInputTest.Events.Volume, (value: number) => {
-      setInputLevel(getAudioLevelPercentage(value));
-    });
-
-    audioInputTest.on(AudioInputTest.Events.End, (report: AudioInputTest.Report) => {
-      if (playbackURI && report.recordingUrl) {
-        URL.revokeObjectURL(playbackURI);
+  const readAudioInput = useCallback(
+    (options: AudioInputTest.Options) => {
+      if (audioInputTest) {
+        audioInputTest.stop();
       }
 
-      if (report.recordingUrl) {
-        setPlaybackURI(report.recordingUrl);
+      log.debug('AudioInputTest running');
+      const duration = options.enableRecording ? RECORD_DURATION : INPUT_TEST_DURATION;
+      options = { duration, ...options };
+      audioInputTest = testAudioInputDevice(options);
+
+      setIsAudioInputTestRunning(true);
+      if (options.enableRecording) {
+        log.debug('Recording audio');
+        setTestEnded(false);
+        setIsRecording(true);
+        setWarning('');
       }
 
-      setIsRecording(false);
-      setIsAudioInputTestRunning(false);
-      log.debug('AudioInputTest ended', report);
-    });
+      audioInputTest.on(AudioInputTest.Events.Volume, (value: number) => {
+        setInputLevel(getAudioLevelPercentage(value));
+      });
 
-    audioInputTest.on(AudioInputTest.Events.Error, (diagnosticError: DiagnosticError) => {
-      log.debug('error', diagnosticError);
-      setError(getErrorMessage(diagnosticError));
-    });
-    audioInputTest.on(AudioInputTest.Events.Warning, (name: WarningName) => {
-      log.debug('warning', name);
-    });
-    audioInputTest.on(AudioInputTest.Events.WarningCleared, (name: WarningName) => {
-      log.debug('warning-cleared', name);
-    });
-  }, [playbackURI]);
+      audioInputTest.on(AudioInputTest.Events.End, (report: AudioInputTest.Report) => {
+        if (playbackURI && report.recordingUrl) {
+          URL.revokeObjectURL(playbackURI);
+        }
+
+        if (report.recordingUrl) {
+          setPlaybackURI(report.recordingUrl);
+        }
+
+        setIsRecording(false);
+        setIsAudioInputTestRunning(false);
+        log.debug('AudioInputTest ended', report);
+      });
+
+      audioInputTest.on(AudioInputTest.Events.Error, (diagnosticError: DiagnosticError) => {
+        log.debug('error', diagnosticError);
+        setError(getErrorMessage(diagnosticError));
+      });
+      audioInputTest.on(AudioInputTest.Events.Warning, (name: WarningName) => {
+        log.debug('warning', name);
+      });
+      audioInputTest.on(AudioInputTest.Events.WarningCleared, (name: WarningName) => {
+        log.debug('warning-cleared', name);
+      });
+    },
+    [playbackURI]
+  );
 
   return {
     error,

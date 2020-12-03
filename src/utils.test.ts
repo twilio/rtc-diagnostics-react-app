@@ -99,23 +99,21 @@ describe('the getAudioLevelPercentage function', () => {
     { inputLevel: 1, outputPercentage: 0.5 },
     { inputLevel: 200, outputPercentage: 100 },
     { inputLevel: 30, outputPercentage: 15 },
-  ]
-    .forEach(({inputLevel, outputPercentage}) => {
-      it(`should return ${outputPercentage} if input level is ${inputLevel}`, () => {
-        expect(getAudioLevelPercentage(inputLevel)).toEqual(outputPercentage);
-      });
+  ].forEach(({ inputLevel, outputPercentage }) => {
+    it(`should return ${outputPercentage} if input level is ${inputLevel}`, () => {
+      expect(getAudioLevelPercentage(inputLevel)).toEqual(outputPercentage);
     });
+  });
 });
 
 describe('the getStandardDeviation function', () => {
   [
-    { stdDev: 0, values: [0,0,0,0] },
+    { stdDev: 0, values: [0, 0, 0, 0] },
     { stdDev: 0, values: [] },
-    { stdDev: 12.03, values: [30,20,10,10,43,32] },
-  ]
-    .forEach(({stdDev, values}) => {
-      it(`should return ${stdDev}`, () => {
-        expect(getStandardDeviation(values)).toEqual(stdDev);
-      });
+    { stdDev: 12.03, values: [30, 20, 10, 10, 43, 32] },
+  ].forEach(({ stdDev, values }) => {
+    it(`should return ${stdDev}`, () => {
+      expect(getStandardDeviation(values)).toEqual(stdDev);
     });
+  });
 });
