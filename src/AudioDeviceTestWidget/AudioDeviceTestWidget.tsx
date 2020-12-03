@@ -71,7 +71,7 @@ export default function AudioDeviceTestWidget() {
     if (!error && (newDeviceSelected || (!isRecording && !isAudioInputTestRunning))) {
       readAudioInput({ deviceId: inputDeviceId });
     }
-  }, [inputDeviceId, isRecording, isAudioInputTestRunning]);
+  }, [error, inputDeviceId, isRecording, isAudioInputTestRunning, readAudioInput]);
 
   return (
     <div>

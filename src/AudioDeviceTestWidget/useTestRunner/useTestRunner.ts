@@ -119,7 +119,7 @@ export default function useTestRunner() {
     audioInputTest.on(AudioInputTest.Events.WarningCleared, (name: WarningName) => {
       log.debug('warning-cleared', name);
     });
-  }, []);
+  }, [playbackURI]);
 
   return {
     error,
