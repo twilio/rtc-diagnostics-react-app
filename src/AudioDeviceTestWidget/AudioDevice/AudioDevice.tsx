@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -50,18 +50,18 @@ export default function AudioDevice({ disabled, level, kind, onDeviceChange }: A
   const { audioLevelText, deviceLabelHeader, headerText } = labels[kind];
   const noAudioRedirect = !Audio.prototype.setSinkId && kind === 'audiooutput';
 
-  const updateSelectedDevice = (value: string) => {
+  const updateSelectedDevice = useCallback((value: string) => {
     if (value !== selectedDevice) {
       onDeviceChange(value);
       setSelectedDevice(value);
     }
-  };
+  }, [onDeviceChange, selectedDevice, setSelectedDevice]);
 
   useEffect(() => {
     if (devices.length) {
       updateSelectedDevice(selectedDevice || devices[0].deviceId);
     }
-  }, [devices]);
+  }, [devices, selectedDevice, updateSelectedDevice]);
 
   return (
     <div style={{ width: 'calc(50% - 1em)', minWidth: '300px', marginBottom: '30px' }}>
