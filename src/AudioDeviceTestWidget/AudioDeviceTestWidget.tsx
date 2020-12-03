@@ -60,16 +60,6 @@ export default function AudioDeviceTestWidget() {
 
   const disableAll = isRecording || isAudioOutputTestRunning || !!error;
 
-  const recordBtnClasses = [classes.button];
-  if (isRecording) {
-    recordBtnClasses.push(classes.busy);
-  }
-
-  const playBtnClasses = [classes.button];
-  if (isAudioOutputTestRunning) {
-    playBtnClasses.push(classes.busy);
-  }
-
   const handleRecordClick = () => {
     readAudioInput({ deviceId: inputDeviceId, enableRecording: true });
   };
@@ -101,7 +91,7 @@ export default function AudioDeviceTestWidget() {
       <Button
         disabled={disableAll}
         onClick={handleRecordClick}
-        className={clsx(...recordBtnClasses)}
+        className={clsx(classes.button, { [classes.busy]: isRecording })}
         variant="contained"
       >
         <RecordIcon className={classes.icon}/>{'Record' + (isRecording ? 'ing...' : '')}
@@ -110,7 +100,7 @@ export default function AudioDeviceTestWidget() {
       <Button
         disabled={!playbackURI || disableAll}
         onClick={handlePlayClick}
-        className={clsx(...playBtnClasses)}
+        className={clsx(classes.button, { [classes.busy]: isAudioOutputTestRunning })}
         variant="contained"
       >
         <PlayIcon className={classes.icon}/>{'Play' + (isAudioOutputTestRunning ? 'ing...' : '')}
