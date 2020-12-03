@@ -75,7 +75,7 @@ describe('the AudioDeviceTestWidget component', () => {
         shouldBeCalled: false, props: { error: 'foo', isRecording: true, isAudioInputTestRunning: true }
       }
     ].forEach(({shouldBeCalled, props}) => {
-      it(`should${isCalled ? ' ' : ' not '}call readAudioInput when props are ${JSON.stringify(props)}`, () => {
+      it(`should${shouldBeCalled ? ' ' : ' not '}call readAudioInput when props are ${JSON.stringify(props)}`, () => {
         hookProps = {...hookProps, ...props};
         mount(<AudioDeviceTestWidget/>);
 
