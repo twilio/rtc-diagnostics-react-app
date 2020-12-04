@@ -97,10 +97,20 @@ describe('the AudioDevice component', () => {
     });
 
     it('should trigger onDeviceChange when a new device is selected', () => {
+      mockDevices.push({
+        deviceId: 'input2',
+        label: 'deviceinput2',
+        kind: 'audioinput',
+        ...mediaInfoProps,
+      });
+
       const wrapper = mount(<AudioDevice disabled={false} level={1} kind="audioinput" onDeviceChange={onDeviceChange} />);
-      const selectEl = wrapper.find(Select);
-      selectEl.simulate('change', 'input1');
       expect(onDeviceChange).toHaveBeenCalledWith('input1');
+
+      const selectEl = wrapper.find(Select).find('input');
+      selectEl.simulate('change', { target: { value: 'input2' } });
+      expect(onDeviceChange).toHaveBeenCalledWith('input2');
+      expect(onDeviceChange).toHaveBeenCalledTimes(2);
     });
   });
 });
