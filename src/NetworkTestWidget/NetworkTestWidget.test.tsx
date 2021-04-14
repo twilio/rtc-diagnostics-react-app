@@ -91,7 +91,7 @@ describe('the NetworkTestWidget component', () => {
     });
   });
 
-  it('should call the onComplete function with the results when the tests are complete', () => {
+  it('should call the onComplete function with the results when the tests are complete', (done) => {
     mockUseTestRunner.mockImplementation(() => ({
       isRunning: false,
       results: [],
@@ -112,7 +112,10 @@ describe('the NetworkTestWidget component', () => {
 
     wrapper.find(Button).at(0).simulate('click');
 
-    setImmediate(() => expect(mockOnComplete).toHaveBeenCalledWith('mockResults'));
+    setImmediate(() => {
+      expect(mockOnComplete).toHaveBeenCalledWith('mockResults');
+      done();
+    });
   });
 
   it('should correctly render an Alert when the bitrate test returns an "expired" error', () => {

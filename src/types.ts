@@ -12,6 +12,7 @@ declare global {
 }
 
 declare module 'twilio-client' {
+  // eslint-disable-next-line
   namespace Device {
     interface Error {
       hasConnected: boolean;

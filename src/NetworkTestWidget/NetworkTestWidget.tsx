@@ -73,9 +73,9 @@ export default function NetworkTestWidget({ getTURNCredentials, getVoiceToken, o
       </Button>
       <SettingsModal
         isOpen={isSettingsOpen}
-        onSettingsChange={(settings) => {
+        onSettingsChange={(newSettings) => {
           setIsSettingsOpen(false);
-          setSettings(settings);
+          setSettings(newSettings);
         }}
       />
     </div>

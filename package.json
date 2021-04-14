@@ -17,9 +17,9 @@
     "nanoid": "^3.1.16",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "4.0.3",
     "twilio": "^3.43.1",
-    "twilio-client": "^1.13.0",
+    "twilio-client": "^1.14.0",
     "typescript": "^3.7.5"
   },
   "scripts": {
@@ -39,7 +39,10 @@
   "eslintConfig": {
     "extends": "react-app",
     "rules": {
-      "no-shadow": "warn"
+      "no-shadow": "off",
+      "@typescript-eslint/no-shadow": [
+        "warn"
+      ]
     }
   },
   "browserslist": {
@@ -76,7 +79,7 @@
     "prettier": "^2.0.5",
     "stdout-stderr": "^0.1.13",
     "superagent": "^5.2.2",
-    "ts-jest": "^24.3.0"
+    "ts-jest": "^26.5.4"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
