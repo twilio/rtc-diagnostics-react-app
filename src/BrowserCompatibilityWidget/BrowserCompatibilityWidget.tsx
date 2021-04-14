@@ -8,7 +8,7 @@ const Link = styled(LinkImpl)({
   textDecoration: 'underline',
 });
 
-export default function () {
+export default function BrowserCompatibilityWidget() {
   return (
     <Alert variant="error">
       <Typography variant="body1">
