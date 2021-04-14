@@ -19,7 +19,7 @@
     "react-dom": "^16.13.1",
     "react-scripts": "4.0.3",
     "twilio": "^3.43.1",
-    "twilio-client": "1.14.0",
+    "twilio-client": "^1.14.0",
     "typescript": "^3.7.5"
   },
   "scripts": {
