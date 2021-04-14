@@ -7,12 +7,13 @@ const mockClient = {
 };
 
 describe('the turn-credentials function', () => {
-  it('should return turn credentials', () => {
+  it('should return turn credentials', (done) => {
     const mockCallback = jest.fn();
     handler({ getTwilioClient: () => mockClient }, {}, mockCallback);
     expect(mockClient.tokens.create).toHaveBeenCalledWith({ ttl: 30 });
     setImmediate(() => {
       expect(mockCallback).toHaveBeenCalledWith(null, 'mock token');
+      done();
     });
   });
 });
