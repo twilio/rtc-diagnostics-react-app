@@ -1,6 +1,6 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { Button, SnackbarContent, Snackbar } from '@material-ui/core';
+import { Button, Snackbar } from '@material-ui/core';
 import CopyResultsWidget from './CopyResultsWidget';
 import { mount } from 'enzyme';
 import { TestResults } from '../types';
@@ -29,7 +29,7 @@ describe('the CopyResultsWidget', () => {
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(`[
   {
-    \"results\": \"test\"
+    "results": "test"
   }
 ]`);
 

@@ -60,7 +60,7 @@ function App() {
             <>
               <Grid item xs={12}>
                 <Paper className={classes.paper} elevation={3}>
-                  <AudioDeviceTestWidget/>
+                  <AudioDeviceTestWidget />
                 </Paper>
               </Grid>
               <Grid item xs={12}>
@@ -68,7 +68,7 @@ function App() {
                   <NetworkTestWidget
                     getVoiceToken={getVoiceToken}
                     getTURNCredentials={getTURNCredentials}
-                    onComplete={(results) => setResults(results)}
+                    onComplete={(res) => setResults(res)}
                   />
                   <SummaryWidget results={results} />
                 </Paper>
