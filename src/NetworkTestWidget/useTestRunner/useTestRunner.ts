@@ -1,4 +1,5 @@
-import { Connection } from 'twilio-client';
+import { Connection, Device } from 'twilio-client';
+import { DiagnosticError } from '@twilio/rtc-diagnostics';
 import { bitrateTestRunner, preflightTestRunner } from '../Tests/Tests';
 import { Edge, TestResults, NetworkTestName } from '../../types';
 import { useState, useCallback } from 'react';
@@ -35,7 +36,8 @@ export default function useTestRunner() {
           const iceServers = await getTURNCredentials();
           testResults.results.preflight = await preflightTestRunner(edge, voiceToken, iceServers, codecPreferences);
         } catch (err) {
-          testResults.errors.preflight = err;
+          const error = err as Device.Error;
+          testResults.errors.preflight = error;
         }
 
         if (!testResults.errors.preflight) {
@@ -44,7 +46,8 @@ export default function useTestRunner() {
             const iceServers = await getTURNCredentials();
             testResults.results.bitrate = await bitrateTestRunner(edge, iceServers);
           } catch (err) {
-            testResults.errors.bitrate = err;
+            const error = err as DiagnosticError;
+            testResults.errors.bitrate = error;
           }
         }
 
