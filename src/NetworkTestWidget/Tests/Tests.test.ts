@@ -64,7 +64,7 @@ describe('the bitrateTestRunner function', () => {
     jest.useFakeTimers();
     bitrateTestRunner('ashburn', mockTurnServers);
     expect(mockBitrateTest.stop).not.toHaveBeenCalled();
-    jest.runTimersToTime(BITRATE_TEST_DURATION);
+    jest.advanceTimersByTime(BITRATE_TEST_DURATION);
     expect(mockBitrateTest.stop).toHaveBeenCalled();
   });
 });

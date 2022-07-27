@@ -5,6 +5,7 @@ import EdgeResult from './EdgeResult/EdgeResult';
 import { shallow } from 'enzyme';
 import useTestRunner from './useTestRunner/useTestRunner';
 import Alert from '../common/Alert/Alert';
+import { setImmediate } from 'timers';
 
 jest.mock('./useTestRunner/useTestRunner');
 const mockUseTestRunner = useTestRunner as jest.Mock<any>;
