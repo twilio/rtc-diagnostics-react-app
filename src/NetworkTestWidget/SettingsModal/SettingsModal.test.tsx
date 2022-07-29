@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
-import { Connection } from 'twilio-client';
+import { Call } from '@twilio/voice-sdk';
 import { mount, ReactWrapper } from 'enzyme';
 import { Edge } from '../../types';
 import SettingsModal from './SettingsModal';
@@ -12,7 +12,7 @@ jest.mock('../../constants', () => ({
   MIN_SELECTED_EDGES: 1,
 }));
 
-const { PCMU, Opus } = Connection.Codec;
+const { PCMU, Opus } = Call.Codec;
 
 const changeCheckbox = (wrapper: ReactWrapper, edge: Edge, checked: boolean) =>
   wrapper

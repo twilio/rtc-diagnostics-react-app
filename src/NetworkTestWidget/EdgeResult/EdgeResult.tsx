@@ -1,5 +1,5 @@
 import React from 'react';
-import { Connection } from 'twilio-client';
+import { Call } from '@twilio/voice-sdk';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Typography, Tooltip } from '@material-ui/core';
 import clsx from 'clsx';
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface EdgeResultProps {
-  codecPreferences: Connection.Codec[];
+  codecPreferences: Call.Codec[];
   edge: Edge;
   isActive: boolean;
   result?: TestResults;

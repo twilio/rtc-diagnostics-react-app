@@ -4,7 +4,7 @@ import { AppBar, Container, Toolbar, Grid, Paper, CssBaseline, makeStyles, Typog
 import AudioDeviceTestWidget from './AudioDeviceTestWidget/AudioDeviceTestWidget';
 import BrowserCompatibilityWidget from './BrowserCompatibilityWidget/BrowserCompatibilityWidget';
 import CopyResultsWidget from './CopyResultsWidget/CopyResultsWidget';
-import { Device } from 'twilio-client';
+import { Device } from '@twilio/voice-sdk';
 import { getJSON } from './utils';
 import { APP_NAME, LOG_LEVEL } from './constants';
 import NetworkTestWidget from './NetworkTestWidget/NetworkTestWidget';

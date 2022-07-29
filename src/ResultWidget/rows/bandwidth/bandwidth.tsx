@@ -2,15 +2,15 @@ import React from 'react';
 
 import { TestResults, TestWarnings } from '../../../types';
 import { Row, Typography } from '../shared';
-import { Connection } from 'twilio-client';
+import { Call } from '@twilio/voice-sdk';
 import { round } from '../../../utils';
 
 // These audio codecs require different amounts of bandwidth to perform well.
 // The bandwidth warning that is displayed to the user will have a different
 // threshold based on the audio codec that is chosen for the test.
 const codecBandwidthThresholds = {
-  [Connection.Codec.PCMU]: 100,
-  [Connection.Codec.Opus]: 40,
+  [Call.Codec.PCMU]: 100,
+  [Call.Codec.Opus]: 40,
 };
 
 const row: Row = {
@@ -25,7 +25,7 @@ const row: Row = {
     }
 
     const bitrate = testResults.results.bitrate?.averageBitrate ?? 0;
-    const codec = testResults.results.preflight?.samples.slice(-1)[0].codecName as Connection.Codec;
+    const codec = testResults.results.preflight?.samples.slice(-1)[0].codecName as Call.Codec;
 
     if (bitrate < codecBandwidthThresholds[codec]) {
       return TestWarnings.warn;

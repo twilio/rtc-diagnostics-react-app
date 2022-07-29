@@ -1,17 +1,16 @@
 import { testMediaConnectionBitrate, MediaConnectionBitrateTest } from '@twilio/rtc-diagnostics';
-import { Device, Connection, PreflightTest } from 'twilio-client';
+import { Device, Call, PreflightTest } from '@twilio/voice-sdk';
 import { getLogger } from 'loglevel';
 import { regionalizeIceUrls } from '../../utils';
 import { APP_NAME, LOG_LEVEL } from '../../constants';
 import { Edge } from '../../types';
-import RTCSample from 'twilio-client/es5/twilio/rtc/sample';
+import RTCSample from '@twilio/voice-sdk/es5/twilio/rtc/sample';
 
 const log = getLogger(APP_NAME);
 
 getLogger(Device.packageName).setLevel(LOG_LEVEL, false);
 
 const preflightOptions: PreflightTest.Options = {
-  debug: false,
   signalingTimeoutMs: 10000,
   fakeMicInput: true,
 };
@@ -22,7 +21,7 @@ export function preflightTestRunner(
   edge: Edge,
   token: string,
   iceServers: RTCIceServer[],
-  codecPreferences: Connection.Codec[]
+  codecPreferences: Call.Codec[]
 ) {
   const updatedIceServers = regionalizeIceUrls(edge, iceServers);
 

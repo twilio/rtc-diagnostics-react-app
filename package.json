@@ -7,6 +7,7 @@
     "@material-ui/icons": "^4.9.1",
     "@twilio-labs/serverless-api": "^2.0.1",
     "@twilio/rtc-diagnostics": "^1.0.0",
+    "@twilio/voice-sdk": "^2.1.1",
     "@types/node": "^12.12.39",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
@@ -19,7 +20,6 @@
     "react-dom": "^16.13.1",
     "react-scripts": "5.0.0",
     "twilio": "^3.80.0",
-    "twilio-client": "^1.14.0",
     "typescript": "^3.7.5",
     "util": "^0.12.4"
   },

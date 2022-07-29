@@ -6,17 +6,17 @@ import NetworkTestWidget from './NetworkTestWidget/NetworkTestWidget';
 import { shallow } from 'enzyme';
 
 let mockDevice = { isSupported: true };
-jest.mock('twilio-client', () => ({
-  get Connection() {
-    return { Codec: {PCMU: 'pcmu', Opus: 'opus'} }
+jest.mock('@twilio/voice-sdk', () => ({
+  get Call() {
+    return { Codec: { PCMU: 'pcmu', Opus: 'opus' } };
   },
   get Device() {
     return mockDevice;
   },
 }));
 
-// These components try to access real properties of twilio-client, but it doesn't
-// work since twilio-client is mocked. These components dont actually need to be
+// These components try to access real properties of @twilio/voice-sdk, but it doesn't
+// work since @twilio/voice-sdk is mocked. These components dont actually need to be
 // rendered, so we will mock them here.
 jest.mock('./NetworkTestWidget/NetworkTestWidget', () => () => null);
 jest.mock('./ResultWidget/ResultWidget', () => () => null);
