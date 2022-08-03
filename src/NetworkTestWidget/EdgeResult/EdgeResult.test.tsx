@@ -1,13 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { Connection } from 'twilio-client';
+import { Call } from '@twilio/voice-sdk';
 import EdgeResult from './EdgeResult';
 import ProgressBar from '../../common/ProgressBar/ProgressBar';
 import { Tooltip } from '@material-ui/core';
 
 import ResultIcon from '../../ResultWidget/ResultIcon/ResultIcon';
 
-const { PCMU, Opus } = Connection.Codec;
+const { PCMU, Opus } = Call.Codec;
 
 const testResult: any = {
   errors: {},

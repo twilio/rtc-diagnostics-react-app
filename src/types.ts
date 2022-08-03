@@ -1,7 +1,7 @@
 import { MediaConnectionBitrateTest } from '@twilio/rtc-diagnostics';
-import { Device, PreflightTest } from 'twilio-client';
+import { PreflightTest, TwilioError } from '@twilio/voice-sdk';
 import { DiagnosticError } from '@twilio/rtc-diagnostics';
-import RTCSample from 'twilio-client/es5/twilio/rtc/sample';
+import RTCSample from '@twilio/voice-sdk/es5/twilio/rtc/sample';
 
 export type NetworkTestName = 'Bitrate Test' | 'Preflight Test';
 
@@ -11,10 +11,10 @@ declare global {
   }
 }
 
-declare module 'twilio-client' {
+declare module '@twilio/voice-sdk' {
   // eslint-disable-next-line
-  namespace Device {
-    interface Error {
+  namespace TwilioError {
+    interface TwilioError {
       hasConnected: boolean;
       latestSample: RTCSample;
     }
@@ -29,7 +29,7 @@ export interface TestResults {
   };
   errors: {
     bitrate?: DiagnosticError;
-    preflight?: Device.Error;
+    preflight?: TwilioError.TwilioError;
   };
 }
 

@@ -1,5 +1,5 @@
 import { bitrateTestRunner, preflightTestRunner, BITRATE_TEST_DURATION } from './Tests';
-import { Connection, Device } from 'twilio-client';
+import { Call, Device } from '@twilio/voice-sdk';
 import { EventEmitter } from 'events';
 
 class MockBitrateTest extends EventEmitter {
@@ -23,10 +23,10 @@ jest.mock('@twilio/rtc-diagnostics', () => ({
   },
 }));
 
-jest.mock('twilio-client', () => ({
+jest.mock('@twilio/voice-sdk', () => ({
   Device: {
     runPreflight: jest.fn(() => mockPreflightTest),
-    packageName: 'twilio-client',
+    packageName: '@twilio/voice-sdk',
   },
   PreflightTest: {
     Events: {
@@ -37,7 +37,7 @@ jest.mock('twilio-client', () => ({
       Warning: 'Warning',
     },
   },
-  Connection: {
+  Call: {
     Codec: {
       Opus: 'opus',
       PCMU: 'pcmu',
@@ -64,17 +64,16 @@ describe('the bitrateTestRunner function', () => {
     jest.useFakeTimers();
     bitrateTestRunner('ashburn', mockTurnServers);
     expect(mockBitrateTest.stop).not.toHaveBeenCalled();
-    jest.runTimersToTime(BITRATE_TEST_DURATION);
+    jest.advanceTimersByTime(BITRATE_TEST_DURATION);
     expect(mockBitrateTest.stop).toHaveBeenCalled();
   });
 });
 
 describe('the preflightTestRunner function', () => {
   it('should be called with the correct options', () => {
-    preflightTestRunner('ashburn', 'token', mockTurnServers, [Connection.Codec.Opus]);
+    preflightTestRunner('ashburn', 'token', mockTurnServers, [Call.Codec.Opus]);
     return expect(Device.runPreflight).toHaveBeenCalledWith('token', {
       codecPreferences: ['opus'],
-      debug: false,
       edge: 'ashburn',
       fakeMicInput: true,
       iceServers: [{ url: '', urls: '' }],
@@ -83,14 +82,14 @@ describe('the preflightTestRunner function', () => {
   });
 
   it('should resolve on "Completed" event', () => {
-    const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers, [Connection.Codec.Opus]);
+    const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers, [Call.Codec.Opus]);
     mockPreflightTest.emit('Completed', { report: 'testReport' });
     return expect(preflightTest).resolves.toEqual({ report: 'testReport' });
   });
 
   describe('"Failed" event', () => {
     it('should reject', () => {
-      const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers, [Connection.Codec.Opus]);
+      const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers, [Call.Codec.Opus]);
       mockPreflightTest.emit('Failed', { report: 'testReport' });
       return expect(preflightTest).rejects.toEqual({
         report: 'testReport',
@@ -100,7 +99,7 @@ describe('the preflightTestRunner function', () => {
     });
 
     it('should reject with "hasConnected" set to true after "Connected" event', () => {
-      const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers, [Connection.Codec.Opus]);
+      const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers, [Call.Codec.Opus]);
       mockPreflightTest.emit('Connected');
       mockPreflightTest.emit('Failed', { report: 'testReport' });
       return expect(preflightTest).rejects.toEqual({
@@ -111,7 +110,7 @@ describe('the preflightTestRunner function', () => {
     });
 
     it('should reject with "latestSample" populated with the latest sample', () => {
-      const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers, [Connection.Codec.Opus]);
+      const preflightTest = preflightTestRunner('ashburn', 'token', mockTurnServers, [Call.Codec.Opus]);
       mockPreflightTest.emit('Connected');
       mockPreflightTest.emit('Sample', 'mockSample1');
       mockPreflightTest.emit('Sample', 'mockSample2');

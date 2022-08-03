@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/twilio/rtc-diagnostics-react-app.svg?style=svg)](https://circleci.com/gh/twilio/rtc-diagnostics-react-app)
 
-The Voice Diagnostics Tool provides connectivity and bandwidth requirements tests towards Twilio’s Programmable Voice servers and audio device tests to check browser VoIP calling readiness. It uses the [RTC Diagnostics SDK](https://github.com/twilio/rtc-diagnostics) and [Twilio Client JS](https://github.com/twilio/twilio-client.js) to perform the tests.
+The Voice Diagnostics Tool provides connectivity and bandwidth requirements tests towards Twilio’s Programmable Voice servers and audio device tests to check browser VoIP calling readiness. It uses the [RTC Diagnostics SDK](https://github.com/twilio/rtc-diagnostics) and [Twilio Voice JS SDK](https://github.com/twilio/twilio-voice.js) to perform the tests.
 
 This application uses Programmable Voice and Twilio NTS to perform the tests and will incur charges. See [Programmable Voice pricing](https://www.twilio.com/voice/pricing) and [NTS pricing](https://www.twilio.com/stun-turn/pricing).
 
@@ -68,7 +68,7 @@ Run `npm run test:serverless` to run all unit and E2E tests on the Serverless sc
 
 ## Related
 
-- [Twilio Voice Client JS SDK](https://github.com/twilio/twilio-client.js)
+- [Twilio Voice JS SDK](https://github.com/twilio/twilio-voice.js)
 - [Twilio RTC Diagnostics SDK](https://github.com/twilio/rtc-diagnostics)
 - [Twilio Voice Client JS Quickstart](https://github.com/TwilioDevEd/client-quickstart-js)
 - [Twilio Client connectivity requirements](https://www.twilio.com/docs/voice/client/javascript/voice-client-js-and-mobile-sdks-network-connectivity-requirements)

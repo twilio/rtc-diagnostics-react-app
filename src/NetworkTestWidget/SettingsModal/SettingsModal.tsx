@@ -10,12 +10,12 @@ import {
   Radio,
   Typography,
 } from '@material-ui/core';
-import { Connection } from 'twilio-client';
+import { Call } from '@twilio/voice-sdk';
 import { DEFAULT_CODEC_PREFERENCES, DEFAULT_EDGES, MAX_SELECTED_EDGES, MIN_SELECTED_EDGES } from '../../constants';
 import { makeStyles } from '@material-ui/core/styles';
 import { Edge } from '../../types';
 
-const { PCMU, Opus } = Connection.Codec;
+const { PCMU, Opus } = Call.Codec;
 
 const useStyles = makeStyles({
   container: {

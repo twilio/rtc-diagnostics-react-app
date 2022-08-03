@@ -1,12 +1,12 @@
 import { Edge } from './types';
-import { Connection } from 'twilio-client';
-import { name } from '../package.json';
+import { Call } from '@twilio/voice-sdk';
+import { default as appInfo } from '../package.json';
 
-export const APP_NAME = name;
+export const APP_NAME = appInfo.name;
 
 export const DEFAULT_EDGES: Edge[] = ['roaming'];
 
-export const DEFAULT_CODEC_PREFERENCES: Connection.Codec[] = [Connection.Codec.PCMU, Connection.Codec.Opus];
+export const DEFAULT_CODEC_PREFERENCES: Call.Codec[] = [Call.Codec.PCMU, Call.Codec.Opus];
 
 export const LOG_LEVEL = process.env.NODE_ENV === 'development' ? 'debug' : 'error';
 
