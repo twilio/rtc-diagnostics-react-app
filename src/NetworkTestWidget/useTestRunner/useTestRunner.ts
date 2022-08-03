@@ -36,8 +36,7 @@ export default function useTestRunner() {
           const iceServers = await getTURNCredentials();
           testResults.results.preflight = await preflightTestRunner(edge, voiceToken, iceServers, codecPreferences);
         } catch (err) {
-          const error = err as TwilioError.TwilioError;
-          testResults.errors.preflight = error;
+          testResults.errors.preflight = err as TwilioError.TwilioError;
         }
 
         if (!testResults.errors.preflight) {
@@ -46,8 +45,7 @@ export default function useTestRunner() {
             const iceServers = await getTURNCredentials();
             testResults.results.bitrate = await bitrateTestRunner(edge, iceServers);
           } catch (err) {
-            const error = err as DiagnosticError;
-            testResults.errors.bitrate = error;
+            testResults.errors.bitrate = err as DiagnosticError;
           }
         }
 
