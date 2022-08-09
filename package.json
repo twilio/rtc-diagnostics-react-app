@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.10.0",
     "@material-ui/icons": "^4.9.1",
-    "@twilio-labs/serverless-api": "^2.0.1",
+    "@twilio-labs/serverless-api": "^5.4.3",
     "@twilio/rtc-diagnostics": "^1.0.0",
     "@twilio/voice-sdk": "^2.1.1",
     "@types/node": "^12.12.39",
