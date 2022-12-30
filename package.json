@@ -75,7 +75,7 @@
     "jest-junit": "^12.1.0",
     "jsonwebtoken": "^8.5.1",
     "lint-staged": "^10.2.2",
-    "mocha": "^7.1.2",
+    "mocha": "^10.2.0",
     "mocha-junit-reporter": "^1.23.3",
     "prettier": "^2.0.5",
     "stdout-stderr": "^0.1.13",
