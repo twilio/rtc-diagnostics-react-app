@@ -19,7 +19,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "5.0.0",
-    "twilio": "^3.80.0",
+    "twilio": "^4.6.0",
     "typescript": "^3.7.5",
     "util": "^0.12.4"
   },
